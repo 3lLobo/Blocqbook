@@ -11,7 +11,14 @@ const Ceramic = () => {
   //ITS GONNA BE DELETED. ALSO I'M USING IT FOR OTHER TESTINGS LIKE POAP
 
   const create = async () => {
-    await initOrUpdateContacts(['acc1', 'acc2', 'acc3', 'acc4'])
+    const { newAddresses, poapLink } = await initOrUpdateContacts([
+      'acc1',
+      'acc2',
+      'acc3',
+      'acc4',
+    ])
+    console.log('newAddresses:', newAddresses);
+    console.log('poapLink:', poapLink);
   }
 
   const getPoapLink = async () => {

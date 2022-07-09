@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
+import { tryAuthenticate } from '../../lib/ceramicFunctions'
 
 export default function Header() {
   const store = useSelector((state) => state.evm)
@@ -12,7 +13,11 @@ export default function Header() {
 
   // TODO: connect logig
   const [buttonText, setButtonText] = useState('Connect')
-  function connectButtonHit() {
+  async function connectButtonHit() {
+    
+    //When connecting with ceramic it has a modal to metamask
+    await tryAuthenticate()
+
     if (buttonText === 'Connect') {
       setButtonText('Disconnect')
     } else {

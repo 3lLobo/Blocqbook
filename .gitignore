@@ -2,6 +2,7 @@
 *.lock
 .next/
 .env
+app/example/*
 
 
 # Logs

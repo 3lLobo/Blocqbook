@@ -25,9 +25,9 @@ export function ColorModeToggle() {
 
   const iconStyle = 'h-4 w-4 text-snow'
   return (
-    <div className="flex flex-grow color-snow hover:scale-110 transition ease-in-out">
+    <div className="flex flex-grow color-snow hover:scale-110 transition ease-in-out duration-500">
       <button
-        className="bg-opacity-50 bg-aqua-muted rounded-full border-4 border-navy border-opacity-30 p-2 outline-double outline-4 outline-slate-900"
+        className="bg-opacity-30 bg-aqua-muted rounded-full border-4 border-aqua border-opacity-30 p-2"
         // bg="blueviolet"
         onClick={toggleButtonClick}
         aria-label="Toggle"

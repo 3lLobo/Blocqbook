@@ -8,9 +8,8 @@ import { useState } from 'react'
 
 export default function Header() {
   const store = useSelector((state) => state.evm)
-  console.log('🚀 ~ file: index.js ~ line 14 ~ Header ~ store', store.account)
 
-  // TODO: connect logig
+  // TODO: connect logic
   const [buttonText, setButtonText] = useState('Connect')
   function connectButtonHit() {
     if (buttonText === 'Connect') {

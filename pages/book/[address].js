@@ -19,7 +19,7 @@ export default function Book({ address }) {
   // Login listener
   useEffect(() => {
     if (!store.connected) {
-      router.push('/')
+      // router.push('/')
     } 
   }, [store.connected])
 

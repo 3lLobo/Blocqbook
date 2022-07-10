@@ -4,7 +4,8 @@ import { createAccountsDocument, updateAccountsDocument, initOrUpdateContacts } 
 
 const ceramic = () => {
   const create = async () => {
-    await initOrUpdateContacts(["acc1", "acc2", "acc3","acc4", "acc6"])
+    const doc = await initOrUpdateContacts(["acc1", "acc2","aojd"])
+    console.log('doc:', doc.content);
   }
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">

@@ -27,7 +27,7 @@ export function ColorModeToggle() {
   return (
     <div className="flex flex-grow color-snow hover:scale-110 transition ease-in-out">
       <button
-        className="bg-opacity-50 bg-aqua-muted rounded-full border-4 border-navy border-opacity-30 p-2 outline-double outline-4 outline-slate-900"
+        className="bg-indigo-600 rounded-full border-2 border-indigo-600 p-2"
         // bg="blueviolet"
         onClick={toggleButtonClick}
         aria-label="Toggle"

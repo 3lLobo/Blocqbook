@@ -4,7 +4,7 @@ import {Box, Button, Tag, Container, VStack } from '@chakra-ui/react'
 const Sidebar = () => {
   return(
       <Box className='flex flex-row relative'>
-        <Container maxW='20%' className='h-full shadow-sm left-0 absolute grid grid-row gap-1 p-4'>
+        <Container maxW='20%' className='h-full left-0 absolute grid grid-row gap-1 p-4'>
           <Button 
             size="md" 
             variant="ghost"

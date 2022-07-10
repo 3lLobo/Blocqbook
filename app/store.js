@@ -6,7 +6,7 @@ import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
 import { covApi } from './covApi'
 
-export const store = configureStore({
+export const store = configureStore({ 
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,

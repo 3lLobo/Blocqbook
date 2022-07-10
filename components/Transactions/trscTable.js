@@ -2,13 +2,20 @@
 
 
 export const TrscTable = ({ transactions, address }) => {
-console.log("🚀 ~ file: trscTable.js ~ line 5 ~ TrscTable ~ transactions", transactions)
+  console.log("🚀 ~ file: trscTable.js ~ line 5 ~ TrscTable ~ transactions", transactions)
 
 
   // TODO: Add date/ time-ago of transaction
-  if (transactions.length === 0 ) {
-    return
-  } 
+  if (transactions.length === 0) {
+    console.log("RETURNNN", transactions)
+    return (
+      <div
+        className="mx-auto mt-11 text-center"
+      >
+        <p>No transactions on this chain</p>
+      </div>
+    )
+  }
 
   return (
     <div

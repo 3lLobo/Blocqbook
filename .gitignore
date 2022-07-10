@@ -4,7 +4,7 @@ package-lock.json
 .next/
 .env
 app/example/*
-
+localtest/
 
 # Logs
 logs

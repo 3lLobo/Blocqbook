@@ -5,51 +5,42 @@ import { Transactions } from '../components/Transactions'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setConnection } from '../app/evmSlice'
+import { MyButton } from '../components/Buttons/MyButton'
+import Link from 'next/link'
+import { Layout } from '../components/Layout'
 
 
 export default function Home() {
   const store = useSelector(state => state.evm)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (window?.ethereum?.isConnected()) {
-      dispatch(setConnection({
-        connected: true,
-        account: window.ethereum.selectedAddress,
-        chainId: '1',
-        // TODO: convert from hex to string
-        // chainId: window.ethereum.chainId,
-      }))
-    }
-  }, [dispatch])
 
   return (
-    // <div className="bg-mybg-light min-h-screen flex flex-col ">
-    <div className="bg-mybg-light dark:bg-mybg-dark dark:text-snow dark:font-medium min-h-screen ">
-      <Head />
-      <Header />
+    <Layout>
+      <div
+        className='mx-auto flex flex-col'
+      >
+        <Image
+          height={311}
+          width={311}
+          src="/ethereum-eth-logo-animated.gif"
+          alt="ETHgif"
+        />
+        {store.connected
+          &&
+          <div
+            className='mx-auto mt-11 bg-navy-muted dark:bg-opacity-0 p-3 rounded-xl'
+          >
+            <Link
+              href={`/book/${store.account}`}>
+              <MyButton
+                text="My ☎️ book"
+              />
+            </Link>
 
-      <main className="z-10 mx-auto max-w-6xl scrollbar-hide my-11 flex flex-col flex-grow">
-        <div
-          className='mx-auto '
-        >
-          <Image
-            height={311}
-            width={311}
-            src="/ethereum-eth-logo-animated.gif"
-            alt="ETHgif"
-          />
-        </div>
-        <div
-          className='mx-auto '
-        >
-          <Transactions />
-
-        </div>
-
-      </main>
-
-      <footer className="mt-auto mb-0"></footer>
-    </div>
+          </div>
+        }
+      </div>
+    </Layout >
   )
 }

@@ -1,20 +1,44 @@
 // import { Disclosure } from '@chakra-ui/react'
 import { ColorModeToggle } from './colorModeToggle'
 import Image from 'next/image'
-import { useSelector, useDispatch } from 'react-redux'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
 import { tryAuthenticate } from '../../lib/ceramicFunctions'
-import { setConnection } from '../../app/evmSlice'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { reset, setConnection } from '../../app/evmSlice'
+import { ethers } from 'ethers'
+
 
 export default function Header() {
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
+  // Manage Metamask changes and couple with state
+  useEffect(() => {
+    if (window?.ethereum?.isConnected()) {
+      const chainId = ethers.utils.arrayify(window.ethereum.chainId, {
+        hexPad: "left"
+      })[0] || 1
+      dispatch(setConnection({
+        connected: true,
+        account: window.ethereum.selectedAddress,
+        chainId: chainId.toString(),
+        // TODO: convert from hex to string
+        // chainId: window.ethereum.chainId,
+      }))
+      window.ethereum.on('disconnect', () => {
+        console.log("Metamask disconnected!")
+        dispatch(reset())
+      });
+    }
+  }, [dispatch])
+
+
+
+
   async function connectButtonHit() {
-
-
     if (!store.connected) {
       try {
         //When connecting with ceramic it has a modal to metamask
@@ -35,7 +59,6 @@ export default function Header() {
       }))
     }
   }
-
 
   return (
     <>
@@ -62,8 +85,8 @@ export default function Header() {
                 }}
                 className="ml-3 px-3 py-1 bg-aqua-muted bg-opacity-30 hidden sm:flex rounded-tr-xl rounded-bl-xl text-aqua-muted hover:text-snow transition-colors duration-300 truncate text-sm"
               >
-              {store.account}
-            </motion.div>
+                {store.account}
+              </motion.div>
             }
             <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
               {/* <div className="relative flex-shrink-0 flex text-white mr-auto"> */}

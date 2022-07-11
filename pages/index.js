@@ -1,11 +1,21 @@
 import { Head } from '../components/Head'
 import Image from 'next/image'
 import Header from '../components/Header'
-import { Button, Text } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setConnection } from '../app/evmSlice'
 import { MyButton } from '../components/Buttons/MyButton'
+import Link from 'next/link'
+import { Layout } from '../components/Layout'
+
+
+  
+import { Button, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 
 export default function Home() {
+
+  const store = useSelector(state => state.evm)
+  const dispatch = useDispatch()
 
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
@@ -29,10 +39,21 @@ export default function Home() {
           src="/hero.svg"
           className='z-0'
         />
+        {store.connected
+          &&
+          <div
+            className='mx-auto mt-11 bg-navy-muted dark:bg-opacity-0 p-3 rounded-xl'
+          >
+            <Link
+              href={`/book/${store.account}`}>
+              <MyButton
+                text="My ☎️ book"
+              />
+            </Link>
+          </div>
+        }
       </main>
-
       <footer className="mt-auto mb-0">
-
       </footer>
     </div>
   )

@@ -50,7 +50,7 @@ module.exports = {
       },
       backgroundImage: {
         'mybg-light': 'linear-gradient(193deg, #edf0f4, 100%, #9ad4db)',
-        'mybg-dark': 'linear-gradient(193deg, #070707f0, 100%, #070707f0)',
+        'mybg-dark': 'linear-gradient(193deg, #0f172a, 100%, #312e81)',
       },
     },
   },

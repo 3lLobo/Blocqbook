@@ -13,7 +13,7 @@ const Dashboard = () => {
       <Box className='flex flex-row relative'>
         <Container maxW='80%' className='h-screen right-0 p-5 absolute'>
           <Text fontSize='3xl' fontWeight='semibold' className='text-black dark:text-indigo-50 mb-10'> Contacts </Text>
-          <Box borderRadius='xl' className='bg-white dark:bg-black p-2 flex w-11/12 flex-row gap-3'>
+          <Box borderRadius='xl' className='bg-white dark:bg-slate-800 p-2 flex w-11/12 flex-row gap-3'>
             <Avatar size='sm' name='Dude' className='mx-3'/>
             <Text fontSize='md' className='text-black dark:text-indigo-50 self-center'> Dude </Text>
             <Tag size='sm' className='bg-indigo-100 hover:bg-indigo-600 ml-20 ' variant='solid' >dude.eth</Tag>

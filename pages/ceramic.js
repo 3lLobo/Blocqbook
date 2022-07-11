@@ -1,8 +1,6 @@
 import Head from '../components/Head'
 import Header from '../components/Header'
 import {
-  createAccountsDocument,
-  updateAccountsDocument,
   initOrUpdateContacts,
 } from '../lib/ceramicFunctions'
 
@@ -38,8 +36,8 @@ const ceramic = () => {
       notes: 'Esteban is nice',
       tags: ['bitcoin'],
     }
-    const doc = await initOrUpdateContacts([acc2, acc5, acc3])
-    console.log('doc:', doc.content)
+    const doc = await initOrUpdateContacts([])
+    console.log('doc:', doc.content[0])
   }
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">

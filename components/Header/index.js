@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
+import { Text } from '@chakra-ui/react'
 import { tryAuthenticate } from '../../lib/ceramicFunctions'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -64,7 +65,7 @@ export default function Header() {
     <>
       <div
         as="nav"
-        className={`bg-gradient-to-b from-slate-800 via-slate-900 to-neutral-900 shadow-2xl z-30 opacity-100 sticky top-0`}
+        className={`backdrop-blur-sm shadow-md z-30 opacity-80 sticky top-0`}
       >
         <div className=" mx-auto px-2 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16">
@@ -83,7 +84,7 @@ export default function Header() {
                   visible: { opacity: 1, y: 0 },
                   hidden: { opacity: 0, y: 500 },
                 }}
-                className="ml-3 px-3 py-1 bg-aqua-muted bg-opacity-30 hidden sm:flex rounded-tr-xl rounded-bl-xl text-aqua-muted hover:text-snow transition-colors duration-300 truncate text-sm"
+                className="ml-3 px-3 py-1 bg-indigo-500 bg-opacity-80 hidden sm:flex rounded-tr-xl rounded-bl-xl text-white hover:bg-indigo-600 transition-colors duration-300 truncate text-sm"
               >
                 {store.account}
               </motion.div>
@@ -111,7 +112,7 @@ export default function Header() {
               </div> */}
               {/* <div className="hidden sm:block sm:ml-6"></div> */}
             </div>
-            <div className="sm:inset-auto sm:ml-6 ">
+            <div className="sm:inset-auto sm:ml-6 flex gap-2">
               {/** notifications */}
               {/* {AuthUser() ? <MenuLogado user={user} /> : <MenuNotLogado />} */}
               <ColorModeToggle />

@@ -7,7 +7,7 @@ export const Head = () => {
         <title>Blocqchain☎️book</title>
         <meta
           name="description"
-          content="Manage your blockchain acquittances."
+          content="Manage your blockchain acquaintances."
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </HeadContainer>

@@ -1,23 +1,39 @@
 import { Head } from '../components/Head'
 import Image from 'next/image'
 import Header from '../components/Header'
+import { useDispatch, useSelector } from 'react-redux'
+import { setConnection } from '../app/evmSlice'
+import { MyButton } from '../components/Buttons/MyButton'
+import Link from 'next/link'
+import { Layout } from '../components/Layout'
+
+import { useState } from 'react'
 
 export default function Home() {
+  const store = useSelector((state) => state.evm)
+  const dispatch = useDispatch()
+
   return (
-    <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
-      <Head />
-      <Header />
+    <div className="bg-mybg-light dark:bg-mybg-dark">
+      <div className="bg-hero-pattern bg-cover min-h-screen flex flex-col">
+        <Head />
+        <Header />
 
-      <main className="z-10 mx-auto max-w-6xl scrollbar-hide my-11 flex-grow ">
-        <Image
-          height={311}
-          width={311}
-          src="/ethereum-eth-logo-animated.gif"
-          alt="ETHgif"
-        />
-      </main>
-
-      <footer className="mt-auto mb-0"></footer>
+        <main className="mx-auto max-w-[100%] scrollbar-hide flex-grow place-content-center ">
+          <h1 className=" dark:text-indigo-50 div-center mt-20 z-20 p-8 font-bold text-4xl text-center ">
+            You don{"'"}t have to juggle <br />
+            between wallets anymore !
+          </h1>
+          {store.connected && (
+            <Link href={`/${store.account}`}>
+              <div className="mx-auto mt-11 justify-center flex">
+                <MyButton text="My ☎️ book" primary={true} />
+              </div>
+            </Link>
+          )}
+        </main>
+        <footer className="mt-auto mb-0"></footer>
+      </div>
     </div>
   )
 }

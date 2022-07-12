@@ -4,11 +4,13 @@ import { enableMapSet } from 'immer'
 
 import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
+import poapSliceReducer from './poapSlice'
 
 export const store = configureStore({
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,
+    poap: poapSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,12 +1,13 @@
 import { Avatar } from './Avatar'
 
 
-const dummyProfile = {
+export const dummyProfile = {
   bio: {
     name: 'CryptoPanda',
     address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
     avatar: 'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
     notes: '',
+    isSelf: false,
     isOneHop: true,
   },
   tags: {
@@ -30,6 +31,9 @@ const dummyProfile = {
 
 
 const ProfileCard = () => {
+
+  const [profile, setProfile] = useState(dummyProfile)
+
   return (
     <div
       borderRadius="md"
@@ -40,15 +44,13 @@ const ProfileCard = () => {
       </div>
 
       <div className="text-black text-2xl dark:text-indigo-50 pb-2">
-        {' '}
-        CryptoPanda{' '}
+        {profile.bio.name}
       </div>
       <div className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate">
-        0xd9a51042eBE9A428e362B36F12Bd332bB565deEa
+        {profile.bio.address}
       </div>
       <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
-        {' '}
-        About me
+        {}
       </div>
       <div
         // className="mt-1"
@@ -59,6 +61,7 @@ const ProfileCard = () => {
           rows="4"
           name="comment"
           id="comment"
+          value={profile.bio.notes}
           placeholder="Add your comment ..."
         ></textarea>
       </div>

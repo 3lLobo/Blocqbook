@@ -4,18 +4,19 @@ import { enableMapSet } from 'immer'
 
 import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
-import poapSliceReducer from './poapSlice'
+import { poapApi } from './poapApi'
 
 export const store = configureStore({
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,
-    poap: poapSliceReducer,
+    [poapApi.reducerPath]: poapApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    })
+    .concat(poapApi.middleware),
   // .concat(bridgeApi.middleware),
 })
 

@@ -4,7 +4,11 @@ import optimismLogoUrl from 'assets/svg/optimistic_ethereum.svg'
 import polygonMaticLogo from 'assets/svg/polygon-matic-logo.svg'
 import ms from 'ms.macro'
 
-import { SupportedChainId, SupportedL1ChainId, SupportedL2ChainId } from './chains'
+import {
+  SupportedChainId,
+  SupportedL1ChainId,
+  SupportedL2ChainId,
+} from './chains'
 import { ARBITRUM_LIST, OPTIMISM_LIST } from './lists'
 
 export enum NetworkType {
@@ -40,10 +44,11 @@ export interface L2ChainInfo extends BaseChainInfo {
   readonly defaultListUrl: string
 }
 
-export type ChainInfoMap = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & {
+export type ChainInfoMap = {
+  readonly [chainId: number]: L1ChainInfo | L2ChainInfo
+} & {
   readonly [chainId in SupportedL2ChainId]: L2ChainInfo
-} &
-  { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
+} & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
 
 export const CHAIN_INFO: ChainInfoMap = {
   [SupportedChainId.MAINNET]: {
@@ -102,7 +107,8 @@ export const CHAIN_INFO: ChainInfoMap = {
     label: 'Optimism',
     logoUrl: optimismLogoUrl,
     statusPage: 'https://optimism.io/status',
-    helpCenterUrl: 'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
+    helpCenterUrl:
+      'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   },
   [SupportedChainId.OPTIMISTIC_KOVAN]: {
@@ -116,8 +122,13 @@ export const CHAIN_INFO: ChainInfoMap = {
     label: 'Optimistic Kovan',
     logoUrl: optimismLogoUrl,
     statusPage: 'https://optimism.io/status',
-    helpCenterUrl: 'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
-    nativeCurrency: { name: 'Optimistic Kovan Ether', symbol: 'kovOpETH', decimals: 18 },
+    helpCenterUrl:
+      'https://help.uniswap.org/en/collections/3137778-uniswap-on-optimistic-ethereum-oξ',
+    nativeCurrency: {
+      name: 'Optimistic Kovan Ether',
+      symbol: 'kovOpETH',
+      decimals: 18,
+    },
   },
   [SupportedChainId.ARBITRUM_ONE]: {
     networkType: NetworkType.L2,
@@ -129,7 +140,8 @@ export const CHAIN_INFO: ChainInfoMap = {
     label: 'Arbitrum',
     logoUrl: arbitrumLogoUrl,
     defaultListUrl: ARBITRUM_LIST,
-    helpCenterUrl: 'https://help.uniswap.org/en/collections/3137787-uniswap-on-arbitrum',
+    helpCenterUrl:
+      'https://help.uniswap.org/en/collections/3137787-uniswap-on-arbitrum',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   },
   [SupportedChainId.ARBITRUM_RINKEBY]: {
@@ -142,8 +154,13 @@ export const CHAIN_INFO: ChainInfoMap = {
     label: 'Arbitrum Rinkeby',
     logoUrl: arbitrumLogoUrl,
     defaultListUrl: ARBITRUM_LIST,
-    helpCenterUrl: 'https://help.uniswap.org/en/collections/3137787-uniswap-on-arbitrum',
-    nativeCurrency: { name: 'Rinkeby Arbitrum Ether', symbol: 'rinkArbETH', decimals: 18 },
+    helpCenterUrl:
+      'https://help.uniswap.org/en/collections/3137787-uniswap-on-arbitrum',
+    nativeCurrency: {
+      name: 'Rinkeby Arbitrum Ether',
+      symbol: 'rinkArbETH',
+      decimals: 18,
+    },
   },
   [SupportedChainId.POLYGON]: {
     networkType: NetworkType.L1,
@@ -165,6 +182,10 @@ export const CHAIN_INFO: ChainInfoMap = {
     infoLink: 'https://info.uniswap.org/#/polygon/',
     label: 'Polygon Mumbai',
     logoUrl: polygonMaticLogo,
-    nativeCurrency: { name: 'Polygon Mumbai Matic', symbol: 'mMATIC', decimals: 18 },
+    nativeCurrency: {
+      name: 'Polygon Mumbai Matic',
+      symbol: 'mMATIC',
+      decimals: 18,
+    },
   },
 }

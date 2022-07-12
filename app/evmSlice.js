@@ -23,9 +23,7 @@ export const evmSlice = createSlice({
     },
     setConnection: (state, action) => {
       state.connected = action.payload.connected
-      console.log(
-        action.payload.connected
-      )
+      console.log(action.payload.connected)
       if (action.payload.connected) {
         state.account = action.payload.account
         state.chainId = action.payload.chainId
@@ -38,11 +36,7 @@ export const evmSlice = createSlice({
   },
 })
 
-export const {
-  setGasPrice,
-  setEthPrice,
-  setConnection,
-  reset
-} = evmSlice.actions
+export const { setGasPrice, setEthPrice, setConnection, reset } =
+  evmSlice.actions
 
 export default evmSlice.reducer

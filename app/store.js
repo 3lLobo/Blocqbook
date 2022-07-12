@@ -6,7 +6,7 @@ import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
 import { covApi } from './covApi'
 
-export const store = configureStore({ 
+export const store = configureStore({
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,
@@ -15,12 +15,10 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // serializableCheck: false,
-    })
-    .concat(covApi.middleware)
+    }).concat(covApi.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 setupListeners(store.dispatch)
 enableMapSet()
-

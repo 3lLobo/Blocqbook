@@ -23,11 +23,11 @@ export function ColorModeToggle() {
     dispatch(toggleTheme())
   }
 
-  const iconStyle = 'h-4 w-4 text-snow'
+  const iconStyle = 'h-4 w-4 text-snow fill-snow '
   return (
     <div className="flex flex-grow color-snow hover:scale-110 transition ease-in-out duration-500">
       <button
-        className="bg-indigo-600 rounded-full border-2 border-indigo-600 p-2"
+        className="dark:bg-indigo-600 bg-indigo-300 rounded-full border-2 dark:border-indigo-600 p-2"
         // bg="blueviolet"
         onClick={toggleButtonClick}
         aria-label="Toggle"

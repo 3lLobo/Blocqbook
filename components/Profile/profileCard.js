@@ -1,5 +1,34 @@
 import { Avatar } from './Avatar'
 
+
+const dummyProfile = {
+  bio: {
+    name: 'CryptoPanda',
+    address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
+    avatar: 'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
+    notes: '',
+    isOneHop: true,
+  },
+  tags: {
+    privTags: [],
+    pubTags: [],
+  },
+  poap: {
+    hasCommonPoap: false,
+    poaps: [],
+  },
+  xmltChat: {
+    isChat: false,
+    chatId: '',
+    chatData: []
+  },
+  fileTransfer: {
+    isTransfer: false,
+    transferData: [],
+  },
+}
+
+
 const ProfileCard = () => {
   return (
     <div

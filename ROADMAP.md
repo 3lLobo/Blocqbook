@@ -21,7 +21,6 @@ That's an easy to implement base and offers a lot of room for creative expansion
 - POAP for appUsers and POAP for XMTP msg waiting
 - TheGraph subgraph to query addresses aho use ourApp, public tags and addresses which have been tagged.
 
-
 We could use Remix (https://remix.run/blog/remix-stacks) which has a nice template for auth and database or stick to NextJs and use Supabase (I like that one better, we can do GraphQL queries here).
 
 Both hackathons are very vague about what they want, both have a 'social track'.

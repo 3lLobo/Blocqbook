@@ -1,22 +1,20 @@
-import { useGetTransactionsQuery } from "../../app/covApi"
-import { TrscTable } from "./trscTable"
+import { useGetTransactionsQuery } from '../../app/covApi'
+import { TrscTable } from './trscTable'
 import { useDispatch, useSelector } from 'react-redux'
-import { skipToken } from "@reduxjs/toolkit/dist/query"
-import { useGetAllTransactionsQuery } from "../../app/covApi"
-
-
+import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { useGetAllTransactionsQuery } from '../../app/covApi'
 
 export const Transactions = () => {
-  const store = useSelector(state => state.evm)
+  const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
   const address = process.env.NEXT_PUBLIC_MYADDRESS
   const { data, loading, error } = useGetAllTransactionsQuery(
     store.connected
       ? {
-        address: store.account,
-        // chain_id: store.chainId,
-      }
+          address: store.account,
+          // chain_id: store.chainId,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -24,13 +22,13 @@ export const Transactions = () => {
   )
   if (loading) return <p>Loading...</p>
   if (error) {
-    console.log("🚀 ~ file: index.js ~ line 23 ~ Transactions ~ error", error)
+    console.log('🚀 ~ file: index.js ~ line 23 ~ Transactions ~ error', error)
     return <p>Error: {error.message}</p>
   }
   if (!data) return <p>No data</p>
 
   // TODO: check if all transactions are displayed
-  console.log("transactions", data)
+  console.log('transactions', data)
 
   const allItems = []
   data.forEach((chainData) => {

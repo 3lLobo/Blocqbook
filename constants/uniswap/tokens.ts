@@ -1,4 +1,10 @@
-import { Currency, Ether, NativeCurrency, Token, WETH9 } from '@uniswap/sdk-core'
+import {
+  Currency,
+  Ether,
+  NativeCurrency,
+  Token,
+  WETH9,
+} from '@uniswap/sdk-core'
 import invariant from 'tiny-invariant'
 
 import { UNI_ADDRESS } from './addresses'
@@ -265,61 +271,97 @@ export const WETH_POLYGON = new Token(
   'Wrapped Ether'
 )
 export const UNI: { [chainId: number]: Token } = {
-  [SupportedChainId.MAINNET]: new Token(SupportedChainId.MAINNET, UNI_ADDRESS[1], 18, 'UNI', 'Uniswap'),
-  [SupportedChainId.RINKEBY]: new Token(SupportedChainId.RINKEBY, UNI_ADDRESS[4], 18, 'UNI', 'Uniswap'),
-  [SupportedChainId.ROPSTEN]: new Token(SupportedChainId.ROPSTEN, UNI_ADDRESS[3], 18, 'UNI', 'Uniswap'),
-  [SupportedChainId.GOERLI]: new Token(SupportedChainId.GOERLI, UNI_ADDRESS[5], 18, 'UNI', 'Uniswap'),
-  [SupportedChainId.KOVAN]: new Token(SupportedChainId.KOVAN, UNI_ADDRESS[42], 18, 'UNI', 'Uniswap'),
-}
-
-export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } = {
-  ...(WETH9 as Record<SupportedChainId, Token>),
-  [SupportedChainId.OPTIMISM]: new Token(
-    SupportedChainId.OPTIMISM,
-    '0x4200000000000000000000000000000000000006',
+  [SupportedChainId.MAINNET]: new Token(
+    SupportedChainId.MAINNET,
+    UNI_ADDRESS[1],
     18,
-    'WETH',
-    'Wrapped Ether'
+    'UNI',
+    'Uniswap'
   ),
-  [SupportedChainId.OPTIMISTIC_KOVAN]: new Token(
-    SupportedChainId.OPTIMISTIC_KOVAN,
-    '0x4200000000000000000000000000000000000006',
+  [SupportedChainId.RINKEBY]: new Token(
+    SupportedChainId.RINKEBY,
+    UNI_ADDRESS[4],
     18,
-    'WETH',
-    'Wrapped Ether'
+    'UNI',
+    'Uniswap'
   ),
-  [SupportedChainId.ARBITRUM_ONE]: new Token(
-    SupportedChainId.ARBITRUM_ONE,
-    '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
+  [SupportedChainId.ROPSTEN]: new Token(
+    SupportedChainId.ROPSTEN,
+    UNI_ADDRESS[3],
     18,
-    'WETH',
-    'Wrapped Ether'
+    'UNI',
+    'Uniswap'
   ),
-  [SupportedChainId.ARBITRUM_RINKEBY]: new Token(
-    SupportedChainId.ARBITRUM_RINKEBY,
-    '0xB47e6A5f8b33b3F17603C83a0535A9dcD7E32681',
+  [SupportedChainId.GOERLI]: new Token(
+    SupportedChainId.GOERLI,
+    UNI_ADDRESS[5],
     18,
-    'WETH',
-    'Wrapped Ether'
+    'UNI',
+    'Uniswap'
   ),
-  [SupportedChainId.POLYGON]: new Token(
-    SupportedChainId.POLYGON,
-    '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+  [SupportedChainId.KOVAN]: new Token(
+    SupportedChainId.KOVAN,
+    UNI_ADDRESS[42],
     18,
-    'WMATIC',
-    'Wrapped MATIC'
-  ),
-  [SupportedChainId.POLYGON_MUMBAI]: new Token(
-    SupportedChainId.POLYGON_MUMBAI,
-    '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
-    18,
-    'WMATIC',
-    'Wrapped MATIC'
+    'UNI',
+    'Uniswap'
   ),
 }
 
-function isMatic(chainId: number): chainId is SupportedChainId.POLYGON | SupportedChainId.POLYGON_MUMBAI {
-  return chainId === SupportedChainId.POLYGON_MUMBAI || chainId === SupportedChainId.POLYGON
+export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
+  {
+    ...(WETH9 as Record<SupportedChainId, Token>),
+    [SupportedChainId.OPTIMISM]: new Token(
+      SupportedChainId.OPTIMISM,
+      '0x4200000000000000000000000000000000000006',
+      18,
+      'WETH',
+      'Wrapped Ether'
+    ),
+    [SupportedChainId.OPTIMISTIC_KOVAN]: new Token(
+      SupportedChainId.OPTIMISTIC_KOVAN,
+      '0x4200000000000000000000000000000000000006',
+      18,
+      'WETH',
+      'Wrapped Ether'
+    ),
+    [SupportedChainId.ARBITRUM_ONE]: new Token(
+      SupportedChainId.ARBITRUM_ONE,
+      '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
+      18,
+      'WETH',
+      'Wrapped Ether'
+    ),
+    [SupportedChainId.ARBITRUM_RINKEBY]: new Token(
+      SupportedChainId.ARBITRUM_RINKEBY,
+      '0xB47e6A5f8b33b3F17603C83a0535A9dcD7E32681',
+      18,
+      'WETH',
+      'Wrapped Ether'
+    ),
+    [SupportedChainId.POLYGON]: new Token(
+      SupportedChainId.POLYGON,
+      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+      18,
+      'WMATIC',
+      'Wrapped MATIC'
+    ),
+    [SupportedChainId.POLYGON_MUMBAI]: new Token(
+      SupportedChainId.POLYGON_MUMBAI,
+      '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      18,
+      'WMATIC',
+      'Wrapped MATIC'
+    ),
+  }
+
+function isMatic(
+  chainId: number
+): chainId is SupportedChainId.POLYGON | SupportedChainId.POLYGON_MUMBAI {
+  return (
+    chainId === SupportedChainId.POLYGON_MUMBAI ||
+    chainId === SupportedChainId.POLYGON
+  )
 }
 
 class MaticNativeCurrency extends NativeCurrency {
@@ -347,10 +389,14 @@ export class ExtendedEther extends Ether {
     throw new Error('Unsupported chain ID')
   }
 
-  private static _cachedExtendedEther: { [chainId: number]: NativeCurrency } = {}
+  private static _cachedExtendedEther: { [chainId: number]: NativeCurrency } =
+    {}
 
   public static onChain(chainId: number): ExtendedEther {
-    return this._cachedExtendedEther[chainId] ?? (this._cachedExtendedEther[chainId] = new ExtendedEther(chainId))
+    return (
+      this._cachedExtendedEther[chainId] ??
+      (this._cachedExtendedEther[chainId] = new ExtendedEther(chainId))
+    )
   }
 }
 
@@ -364,7 +410,9 @@ export function nativeOnChain(chainId: number): NativeCurrency {
   )
 }
 
-export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in SupportedChainId]?: string } } = {
+export const TOKEN_SHORTHANDS: {
+  [shorthand: string]: { [chainId in SupportedChainId]?: string }
+} = {
   USDC: {
     [SupportedChainId.MAINNET]: USDC_MAINNET.address,
     [SupportedChainId.ARBITRUM_ONE]: USDC_ARBITRUM.address,

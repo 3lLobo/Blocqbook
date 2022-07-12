@@ -1,10 +1,14 @@
 import Head from '../components/Head'
 import Header from '../components/Header'
-import { createAccountsDocument, updateAccountsDocument, initOrUpdateContacts } from '../lib/ceramicFunctions'
+import {
+  createAccountsDocument,
+  updateAccountsDocument,
+  initOrUpdateContacts,
+} from '../lib/ceramicFunctions'
 
 const ceramic = () => {
   const create = async () => {
-    await initOrUpdateContacts(["acc1", "acc2", "acc3","acc4"])
+    await initOrUpdateContacts(['acc1', 'acc2', 'acc3', 'acc4'])
   }
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">

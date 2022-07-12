@@ -49,8 +49,9 @@ module.exports = {
         'washed-blue': '#F0F6FA',
       },
       backgroundImage: {
-        'mybg-light': 'linear-gradient(193deg, #edf0f4, 100%, #9ad4db)',
-        'mybg-dark': 'linear-gradient(193deg, #0f172a, 100%, #312e81)',
+        'mybg-light': 'linear-gradient(183deg, #edf0f4, 70%, #818cf8)',
+        'mybg-dark': 'linear-gradient(186deg, #0f172a, 60%, #312e81)',
+        'hero-pattern': 'url("/hero.svg")',
       },
     },
   },
@@ -58,6 +59,7 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {

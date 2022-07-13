@@ -6,12 +6,12 @@ import { Avatar } from './Avatar'
 import { PrivTags } from './privTags'
 import { PubTags } from './pubTags'
 
-
 export const dummyProfile = {
   bio: {
     name: 'CryptoPanda',
     address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
-    avatar: 'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
+    avatar:
+      'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
     notes: 'My First Note!!!',
     isSelf: false,
     isOneHop: true,
@@ -27,7 +27,7 @@ export const dummyProfile = {
   xmltChat: {
     isChat: false,
     chatId: '',
-    chatData: []
+    chatData: [],
   },
   fileTransfer: {
     isTransfer: false,
@@ -39,26 +39,34 @@ export const dummyProfile = {
 
 // TODO: get the address as props
 const ProfileCard = () => {
-
   // TODO: store the profile to the DB
   const [profile, setProfile] = useState(dummyProfile)
-  const { data, loading, error } = useGetAllTokenBalancesQuery({
-    address: profile.bio.address,
-  } || skipToken,
+  const { data, loading, error } = useGetAllTokenBalancesQuery(
+    {
+      address: profile.bio.address,
+    } || skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
-    })
+    }
+  )
 
   function handleChange(e) {
     e.preventDefault()
     switch (e.target.id) {
       case 'notes':
-        setProfile((prevState) => ({ ...prevState, bio: { ...prevState.bio, notes: e.target.value } }))
+        setProfile((prevState) => ({
+          ...prevState,
+          bio: { ...prevState.bio, notes: e.target.value },
+        }))
         break
       case 'name':
-        setProfile((prevState) => ({ ...prevState, bio: { ...prevState.bio, name: e.target.value } }))
+        setProfile((prevState) => ({
+          ...prevState,
+          bio: { ...prevState.bio, name: e.target.value },
+        }))
     }
   }
+  console.log(data)
 
   return (
     <div
@@ -80,16 +88,13 @@ const ProfileCard = () => {
         value={profile.bio.name}
         placeholder="Add a nick-name..."
         onChange={(e) => handleChange(e)}
-      >
-      </textarea>
+      ></textarea>
       <div className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate">
         {profile.bio.address}
       </div>
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
-      <div
-        className='mt-3'
-      >
+      <div className="mt-3">
         <PrivTags />
         <PubTags />
       </div>
@@ -107,20 +112,20 @@ const ProfileCard = () => {
           onChange={(e) => handleChange(e)}
         ></textarea>
       </div>
-      <div
-        className='mt-11'
-      >
-        {loading
-          ? <BezierSpinner radius={10} />
-          : data &&
-          <div
-            // TODO: for each chain a dropdown with a list of tokens with non-zero balance
-            // https://tailwindui.com/components/application-ui/lists/stacked-lists
-            className='dark:text-indigo-200 w-40 truncate'
-          >
-            {JSON.stringify(data)}
-          </div>
-        }
+      <div className="mt-11">
+        {loading ? (
+          <BezierSpinner radius={10} />
+        ) : (
+          data && (
+            <div
+              // TODO: for each chain a dropdown with a list of tokens with non-zero balance
+              // https://tailwindui.com/components/application-ui/lists/stacked-lists
+              className="dark:text-indigo-200 w-40 truncate"
+            >
+              {JSON.stringify(data)}
+            </div>
+          )
+        )}
       </div>
     </div>
   )

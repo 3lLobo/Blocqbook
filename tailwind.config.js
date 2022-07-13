@@ -82,8 +82,7 @@ module.exports = {
       })
     }),
     plugin(function ({ addComponents }) {
-      addComponents({
-      })
+      addComponents({})
     }),
   ],
 }

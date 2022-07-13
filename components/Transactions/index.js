@@ -13,37 +13,35 @@ export const Transactions = () => {
   const { data, loading, error } = useGetAllTransactionsQuery(
     store.connected
       ? {
-        address: store.account,
-        // chain_id: store.chainId,
-      }
+          address: store.account,
+          // chain_id: store.chainId,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (loading) return (
-    // if (loading) return (
-    <div
-      className="flex justify-center items-center mt-11"
-    >
-      <BezierSpinner
-        radius={10}
-        // text="Loading transactions..."
-      />
-    </div>
-  )
+  if (loading)
+    return (
+      // if (loading) return (
+      <div className="flex justify-center items-center mt-11">
+        <BezierSpinner
+          radius={10}
+          // text="Loading transactions..."
+        />
+      </div>
+    )
   if (error) {
     console.log('🚀 ~ file: index.js ~ line 23 ~ Transactions ~ error', error)
     // TODO: throw toast with error
     return <p>Error: {error.message}</p>
   }
-  if (!data) return (
-    <div
-      className="flex flex-col items-center justify-center mt-11 text-bold text-center dark:text-slate-500"
-    >
-      Zero transactions
-    </div>
-  )
+  if (!data)
+    return (
+      <div className="flex flex-col items-center justify-center mt-11 text-bold text-center dark:text-slate-500">
+        Zero transactions
+      </div>
+    )
 
   const allItems = []
   data.forEach((chainData) => {
@@ -59,8 +57,9 @@ export const Transactions = () => {
     }
   })
   // Sort transactions by date ✅
-  allItems.sort((a, b) => { return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at) })
-  console.log("🚀 ~ file: index.js ~ line 62 ~ allItems.sort ~ allItems", allItems)
+  allItems.sort((a, b) => {
+    return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at)
+  })
 
   return (
     <div>

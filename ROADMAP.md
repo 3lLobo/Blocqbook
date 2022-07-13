@@ -76,32 +76,35 @@ The social impact of this app would be to help w3b users to organize and interac
    - Plus button to init new file transfer
 
 Bacqend:
+
 - User db with:
-   - own profile
-   - contacts with all fields
-   - messenger history
-   - file transfer history
-   - OPTION: if ceramic does not work we can use supabase
+  - own profile
+  - contacts with all fields
+  - messenger history
+  - file transfer history
+  - OPTION: if ceramic does not work we can use supabase
 - Public db:
-   - store tags & if address uses our app
-   - Could be an IPFS DAG stored on Filecoin/worldcloud
-   - Could have a smart contract which processes every entry and keeps track of the latest CID of our DAG.
+  - store tags & if address uses our app
+  - Could be an IPFS DAG stored on Filecoin/worldcloud
+  - Could have a smart contract which processes every entry and keeps track of the latest CID of our DAG.
 - Messenger:
-   - get started with XMTP
-   - copy PAPA React with his whatsapp clone
+  - get started with XMTP
+  - copy PAPA React with his whatsapp clone
 - FileTransfer:
-   - get started with IPFS lib2p
-   - OPTION1: client side IPFS daemon in browser
-   - OPTION2: server side IPFS daemon through NextJs API
-- Search: 
-   - find a nice search algorithm
-   - search as you go?
+  - get started with IPFS lib2p
+  - OPTION1: client side IPFS daemon in browser
+  - OPTION2: server side IPFS daemon through NextJs API
+- Search:
+  - find a nice search algorithm
+  - search as you go?
 
 Design:
+
 - Create/steal cool logo
 - make a slide deck presenting the app
 
 Submission:
+
 - Demo video - populate with data first
 - Pretty README
 - Submit on time!!!

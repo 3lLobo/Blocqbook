@@ -70,7 +70,7 @@ export function PrivTags() {
           )
         }
       </div>
-      < div className="flex w-fit z-30  " >
+      < div className="flex w-full z-30  " >
         <Combobox value={selected} onChange={onSelected} name="assignee" multiple nullable>
           <div className="relative mt-1">
             <div className="relative flex cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -85,7 +85,7 @@ export function PrivTags() {
                   }
                 }}
               />
-              <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <Combobox.Button className="relative w-fit cursor-default rounded-lg py-2 px-1 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                 <SelectorIcon
                   className="h-5 w-5 text-indigo-400"
                   aria-hidden="true"

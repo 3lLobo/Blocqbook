@@ -4,6 +4,7 @@ import { useGetAllTokenBalancesQuery } from '../../app/covApi'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import { Avatar } from './Avatar'
 import { PrivTags } from './privTags'
+import { PubTags } from './pubTags'
 
 
 export const dummyProfile = {
@@ -90,6 +91,7 @@ const ProfileCard = () => {
         className='mt-3'
       >
         <PrivTags />
+        <PubTags />
       </div>
       <div
         // className="mt-1"

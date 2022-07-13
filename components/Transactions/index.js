@@ -58,7 +58,7 @@ export const Transactions = () => {
       })
     }
   })
-  // Sort tranasctions by date
+  // Sort transactions by date ✅
   allItems.sort((a, b) => { return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at) })
   console.log("🚀 ~ file: index.js ~ line 62 ~ allItems.sort ~ allItems", allItems)
 

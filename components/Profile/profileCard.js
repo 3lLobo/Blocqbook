@@ -87,7 +87,7 @@ const ProfileCard = () => {
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
       <div
-        className='mt-3 flex'
+        className='mt-3'
       >
         <PrivTags />
       </div>

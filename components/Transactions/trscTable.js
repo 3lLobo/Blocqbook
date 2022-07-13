@@ -7,11 +7,10 @@ export const TrscTable = ({ transactions, address }) => {
     transactions
   )
 
-  // TODO: Add date/ time-ago of transaction
   if (transactions.length === 0) {
     return (
       <div className="mx-auto mt-11 text-center">
-        <p>No transactions on this chain</p>
+        <p>No transactions</p>
       </div>
     )
   }
@@ -28,26 +27,28 @@ export const TrscTable = ({ transactions, address }) => {
           <th>Info</th>
         </tr>
       </thead>
-      <tbody className="text-xs">
+      <tbody className="text-xs ">
         {transactions?.map((transaction) => {
-          // TODO: sort by date
           const incoming =
             transaction.from_address === address?.toLocaleLowerCase()
               ? false
               : true
           return (
-            <tr key={transaction.hash}>
-              <td>
-                <TimeAgo datetime={transaction.block_signed_at} />
-              </td>
-              <td>{incoming ? '⬅️' : '➡️'}</td>
-              <td>{transaction.chain_id}</td>
-              <td>
-                {incoming ? transaction.from_address : transaction.to_address}
-              </td>
-              <td>{transaction.value}</td>
-              <td>{transaction.to_address_label || '🏴‍☠️'}</td>
-            </tr>
+              <tr
+              className='text- even:text-indigo-400'
+              key={transaction.hash}
+              >
+                <td>
+                  <TimeAgo datetime={transaction.block_signed_at} />
+                </td>
+                <td>{incoming ? '⬅️' : '➡️'}</td>
+                <td>{transaction.chain_id}</td>
+                <td>
+                  {incoming ? transaction.from_address : transaction.to_address}
+                </td>
+                <td>{transaction.value}</td>
+                <td>{transaction.to_address_label || '🏴‍☠️'}</td>
+              </tr>
           )
         })}
       </tbody>

@@ -26,8 +26,6 @@ export default function Header() {
           connected: true,
           account: window.ethereum.selectedAddress,
           chainId: chainId.toString(),
-          // TODO: convert from hex to string
-          // chainId: window.ethereum.chainId,
         })
       )
       window.ethereum.on('disconnect', () => {
@@ -42,11 +40,16 @@ export default function Header() {
       try {
         //When connecting with ceramic it has a modal to metamask
         const ceramic = await tryAuthenticate()
+        const chainId =
+        ethers.utils.arrayify(window.ethereum.chainId, {
+          hexPad: 'left',
+        })[0] || 1
         dispatch(
           setConnection({
             connected: true,
+            ceramicConnected: true,
             account: window.ethereum.selectedAddress,
-            chainId: '1', // TODO:
+            chainId,
           })
         )
       } catch (e) {
@@ -56,7 +59,9 @@ export default function Header() {
       // Reset the stored account
       dispatch(
         setConnection({
-          connected: false,
+          ceramicConnected: false,
+          connected: window?.ethereum?.isConnected() || false,
+          account: window.ethereum.selectedAddress || null,
           account: null,
         })
       )

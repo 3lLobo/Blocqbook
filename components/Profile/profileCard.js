@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useGetAllTokenBalancesQuery } from '../../app/covApi'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import { Avatar } from './Avatar'
+import Balances from './balances'
 import { PrivTags } from './privTags'
 import { PubTags } from './pubTags'
 
@@ -122,6 +123,7 @@ const ProfileCard = () => {
               // https://tailwindui.com/components/application-ui/lists/stacked-lists
               className="dark:text-indigo-200 w-40 truncate"
             >
+              <Balances />
               {JSON.stringify(data)}
             </div>
           )

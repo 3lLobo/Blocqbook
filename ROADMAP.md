@@ -31,13 +31,83 @@ The social impact of this app would be to help w3b users to organize and interac
 1. Get started:
    - find a template or make a new UI design.
    - Open questions ❔:
-     - from where to fetch blockchain data (address interactions)
-     - which chains we want to support (Mumbai & Kovan/Rinkeby/Goerly?)
-     - what sdk for wallet auth (web3Modal & ethers rather than web3js?)
+     - from where to fetch blockchain data (address interactions) - covalent ✅
+     - which chains we want to support (Mumbai & Kovan/Rinkeby/Goerly?) - all covalent supported ✅
+     - what sdk for wallet auth (web3Modal & ethers rather than web3js?) - ceramic ✅
 2. UI:
-   - mockup UI
-   - Wallet auth
-   - go live (netlify?)
+   - mockup UI ✅
+   - Wallet auth ✅
+   - go live (netlify?) ✅
+   - add icons to tabs
+   - replace emojis with icons
+   - cooler landing page
+3. Transaction dashboard
+   - Search: search transactions
+   - Parse addresses to names (<You!>)
+   - show transaction in addrss ➡️ addrss style
+   - add additional data from transaction
+   - highlight transaction row by 'high frequency' or 'high value'
+4. Address card:
+   - open on address click
+   - show POAPs and balances
+   - option to add to contacts
+5. Contacts:
+   - Search: searches the contacts
+   - list of contacts
+   <!-- - option to add new contact -->
+   - option to edit contact - nickName, avatar, tags, notes
+   - option to delete contact
+   - option to remove tag from contact
+   - option to add public tag to contact - only if there was a direct transaction
+   - icon with link to messenger
+   - icon with link to fileTransfer
+   - plus button to add new contact without transaction
+6. Explore:
+   - For now, search etherscan for input
+7. Messenger:
+   - Search conversations
+   - XMTP integration
+   - whatsapp style chats with addresses
+   - plus button to start new chat
+8. FileTransfer:
+   - Search sent files
+   - IPFS lib2p integration
+   - table with transactions
+   - Plus button to init new file transfer
+
+Bacqend:
+
+- User db with:
+  - own profile
+  - contacts with all fields
+  - messenger history
+  - file transfer history
+  - OPTION: if ceramic does not work we can use supabase
+- Public db:
+  - store tags & if address uses our app
+  - Could be an IPFS DAG stored on Filecoin/worldcloud
+  - Could have a smart contract which processes every entry and keeps track of the latest CID of our DAG.
+- Messenger:
+  - get started with XMTP
+  - copy PAPA React with his whatsapp clone
+- FileTransfer:
+  - get started with IPFS lib2p
+  - OPTION1: client side IPFS daemon in browser
+  - OPTION2: server side IPFS daemon through NextJs API
+- Search:
+  - find a nice search algorithm
+  - search as you go?
+
+Design:
+
+- Create/steal cool logo
+- make a slide deck presenting the app
+
+Submission:
+
+- Demo video - populate with data first
+- Pretty README
+- Submit on time!!!
 
 ## Resources
 

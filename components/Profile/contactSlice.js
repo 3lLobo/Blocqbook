@@ -1,4 +1,5 @@
 import { Avatar } from './Avatar'
+import { Tag } from './tag'
 
 export const ContactSlice = () => {
   return (
@@ -10,10 +11,12 @@ export const ContactSlice = () => {
         {' '}
         Dude{' '}
       </div>
-      <div className="mr-11  col-span-2 flex">
-        <div className="text-snow col-span-5 bg-indigo-400 hover:bg-indigo-600 rounded-bl-xl rounded-tr-xl px-3 py-1 text-center">
+      <div className="mr-11 space-x-1  col-span-2 flex flex-row">
+        {/* <div className="text-snow bg-indigo-400 hover:bg-indigo-600 rounded-bl-xl rounded-tr-xl px-3 py-1 text-center">
           dude.eth
-        </div>
+        </div> */}
+        <Tag tagText="dude.eth" color="indigo-300" />
+        <Tag tagText="dude.eth" />
       </div>
       <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
         {

@@ -3,6 +3,7 @@ import { TrscTable } from './trscTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useGetAllTransactionsQuery } from '../../app/covApi'
+import { BezierSpinner } from '../Spinner/BezierSpinner'
 
 export const Transactions = () => {
   const store = useSelector((state) => state.evm)
@@ -20,15 +21,27 @@ export const Transactions = () => {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      // if (loading) return (
+      <div className="flex justify-center items-center mt-11">
+        <BezierSpinner
+          radius={10}
+          // text="Loading transactions..."
+        />
+      </div>
+    )
   if (error) {
     console.log('🚀 ~ file: index.js ~ line 23 ~ Transactions ~ error', error)
+    // TODO: throw toast with error
     return <p>Error: {error.message}</p>
   }
-  if (!data) return <p>No data</p>
-
-  // TODO: check if all transactions are displayed
-  console.log('transactions', data)
+  if (!data)
+    return (
+      <div className="flex flex-col items-center justify-center mt-11 text-bold text-center dark:text-slate-500">
+        Zero transactions
+      </div>
+    )
 
   const allItems = []
   data.forEach((chainData) => {
@@ -42,6 +55,10 @@ export const Transactions = () => {
         allItems.push(newItem)
       })
     }
+  })
+  // Sort transactions by date ✅
+  allItems.sort((a, b) => {
+    return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at)
   })
 
   return (

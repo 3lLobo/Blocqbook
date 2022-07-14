@@ -23,11 +23,6 @@ const axiosBaseQuery =
           method,
           data,
           params,
-          // // This should work like CURL using Basic Auth, but it doesn't
-          // auth: {
-          //   username: 'process.env.NEXT_PUBLIC_COVALENT_API_KEY',
-          //   // password: ''
-          // },
         })
         result.push(res.data.data)
       }
@@ -70,7 +65,26 @@ export const covApi = createApi({
         // }
       }),
     }),
+    getTokenBalances: builder.query({
+      query: ({ address, chain_id }) => ({
+        url: [chain_id + `/address/${address}/balances_v2/`],
+        responseHandler: (response) => response[0],
+      }),
+    }),
+    getAllTokenBalances: builder.query({
+      query: ({ address }) => ({
+        url: chainIds.map(
+          (chain_id) => `${chain_id}/address/${address}/balances_v2/`
+        ),
+      }),
+    }),
   }),
 })
 
-export const { useGetTransactionsQuery, useGetAllTransactionsQuery } = covApi
+export const {
+  useGetTransactionsQuery,
+  useGetAllTransactionsQuery,
+  useGetAllTokenBalancesQuery,
+  useLazyGetAllTokenBalancesQuery,
+  useGetTokenBalancesQuery,
+} = covApi

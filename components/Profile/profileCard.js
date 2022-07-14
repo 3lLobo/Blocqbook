@@ -95,12 +95,14 @@ const ProfileCard = () => {
       </div>
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
-      <div className="mt-3">
+      <div 
+      // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
+      className="mt-3"
+      >
         <PrivTags />
         <PubTags />
       </div>
       <div
-        // className="mt-1"
         className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl"
       >
         <textarea
@@ -113,19 +115,12 @@ const ProfileCard = () => {
           onChange={(e) => handleChange(e)}
         ></textarea>
       </div>
-      <div className="mt-11">
+      <div className="flex justify-center items-center mt-4">
         {loading ? (
-          <BezierSpinner radius={10} />
+          <BezierSpinner />
         ) : (
           data && (
-            <div
-              // TODO: for each chain a dropdown with a list of tokens with non-zero balance
-              // https://tailwindui.com/components/application-ui/lists/stacked-lists
-              className="dark:text-indigo-200 w-40 truncate"
-            >
-              <Balances />
-              {JSON.stringify(data)}
-            </div>
+            <Balances />
           )
         )}
       </div>

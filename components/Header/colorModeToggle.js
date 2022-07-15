@@ -4,6 +4,7 @@ import { SunIcon, MoonIcon } from '@heroicons/react/solid'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from '../../app/themeSlice'
 
+
 export function ColorModeToggle() {
   const store = useSelector((state) => state.theme)
   const dispatch = useDispatch()

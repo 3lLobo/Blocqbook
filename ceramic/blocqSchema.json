@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BlocqBookSchema",
+  "type": "object",
+  "properties": {
+    "blocqContacts": {
+      "type": "array",
+      "items": {
+        "title": "profile",
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "address": { "type": "string" },
+          "notes": { "type": "string" },
+          "isSelf": { "type": "boolean", "default": false },
+          "hasCommonPoaps": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  }
+}

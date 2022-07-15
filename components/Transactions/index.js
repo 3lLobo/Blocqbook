@@ -21,7 +21,7 @@ export const Transactions = () => {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (!loading)
+  if (loading)
     return (
       <div className="flex justify-center items-center my-11">
         <BezierSpinner

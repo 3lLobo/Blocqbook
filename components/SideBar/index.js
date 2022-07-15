@@ -12,6 +12,8 @@ import { Transactions } from '../Transactions'
 import { useState } from 'react'
 import { ContactSlice } from '../Profile/contactSlice'
 
+
+// TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 

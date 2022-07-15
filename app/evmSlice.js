@@ -5,7 +5,9 @@ const initialState = {
   gasPrice: null,
   ethPrice: null,
   account: null,
+  chainId: '1',
   connected: false,
+  ceramicConnected: false,
 }
 
 export const evmSlice = createSlice({
@@ -20,31 +22,24 @@ export const evmSlice = createSlice({
       const { ethPrice } = action.payload
       state.ethPrice = ethPrice
     },
-    setAccount: (state, action) => {
-      const { account } = action.payload
-      state.account = account
-    },
     setConnection: (state, action) => {
       state.connected = action.payload.connected
-      console.log(
-        '🚀 ~ file: evmSlice ~ line 30 ~ action.payload.connected',
-        action.payload.connected
-      )
+      if (action.payload.ceramicConnected) {
+        state.ceramicConnected = action.payload.ceramicConnected
+      }
       if (action.payload.connected) {
         state.account = action.payload.account
-        console.log(
-          '🚀 ~ file: evmSlice ~ line 33 ~ action.payload.account',
-          action.payload.account
-        )
+        state.chainId = action.payload.chainId
       } else {
         state.account = null
+        state.chainId = '1'
       }
     },
     reset: () => initialState,
   },
 })
 
-export const { setGasPrice, setEthPrice, setAccount, setConnection, reset } =
+export const { setGasPrice, setEthPrice, setConnection, reset } =
   evmSlice.actions
 
 export default evmSlice.reducer

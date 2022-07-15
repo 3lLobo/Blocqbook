@@ -6,9 +6,15 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  safelist: [
+    {
+      pattern: /bg-([a-z]+)-(100|200|300|400)/,
+    },
+  ],
   darkMode: ['class'],
   theme: {
     extend: {
+      
       scale: {
         500: '5',
         300: '3',
@@ -31,26 +37,27 @@ module.exports = {
         'navy-muted': '#244e66',
         aqua: '#69c4cd',
         'aqua-muted': '#9ad4db',
-        gray: '#b7bbc8',
-        'gray-muted': '#d9dbe2',
+        ipfsgray: '#b7bbc8',
+        'ipfsgray-muted': '#d9dbe2',
         charcoal: '#34373f',
         'charcoal-muted': '#7f8491',
-        red: '#ea5037',
-        'red-muted': '#f36149',
-        yellow: '#f39021',
-        'yellow-muted': '#f9a13e',
-        teal: '#378085',
-        'teal-muted': '#439a9d',
-        green: '#0cb892',
-        'green-muted': '#0aca9f',
+        ipfsred: '#ea5037',
+        'ipfsred-muted': '#f36149',
+        ipfsyellow: '#f39021',
+        'ipfsyellow-muted': '#f9a13e',
+        ipfsteal: '#378085',
+        'ipfsteal-muted': '#439a9d',
+        ipfsgreen: '#0cb892',
+        'ipfsgreen-muted': '#0aca9f',
         snow: '#edf0f4',
         'snow-muted': '#f7f8fa',
         link: '#117eb3',
         'washed-blue': '#F0F6FA',
       },
       backgroundImage: {
-        'mybg-light': 'linear-gradient(193deg, #edf0f4, 50%, #9ad4db)',
-        'mybg-dark': 'linear-gradient(193deg, #244e66, 20%, #0f172a)',
+        'mybg-light': 'linear-gradient(183deg, #edf0f4, 70%, #818cf8)',
+        'mybg-dark': 'linear-gradient(186deg, #0f172a, 60%, #312e81)',
+        'hero-pattern': 'url("/hero.svg")',
       },
     },
   },
@@ -58,6 +65,7 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {
@@ -75,28 +83,7 @@ module.exports = {
       })
     }),
     plugin(function ({ addComponents }) {
-      addComponents({
-        // '.btn': {
-        //   padding: '.5rem 1rem !important',
-        //   borderRadius: '.25rem !important',
-        //   fontWeight: '600 !important',
-        // },
-        '.mySpinner': {
-          display: 'flex',
-          // animation: 'spin 1s cubic-bezier(0.83, 0, 0.17, 1) infinite',
-          transform: 'translateZ(0)',
-          borderTop: '1px solid transparent',
-          borderRight: '1px solid transparent',
-          borderBottom: '11px solid',
-          borderLeft: '2px solid',
-          background: 'transparent',
-          width: '114px',
-          height: '114px',
-          borderRadius: '50%',
-          transition: '250ms ease border-color',
-          alignItems: 'center',
-        },
-      })
+      addComponents({})
     }),
   ],
 }

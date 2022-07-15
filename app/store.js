@@ -4,12 +4,17 @@ import { enableMapSet } from 'immer'
 
 import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
+<<<<<<< HEAD
 import { poapApi } from './poapApi'
+=======
+import { covApi } from './covApi'
+>>>>>>> 2d8173a925a8f957f79676356ae9c8263e969ecc
 
 export const store = configureStore({
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,
+<<<<<<< HEAD
     [poapApi.reducerPath]: poapApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -18,6 +23,14 @@ export const store = configureStore({
     })
     .concat(poapApi.middleware),
   // .concat(bridgeApi.middleware),
+=======
+    [covApi.reducerPath]: covApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // serializableCheck: false,
+    }).concat(covApi.middleware),
+>>>>>>> 2d8173a925a8f957f79676356ae9c8263e969ecc
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

@@ -11,6 +11,7 @@ import ProfileCard from '../Profile/profileCard'
 import { Transactions } from '../Transactions'
 import { useState } from 'react'
 import { ContactSlice } from '../Profile/contactSlice'
+import FileTransfer from '../FileTransfer'
 
 const Sidebar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -157,7 +158,11 @@ const Sidebar = () => {
                       ) : tabName === 'Contacts' ? (
                         <ContactSlice />
                       ) : (
-                        <ProfileCard />
+                        tabName === 'FileTransfer' ? (
+                          <FileTransfer />
+                        ) : (
+                          <ProfileCard />
+                        )
                       )}
                     </div>
                   </main>

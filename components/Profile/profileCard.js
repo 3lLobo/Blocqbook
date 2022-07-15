@@ -14,9 +14,9 @@ export const dummyProfile = {
     avatar:
       'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
     notes: 'My First Note!!!',
-    isSelf: false,
-    isOneHop: true,
   },
+  isSelf: false,
+  isOneHop: true,
   tags: {
     privTags: [],
     pubTags: [],

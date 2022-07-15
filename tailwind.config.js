@@ -33,6 +33,7 @@ module.exports = {
         },
       },
       colors: {
+        neonPurple: 'rgba(111,76,255,1.0)',
         navy: '#0b3a53',
         'navy-muted': '#244e66',
         aqua: '#69c4cd',

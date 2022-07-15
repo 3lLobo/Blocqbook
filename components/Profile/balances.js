@@ -40,6 +40,6 @@ export default function Balances() {
         ))}
 
       </div>
-    // </div>
+    // </div
   )
 }

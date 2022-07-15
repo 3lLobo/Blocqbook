@@ -1,6 +1,7 @@
 import { Head } from '../components/Head'
 import Image from 'next/image'
 import Header from '../components/Header'
+import Poap from '../components/Poap'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
           alt="ETHgif"
         />
       </main>
+      <Poap />
 
       <footer className="mt-auto mb-0"></footer>
     </div>

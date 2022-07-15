@@ -7,7 +7,7 @@ export const poapApi = createApi({
     baseUrl: 'https://api.poap.tech/actions/',
     headers: {
       Accept: 'application/json',
-      'X-API-Key': NEXT_PUBLIC_POAP_API_KEY,
+      'X-API-Key': process.env.NEXT_PUBLIC_POAP_API_KEY,
     },
   }),
   endpoints: (builder) => ({

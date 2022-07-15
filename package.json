@@ -17,10 +17,13 @@
     "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^1.7.0-rc.0",
+    "@self.id/react": "^0.3.2",
+    "@self.id/web": "^0.4.2",
     "axios": "^0.27.2",
     "dids": "^3.2.0",
     "ethers": "^5.6.9",
     "framer-motion": "^6.4.3",
+    "key-did-provider-ed25519": "^2.0.1",
     "key-did-resolver": "^2.0.5",
     "next": "12.2.0",
     "qs": "^6.11.0",
@@ -31,6 +34,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@glazed/devtools": "^0.2.0",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",

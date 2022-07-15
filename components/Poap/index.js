@@ -1,17 +1,10 @@
-import { useEffect } from 'react'
 import { useGetPoapsQuery } from '../../app/poapApi'
 
 const Poap = ({ address }) => {
-  const { data, error, isLoading } = useGetPoapsQuery('pablito.eth')
-  useEffect(() => {
-    if (!isLoading) {
-      console.log('data:', data)
-    }
-    if (error) {
-      console.log(error)
-    }
-  }, [isLoading])
+  const { data, error, isLoading } = useGetPoapsQuery(address)
 
+  if (isLoading) return <div className='bg-white'>Loading...</div>
+  if (error) return <div className='bg-white'>{error.data.message}</div>
   return (
     <div>
       {data && (

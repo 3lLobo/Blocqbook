@@ -17,7 +17,6 @@ export default function Home() {
           alt="ETHgif"
         />
       </main>
-      <Poap />
 
       <footer className="mt-auto mb-0"></footer>
     </div>

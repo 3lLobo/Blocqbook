@@ -21,13 +21,10 @@ export const Transactions = () => {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (loading)
+  if (!loading)
     return (
-      // if (loading) return (
-      <div className="flex justify-center items-center mt-11">
+      <div className="flex justify-center items-center my-11">
         <BezierSpinner
-          radius={10}
-          // text="Loading transactions..."
         />
       </div>
     )
@@ -63,14 +60,6 @@ export const Transactions = () => {
 
   return (
     <div>
-      {/* <h1>Transactions</h1>
-      <ul>
-        {data?.items?.map((transaction) => (
-          <li key={transaction.tx_hash}>
-            <p>{transaction.from_address === address.toLocaleLowerCase() ? transaction.to_address : transaction.from_address }</p>
-          </li>
-        ))}
-      </ul> */}
       <TrscTable transactions={allItems} address={address} />
     </div>
   )

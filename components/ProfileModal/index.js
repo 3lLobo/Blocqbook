@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 import ProfileCard from '../Profile/profileCard'
 
-
 export default function ProfileModal({ children }) {
   let [isOpen, setIsOpen] = useState(false)
 
@@ -20,7 +19,7 @@ export default function ProfileModal({ children }) {
   async function onClose(saveContact) {
     setIsOpen(false)
     setTimeout(() => {
-      dispatch(closeModal({saveContact}))
+      dispatch(closeModal({ saveContact }))
     }, 500)
   }
 
@@ -73,13 +72,11 @@ export default function ProfileModal({ children }) {
                     Payment successful
                   </Dialog.Title> */}
                   <div className="mt-2">
-                    {store.contactInEdit
-                      && <ProfileCard profile={store.contactInEdit} />
-                    }
+                    {store.contactInEdit && (
+                      <ProfileCard profile={store.contactInEdit} />
+                    )}
                   </div>
-                  <div
-                  className='flex flex-row-reverse justify-between items-center'
-                  >
+                  <div className="flex flex-row-reverse justify-between items-center">
                     <div className="mt-4">
                       <button
                         type="button"

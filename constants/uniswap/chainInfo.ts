@@ -4,7 +4,6 @@ import {
   SupportedL2ChainId,
 } from './chains.ts'
 
-
 export enum NetworkType {
   L1,
   L2,

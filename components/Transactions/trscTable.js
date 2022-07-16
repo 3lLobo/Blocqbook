@@ -5,14 +5,11 @@ import { AddressTag } from '../AddressTag'
 import { CHAIN_INFO } from '../../constants/uniswap/chainInfo.ts'
 import { ChainLogo } from '../ChainLogo'
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
 export const PrettyTable = ({ transactions }) => {
-
   if (transactions.length === 0) {
     return (
       <div className="mx-auto mt-11 text-center">
@@ -22,7 +19,14 @@ export const PrettyTable = ({ transactions }) => {
   }
 
   const tableCols = ['chain', 'from', 'to', 'value', 'info']
-  const tAttributes = ['block_signed_at', 'chain_id', 'from_address', 'to_address', 'value', 'to_address_label']
+  const tAttributes = [
+    'block_signed_at',
+    'chain_id',
+    'from_address',
+    'to_address',
+    'value',
+    'to_address_label',
+  ]
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -30,7 +34,10 @@ export const PrettyTable = ({ transactions }) => {
         <div className="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
             <div className="shadow-sm ring-1 ring-black ring-opacity-5">
-              <table className="min-w-full border-separate" style={{ borderSpacing: 0 }}>
+              <table
+                className="min-w-full border-separate"
+                style={{ borderSpacing: 0 }}
+              >
                 <thead className="">
                   <tr>
                     {tableCols.map((col) => (
@@ -49,7 +56,9 @@ export const PrettyTable = ({ transactions }) => {
                     <tr key={transaction.email}>
                       <td
                         className={classNames(
-                          transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
+                          transactionIdx !== transactions.length - 1
+                            ? 'border-b border-slate-300 dark:border-slate-800'
+                            : '',
                           'whitespace-nowrap py-4 pl-4 pr-3 text-left text-xs font-medium text-slate-500 sm:pl-6 lg:pl-8 flex flex-col space-y-1 align-items-center content-center'
                         )}
                       >
@@ -58,43 +67,60 @@ export const PrettyTable = ({ transactions }) => {
                       </td>
                       <td
                         className={classNames(
-                          transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
+                          transactionIdx !== transactions.length - 1
+                            ? 'border-b border-slate-300 dark:border-slate-800'
+                            : '',
                           'whitespace-nowrap px-3 py-4 text-sm text-slate-500 hidden lg:table-cell'
                         )}
                       >
-                        <AddressTag address={transaction.from_address} isOneHop={true} />
+                        <AddressTag
+                          address={transaction.from_address}
+                          isOneHop={true}
+                        />
                       </td>
                       <td
                         className={classNames(
-                          transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
+                          transactionIdx !== transactions.length - 1
+                            ? 'border-b border-slate-300 dark:border-slate-800'
+                            : '',
                           'whitespace-nowrap px-3 py-4 text-sm text-slate-500 '
                         )}
                       >
-                        <AddressTag address={transaction.to_address} isOneHop={true}  />
+                        <AddressTag
+                          address={transaction.to_address}
+                          isOneHop={true}
+                        />
                       </td>
                       <td
                         className={classNames(
-                          transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
+                          transactionIdx !== transactions.length - 1
+                            ? 'border-b border-slate-300 dark:border-slate-800'
+                            : '',
                           'whitespace-nowrap px-3 py-4 text-xs text-slate-500 '
                         )}
                       >
                         <div
-                          title={parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
-                          className='truncate  w-12 '
+                          title={parseFloat(
+                            transaction.value / Math.pow(10, 18)
+                          ).toPrecision()}
+                          className="truncate  w-12 "
                         >
-
-                          {parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
+                          {parseFloat(
+                            transaction.value / Math.pow(10, 18)
+                          ).toPrecision()}
                         </div>
                       </td>
                       <td
                         className={classNames(
-                          transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
+                          transactionIdx !== transactions.length - 1
+                            ? 'border-b border-slate-300 dark:border-slate-800'
+                            : '',
                           'relative whitespace-nowrap px-1 py-4 text-xs text-slate-500 sm:pr-6 lg:pr-8 truncate'
                         )}
                       >
                         <div
                           title={transaction.to_address_label || '🏴‍☠️'}
-                          className='truncate w-20 '
+                          className="truncate w-20 "
                         >
                           {transaction.to_address_label || '🏴‍☠️'}
                         </div>

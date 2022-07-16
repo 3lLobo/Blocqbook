@@ -22,8 +22,7 @@ export const Transactions = () => {
   if (!data || loading)
     return (
       <div className="flex justify-center items-center my-11">
-        <BezierSpinner
-        />
+        <BezierSpinner />
       </div>
     )
   if (error) {

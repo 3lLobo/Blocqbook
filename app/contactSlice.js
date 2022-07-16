@@ -50,14 +50,20 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action) => {
-      console.log("🚀 ~ file: contactSlice.js ~ line 52 ~ action", action)
+      console.log('🚀 ~ file: contactSlice.js ~ line 52 ~ action', action)
       // When the profile card modal is opened, we either fetch the existing contact or build the initial structure.
       if (Object.keys(state.contacts).includes(action.payload.address)) {
         state.contactInEdit = state.contacts[action.payload.address]
         state.contactInEditExists = true
       } else {
-        const newProfile = emptyProfile(action.payload.address, action.payload.isOneHop)
-        console.log("🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile", newProfile)
+        const newProfile = emptyProfile(
+          action.payload.address,
+          action.payload.isOneHop
+        )
+        console.log(
+          '🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile',
+          newProfile
+        )
         state.contactInEdit = newProfile
       }
       state.modalOpen = true
@@ -89,8 +95,13 @@ export const contactSlice = createSlice({
     },
     updateContact: (state, action) => {
       // update a field of the contact
-      if (['bio', 'tags', 'poap', 'xmltChat', 'fileTransfer'].includes(action.payload.field1)) {
-        state.contactInEdit[action.payload.field1][action.payload.field2] = action.payload.value
+      if (
+        ['bio', 'tags', 'poap', 'xmltChat', 'fileTransfer'].includes(
+          action.payload.field1
+        )
+      ) {
+        state.contactInEdit[action.payload.field1][action.payload.field2] =
+          action.payload.value
       } else {
         state.contactInEdit[action.payload.field1] = action.payload.value
       }
@@ -100,9 +111,16 @@ export const contactSlice = createSlice({
       state.isSyncedCeramic = action.payload.isSyncedCeramic
     },
     reset: () => initialState,
-  }
+  },
 })
 
-export const { openModal, closeModal, setContacts, updateContact, setSyncedCeramic, reset } = contactSlice.actions
+export const {
+  openModal,
+  closeModal,
+  setContacts,
+  updateContact,
+  setSyncedCeramic,
+  reset,
+} = contactSlice.actions
 
 export default contactSlice.reducer

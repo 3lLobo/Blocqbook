@@ -9,7 +9,6 @@ import { PubTags } from './pubTags'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 
-
 export const dummyProfile = (name, address) => ({
   bio: {
     name: name || 'CryptoPanda',
@@ -43,7 +42,6 @@ export const dummyProfile = (name, address) => ({
 
 // TODO: get the address as props
 const ProfileCard = ({ profile }) => {
-
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
@@ -63,10 +61,22 @@ const ProfileCard = ({ profile }) => {
     e.preventDefault()
     switch (e.target.id) {
       case 'notes':
-        dispatch(updateContact({ field1: 'bio', field2: 'notes', value: e.target.value }))
+        dispatch(
+          updateContact({
+            field1: 'bio',
+            field2: 'notes',
+            value: e.target.value,
+          })
+        )
         break
       case 'name':
-        dispatch(updateContact({ field1: 'bio', field2: 'name', value: e.target.value }))
+        dispatch(
+          updateContact({
+            field1: 'bio',
+            field2: 'name',
+            value: e.target.value,
+          })
+        )
     }
   }
 
@@ -82,7 +92,8 @@ const ProfileCard = ({ profile }) => {
         <Avatar
           // TODO: make this clickable to enter a new image URL
           w="60"
-          scale={110} />
+          scale={110}
+        />
       </div>
 
       <textarea
@@ -106,9 +117,7 @@ const ProfileCard = ({ profile }) => {
         <PrivTags profile={profile} />
         <PubTags profile={profile} />
       </div>
-      <div
-        className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl"
-      >
+      <div className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl">
         <textarea
           className="dark:text-snow bg-transparent border-0 rounded-xl p-3 form-textarea flex flex-grow resize-none"
           rows="4"
@@ -120,11 +129,7 @@ const ProfileCard = ({ profile }) => {
         ></textarea>
       </div>
       <div className="flex justify-center items-center mt-4">
-        {!data ? (
-          <BezierSpinner />
-        ) : (
-          <Balances balances={data} />
-        )}
+        {!data ? <BezierSpinner /> : <Balances balances={data} />}
       </div>
     </div>
   )

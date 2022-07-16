@@ -12,8 +12,6 @@ import { ethers } from 'ethers'
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 
-
-
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
   await window.ethereum.send('eth_requestAccounts')
@@ -26,7 +24,7 @@ export default function Header() {
   const dispatch = useDispatch()
 
   const [connection, connect, disconnect] = useViewerConnection()
-  console.log("🚀 ~ file: index.js ~ line 28 ~ Header ~ connection", connection)
+  console.log('🚀 ~ file: index.js ~ line 28 ~ Header ~ connection', connection)
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
@@ -47,9 +45,7 @@ export default function Header() {
       dispatch(reset())
       setIsConnected(false)
     }
-
   }, [connection.status, dispatch])
-
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
@@ -63,7 +59,6 @@ export default function Header() {
         console.log('Metamask disconnected!')
         await disconnect()
         dispatch(reset())
-
       })
     }
   }
@@ -80,14 +75,12 @@ export default function Header() {
               text={isConnected ? 'Disconnect' : 'Connect'}
               onClick={connectButtonHit}
               primary={false}
-            >{ !isConnected &&
-              <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1" >
-                <Image
-                  alt='metamask'
-                  layout='fill'
-                  src='/metamask.png'
-                />
-              </div>}
+            >
+              {!isConnected && (
+                <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1">
+                  <Image alt="metamask" layout="fill" src="/metamask.png" />
+                </div>
+              )}
             </MyButton>
             <motion.div
               initial={false}

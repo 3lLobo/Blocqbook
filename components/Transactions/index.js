@@ -1,5 +1,5 @@
 import { useGetTransactionsQuery } from '../../app/covApi'
-import { TrscTable } from './trscTable'
+import { PrettyTable } from './trscTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useGetAllTransactionsQuery } from '../../app/covApi'
@@ -9,12 +9,10 @@ export const Transactions = () => {
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
-  const address = process.env.NEXT_PUBLIC_MYADDRESS
   const { data, loading, error } = useGetAllTransactionsQuery(
     store.connected
       ? {
           address: store.account,
-          // chain_id: store.chainId,
         }
       : skipToken,
     {
@@ -60,7 +58,7 @@ export const Transactions = () => {
 
   return (
     <div>
-      <TrscTable transactions={allItems} address={address} />
+      <PrettyTable transactions={allItems} />
     </div>
   )
 }

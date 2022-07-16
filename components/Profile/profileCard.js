@@ -7,10 +7,10 @@ import Balances from './balances'
 import { PrivTags } from './privTags'
 import { PubTags } from './pubTags'
 
-export const dummyProfile = {
+export const dummyProfile = (name, address) => ({
   bio: {
-    name: 'CryptoPanda',
-    address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
+    name: name || 'CryptoPanda',
+    address: address || '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
     avatar:
       'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
     notes: 'My First Note!!!',
@@ -34,7 +34,7 @@ export const dummyProfile = {
     isTransfer: false,
     transferData: [],
   },
-}
+})
 // TODO: make this a modal which pops up when you click on an address
 //  https://headlessui.com/react/dialog
 

@@ -15,10 +15,13 @@ export default function Home() {
   // This is the entrypoint to the users database.
   const record = useViewerRecord("kjzl6cwe1jw147ce8khc2sfyarq74tngnxehvjdxjb0ec472uvucknju7188ntp")
 
+  
   useEffect(() => {
-    console.log("record", record)
+    if (record.content) {
+      console.log("record", record)
+    }
   }, [record])
-
+  
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark">
       <div className="bg-hero-pattern bg-cover min-h-screen flex flex-col">

@@ -7,6 +7,7 @@ const Profile = () => {
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
       <Head />
+      <Header/>
       <Sidebar />
     </div>
   )

@@ -85,10 +85,16 @@ export default function Header() {
     <>
       <div
         as="nav"
-        className="backdrop-blur-sm dark:backdrop-brightness-150 z-30 sticky top-0 shadow-xl overflow-hidden"
-      >
-        <div className=" mx-auto px-2 sm:px-6 ">
-          <div className=" flex items-center justify-between h-16">
+        className="dark:backdrop-brightness-150 flex z-30 sticky top-0 shadow-xl overflow-hidden"
+      > 
+        <div className='flex items-center px-2 sm:px-6 h-16'>
+          <h2 className='flex-nowrap items-center text-xl font-semibold text-indigo-600 dark:text-white'>
+            Block book
+          </h2>
+          <div className="flex flex-end items-center gap-1 ml-[30vw]">
+            <div className="sm:inset-auto sm:ml-6">
+              <ColorModeToggle />
+            </div>
             <MyButton
               text={isConnected ? 'Disconnect' : 'Connect'}
               onClick={connectButtonHit}
@@ -102,32 +108,11 @@ export default function Header() {
                 />
               </div>
             </MyButton>
-            <motion.div
-              initial={false}
-              animate={isConnected ? 'visible' : 'hidden'}
-              exit={{ opacity: 0 }}
-              transition={{ ease: 'easeInOut', duration: 0.5 }}
-              variants={{
-                visible: { opacity: 1, x: 0 },
-                hidden: { opacity: 0, x: -500 },
-              }}
-              title={store.account}
-              className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate"
-            >
-              {store.account}
-            </motion.div>
-            <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
-              <motion.div
-                animate={{
-                  rotate: [0, 0, 16, -11, 0, 0],
-                }}
-                transition={{ duration: 2 }}
-              >
-              </motion.div>
-            </div>
-            <div className="sm:inset-auto sm:ml-6 flex gap-2">
-              <ColorModeToggle />
-            </div>
+            {/* {!isConnected && ( */}
+              <div className='p-2 outline-none rounded text-indigo-600 shadow-indigo-200 font-medium'>
+                {store.account}
+              </div>
+            {/* )} */}
           </div>
         </div>
       </div>

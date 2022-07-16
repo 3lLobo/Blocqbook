@@ -94,7 +94,7 @@ export default function Header() {
               onClick={connectButtonHit}
               primary={false}
             >
-              <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1" >
+              <div className="relative flex col-span-1 h-4 w-4 rounded-full ml-3" >
                 <Image
                   alt='metamask'
                   layout='fill'
@@ -123,12 +123,6 @@ export default function Header() {
                 }}
                 transition={{ duration: 2 }}
               >
-                <Image
-                  height={55}
-                  width={111}
-                  src="/ethereum-eth-logo-full-horizontal.svg"
-                  alt="ETHsvg"
-                />
               </motion.div>
             </div>
             <div className="sm:inset-auto sm:ml-6 flex gap-2">

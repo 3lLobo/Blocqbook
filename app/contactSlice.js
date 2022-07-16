@@ -42,6 +42,7 @@ const initialState = {
   isUpdated: false,
   contacts: {},
   hasInitialRecord: false,
+  isSyncedCeramic: false,
 }
 
 export const contactSlice = createSlice({
@@ -49,15 +50,18 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action) => {
+      console.log("🚀 ~ file: contactSlice.js ~ line 52 ~ action", action)
       // When the profile card modal is opened, we either fetch the existing contact or build the initial structure.
-      state.modalOpen = true
-      state.addressModal = action.payload.address
       if (Object.keys(state.contacts).includes(action.payload.address)) {
         state.contactInEdit = state.contacts[action.payload.address]
         state.contactInEditExists = true
       } else {
-        state.contactInEdit = emptyProfile({ address: action.payload.address, isOneHop: action.payload.isOneHop })
+        const newProfile = emptyProfile(action.payload.address, action.payload.isOneHop)
+        console.log("🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile", newProfile)
+        state.contactInEdit = newProfile
       }
+      state.modalOpen = true
+      state.addressModal = action.payload.address
     },
     closeModal: (state, action) => {
       state.modalOpen = false
@@ -65,7 +69,7 @@ export const contactSlice = createSlice({
       // If so, we need to update the contact in the store.
       if (action.payload.saveContact) {
         state.contacts[state.addressModal] = state.contactInEdit
-        state.isUpdated = true
+        state.isSyncedCeramic = false
         console.log('Contact updated!')
       } else {
         console.log('Contact not saved!')
@@ -73,12 +77,14 @@ export const contactSlice = createSlice({
       state.addressModal = null
       state.contactInEdit = null
       state.contactInEditExists = false
+      state.isUpdated = false
     },
     setContacts: (state, action) => {
       state.contacts = action.payload.contacts
       // check if we already loaded data from the record
       if (action.payload.isInitialRecord) {
         state.hasInitialRecord = true
+        state.isSyncedCeramic = true
       }
     },
     updateContact: (state, action) => {

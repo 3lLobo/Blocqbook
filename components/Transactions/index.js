@@ -19,7 +19,7 @@ export const Transactions = () => {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (loading)
+  if (!data || loading)
     return (
       <div className="flex justify-center items-center my-11">
         <BezierSpinner
@@ -31,12 +31,6 @@ export const Transactions = () => {
     // TODO: throw toast with error
     return <p>Error: {error.message}</p>
   }
-  if (!data)
-    return (
-      <div className="flex flex-col items-center justify-center mt-11 text-bold text-center dark:text-slate-500">
-        Zero transactions
-      </div>
-    )
 
   const allItems = []
   data.forEach((chainData) => {

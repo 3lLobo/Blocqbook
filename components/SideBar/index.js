@@ -159,7 +159,9 @@ const Sidebar = () => {
                       ) : tabName === 'Contacts' ? (
                         <ContactSlices />
                       ) : (
-                        <ProfileCard />
+                        <div>
+                          <h1>TODO: {tabName}</h1>
+                        </div>
                       )}
                     </div>
                   </main>

@@ -17,9 +17,11 @@ export default function ProfileModal({ children }) {
     }
   }, [store.modalOpen])
 
-  function onClose() {
-    dispatch(closeModal({}))
+  async function onClose(saveContact) {
     setIsOpen(false)
+    setTimeout(() => {
+      dispatch(closeModal({saveContact}))
+    }, 500)
   }
 
   function onOpen() {
@@ -63,7 +65,7 @@ export default function ProfileModal({ children }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-indigo-900 p-6 text-left align-middle shadow-xl transition-all">
                   {/* <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -71,16 +73,31 @@ export default function ProfileModal({ children }) {
                     Payment successful
                   </Dialog.Title> */}
                   <div className="mt-2">
-                    <ProfileCard />
+                    {store.contactInEdit
+                      && <ProfileCard profile={store.contactInEdit} />
+                    }
                   </div>
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={onClose}
-                    >
-                      Got it, thanks!
-                    </button>
+                  <div
+                  className='flex flex-row-reverse justify-between items-center'
+                  >
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-orange-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => onClose(false)}
+                      >
+                        Close
+                      </button>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => onClose(true)}
+                      >
+                        Save!
+                      </button>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

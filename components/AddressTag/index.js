@@ -14,7 +14,7 @@ export const AddressTag = ({ address, isOneHop }) => {
   function onClick() {
     dispatch(openModal({
       address,
-      isOneHop
+      isOneHop: isOneHop || false,
     }))
   }
 
@@ -22,7 +22,7 @@ export const AddressTag = ({ address, isOneHop }) => {
     <div
       title={address}
       onClick={onClick}
-      className="ml-3 px-2 py-1 bg-indigo-500 shadow-lg bg-opacity-80 rounded-tr-xl rounded-bl-xl font-medium text-center text-snow text-xs hover:text-snow-muted hover:cursor-pointer hover:bg-indigo-600 transition-colors duration-500 truncate w-fit"
+      className="ml-3 px-2 py-1 bg-indigo-500 shadow-lg bg-opacity-80 rounded-tr-xl rounded-bl-xl font-medium text-center text-snow text-xs hover:text-snow-muted hover:cursor-pointer hover:bg-neonPurple transition-colors duration-500 truncate w-fit"
     >
       {contactName}
     </div >

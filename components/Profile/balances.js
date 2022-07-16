@@ -6,9 +6,9 @@ import { CoinBalance } from './coinBalance'
 
 
 
-export default function Balances() {
+export default function Balances({balances}) {
 
-  const balances = balancesAddress
+  // const balances = balancesAddress
 
   return (
     // <div className="w-40 px-4 pt-16">

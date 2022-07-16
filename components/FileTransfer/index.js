@@ -20,36 +20,41 @@ const FileTransfer = () => {
     '0x7495F698C121569b6e1915d884e550B25Fa08615',
   ]
 
-  async function handleUpload(event) {
-    event.preventDefault()
+  async function handleUpload() {
     setIsUploading(true)
-    console.log('files:', files)
+    try {
+      console.log('> 📦 creating web3.storage client')
+      const client = new Web3Storage({ token })
 
-    console.log('> 📦 creating web3.storage client')
-    const client = await new Web3Storage({ token })
+      console.log(
+        '> 🤖 chunking and hashing the files to calculate the Content ID'
+      )
+      const cid = await client.put(files, {
+        onRootCidReady: (localCid) => {
+          console.log(`> 🔑 locally calculated Content ID: ${localCid} `)
+          console.log('> 📡 sending files to web3.storage ')
+        },
+        onStoredChunk: (bytes) =>
+          console.log(
+            `> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`
+          ),
+      })
+      console.log(`> ✅ web3.storage now hosting ${cid}`)
+      console.log(`https://dweb.link/ipfs/${cid}`)
+      setFilesCID(cid)
 
-    console.log(
-      '> 🤖 chunking and hashing the files to calculate the Content ID'
-    )
-    const cid = await client.put(files, {
-      onRootCidReady: (localCid) => {
-        console.log(`> 🔑 locally calculated Content ID: ${localCid} `)
-        console.log('> 📡 sending files to web3.storage ')
-      },
-      onStoredChunk: (bytes) =>
-        console.log(`> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`),
-    })
-    console.log(`> ✅ web3.storage now hosting ${cid}`)
-    console.log(`https://dweb.link/ipfs/${cid}`)
-    setFilesCID(cid)
-
-    console.log('> 📡 fetching the list of all unique uploads on this account')
-    let totalBytes = 0
-    for await (const upload of client.list()) {
-      console.log(`> 📄 ${upload.cid}  ${upload.name}`)
-      totalBytes += upload.dagSize || 0
+      console.log(
+        '> 📡 fetching the list of all unique uploads on this account'
+      )
+      let totalBytes = 0
+      for await (const upload of client.list()) {
+        console.log(`> 📄 ${upload.cid}  ${upload.name}`)
+        totalBytes += upload.dagSize || 0
+      }
+      console.log(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
+    } catch (error) {
+      console.log(error)
     }
-    console.log(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
     setIsUploading(false)
   }
 
@@ -68,9 +73,12 @@ const FileTransfer = () => {
 
     // Send a message
     console.log('Sending message...')
-    await conversation.send(
-      '75BCD1575BCD15' + filesCID + '75BCD1575BCD15' + description
-    )
+    const messageToSend = JSON.stringify({
+      message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
+      cid: filesCID,
+      description,
+    })
+    await conversation.send(messageToSend)
     console.log('Message sent.')
     // // Listen for new messages in the conversation
     // console.log('Loading conversations...')
@@ -83,7 +91,7 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
-    setReceivedMedia([]);
+    setReceivedMedia([])
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
     const wallet = provider.getSigner()
@@ -93,33 +101,27 @@ const FileTransfer = () => {
       console.log(`Loading messages from ${contact}...`)
       const messages = await conversation.messages()
       for await (const message of messages) {
-        const sliced = message.content?.slice(0, 14)
-        console.log('message:', message)
-        console.log('sliced:', sliced)
+        const sliced = message.content?.slice(0, 64)
         if (
-          (sliced === '75BCD1575BCD15') &
+          (sliced ===
+            '{"message":"THIS IS A FILE. CHECK IT ON FILETRANSFER TAB","cid":') &
           (message.senderAddress !== wallet.getAddress())
         ) {
-          const subject = message.content.split('75BCD1575BCD15')[2]
-          console.log('subject:', subject)
-          const cid = message.content.slice(-59)
-          const sender = message.senderAddress
-          setReceivedMedia((prevState) => [
-            ...prevState,
-            { sender, cid, subject },
-          ])
+          const newMedia = JSON.parse(message.content)
+          newMedia['sender'] = message.senderAddress
+          setReceivedMedia((prevState) => [...prevState, newMedia])
         }
       }
     }
   }
 
-  // useEffect(() => {
-  //   getFiles()
-  // }, [])
+  useEffect(() => {
+    if (files.length > 0) handleUpload()
+  }, [files])
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center gap-8 mt-4">
+      <div className="flex flex-col items-center gap-8 mt-4 p-4 w-3/4 bg-red-500">
         <div className="text-2xl">Send files to your friends</div>
         <div className="">
           <label htmlFor="filePicker">Pick files to send</label>
@@ -130,13 +132,11 @@ const FileTransfer = () => {
             multiple
             required
           />
-          {files.length !== 0 && (
-            <button onClick={handleUpload}>Upload icon</button>
-          )}
         </div>
         <div className="">
           <label htmlFor="addressPicker">Pick your friend</label>
           <input
+            className="w-96"
             type="text"
             name="addressPicker"
             placeholder="for now just paste but should be a selector"
@@ -147,12 +147,14 @@ const FileTransfer = () => {
         <div className="">
           <label htmlFor="descriptionPicker">You can add a subject</label>
           <input
+            className="w-96"
             type="text"
             name="descriptionPicker"
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <button
+          className='bg-slate-900 text-slate-300 hover:bg-indigo-900 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md'
           disabled={isUploading || filesCID.length === 0}
           onClick={sendFile}
         >
@@ -165,13 +167,18 @@ const FileTransfer = () => {
           receivedMedia.map((m, i) => (
             <div key={i} className="flex flex-col">
               <div>{m.sender}</div>
-              <div>{m.subject}</div>
+              <div>{m.description}</div>
               <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                 <a target="_blank">Go to file</a>
               </Link>
             </div>
           ))}
-        <button onClick={getFiles}>get</button>
+        <button
+          onClick={getFiles}
+          className='bg-slate-900 text-slate-300 hover:bg-indigo-900 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+        >
+          {receivedMedia.length === 0 ? "To check your inbox LogIn to XMTP" : "Click here to refresh your inbox"}
+        </button>
       </div>
     </div>
   )

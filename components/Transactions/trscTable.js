@@ -1,15 +1,14 @@
 // Table to display transaction details
 import TimeAgo from 'timeago-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AddressTag } from '../addressTag'
+import { AddressTag } from '../AddressTag'
 import { CHAIN_INFO } from '../../constants/uniswap/chainInfo.ts'
-import { ChainLogo } from '../chainLogo'
+import { ChainLogo } from '../ChainLogo'
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
 
 
 export const PrettyTable = ({ transactions }) => {
@@ -38,7 +37,7 @@ export const PrettyTable = ({ transactions }) => {
                       <th
                         key={col}
                         scope="col"
-                        className="sticky top-11 z-10 border-b border-slate-300 bg-indigo-100 dark:bg-indigo-900 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-slate-900 backdrop-blur backdrop-filter dark:text-slate-400 text-center"
+                        className="sm:pl-6 lg:pl-8  sticky top-11 z-10 border-b border-slate-300 bg-indigo-100 dark:bg-indigo-900 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-slate-900 backdrop-blur backdrop-filter dark:text-slate-400"
                       >
                         {col.toUpperCase()}
                       </th>
@@ -63,15 +62,15 @@ export const PrettyTable = ({ transactions }) => {
                           'whitespace-nowrap px-3 py-4 text-sm text-slate-500 hidden lg:table-cell'
                         )}
                       >
-                        <AddressTag address={transaction.from_address} />
+                        <AddressTag address={transaction.from_address} isOneHop={true} />
                       </td>
                       <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
-                          'whitespace-nowrap px-3 py-4 text-sm text-slate-500'
+                          'whitespace-nowrap px-3 py-4 text-sm text-slate-500 '
                         )}
                       >
-                        <AddressTag address={transaction.to_address} />
+                        <AddressTag address={transaction.to_address} isOneHop={true}  />
                       </td>
                       <td
                         className={classNames(
@@ -80,8 +79,8 @@ export const PrettyTable = ({ transactions }) => {
                         )}
                       >
                         <div
-                        title={parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
-                        className='truncate  w-12 '
+                          title={parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
+                          className='truncate  w-12 '
                         >
 
                           {parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
@@ -90,14 +89,14 @@ export const PrettyTable = ({ transactions }) => {
                       <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
-                          'relative whitespace-nowrap px-3 py-4 text-xs text-slate-500 sm:pr-6 lg:pr-8 truncate'
+                          'relative whitespace-nowrap px-1 py-4 text-xs text-slate-500 sm:pr-6 lg:pr-8 truncate'
                         )}
                       >
                         <div
-                        title={transaction.to_address_label || '🏴‍☠️'}
-                        className='truncate w-20 '
+                          title={transaction.to_address_label || '🏴‍☠️'}
+                          className='truncate w-20 '
                         >
-                        {transaction.to_address_label || '🏴‍☠️'}
+                          {transaction.to_address_label || '🏴‍☠️'}
                         </div>
                       </td>
                       {/* <td

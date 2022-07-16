@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
-import { ChainLogo } from '../chainLogo'
+import { ChainLogo } from '../ChainLogo'
 import { balancesAddress } from './balanceResponse'
 import { CoinBalance } from './coinBalance'
 

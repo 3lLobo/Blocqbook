@@ -7,9 +7,6 @@ const initialState = {
   account: null,
   chainId: '1',
   connected: false,
-  contactList: [],
-  contactNames: {},
-  hasInitialRecord: false,
 }
 
 export const evmSlice = createSlice({
@@ -34,23 +31,11 @@ export const evmSlice = createSlice({
         state.chainId = '1'
       }
     },
-    setContacts: (state, action) => {
-      state.contactList = []
-      state.contactNames = {}
-      action.payload.contacts.forEach((contact) => {
-        state.contactList.push(contact.bio.address)
-        state.contactNames[contact.bio.address] = contact.bio.name
-      })
-      // check if we already loaded data from the record
-      if (action.payload.isInitialRecord) {
-        state.hasInitialRecord = true
-      }
-    },
     reset: () => initialState,
   },
 })
 
-export const { setGasPrice, setEthPrice, setConnection, setContacts, reset } =
+export const { setGasPrice, setEthPrice, setConnection, reset } =
   evmSlice.actions
 
 export default evmSlice.reducer

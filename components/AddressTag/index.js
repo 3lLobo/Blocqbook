@@ -1,14 +1,22 @@
 // A tag which displays the address af a wallet. 
 
 import { useDispatch, useSelector } from 'react-redux'
+import { closeModal, openModal } from '../../app/contactSlice'
 
 
-export const AddressTag = ({ address, onClick }) => {
+export const AddressTag = ({ address, isOneHop }) => {
 
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
-  const contactName = store.contactNames[address] || address
+  const contactName = store.contacts[address]?.bio.name || address
+
+  function onClick() {
+    dispatch(openModal({
+      address,
+      isOneHop
+    }))
+  }
 
   return (
     <div

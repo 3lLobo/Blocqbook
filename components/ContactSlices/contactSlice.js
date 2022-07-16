@@ -1,16 +1,29 @@
-import { Avatar } from './Avatar'
-import { Tag } from './tag'
+import { Avatar } from '../Profile/avatar'
+import { Tag } from '../Profile/tag'
+import { useDispatch, useSelector } from 'react-redux'
+import { closeModal, openModal } from '../../app/contactSlice'
 
-export const ContactSlice = () => {
+export const Slice = () => {
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
+  function onContactClick() {
+    dispatch(openModal({address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa'}))
+  }
+
+
   return (
     <div className="bg-white dark:bg-slate-800 p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow">
-      <div className="w-10 ml-0 ">
+      <div className="w-10 ml-0 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer">
         <Avatar scale={110} />
       </div>
-      <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
+      <button 
+      onClick={onContactClick}
+      className="mr-11 col-span-2 div-black dark:div-indigo-50 self-center hover:font-semibold hover:scale-105 transition-all duration-300 transform-gpu"
+      >
         {' '}
         Dude{' '}
-      </div>
+      </button>
       <div className="mr-11 space-x-1  col-span-2 flex flex-row">
         {/* <div className="text-snow bg-indigo-400 hover:bg-indigo-600 rounded-bl-xl rounded-tr-xl px-3 py-1 text-center">
           dude.eth

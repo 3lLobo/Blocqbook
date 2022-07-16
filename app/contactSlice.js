@@ -1,7 +1,9 @@
 // TODO: manage the fetch/edit/update/delete logic of contacts here.
 
 import { createSlice } from '@reduxjs/toolkit'
-
+import { QueryStatus } from '@reduxjs/toolkit/dist/query'
+import { deepEqual } from 'assert'
+import qs from 'qs'
 
 const emptyProfile = (address, isOneHop) => ({
   bio: {
@@ -36,10 +38,9 @@ const initialState = {
   modalOpen: false,
   addressModal: null,
   contactInEdit: null,
+  contactInEditExists: false,
   isUpdated: false,
   contacts: {},
-  contactList: [],
-  contactNames: {},
   hasInitialRecord: false,
 }
 
@@ -48,24 +49,33 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action) => {
-      // When the profilecard modalis opened, we either fetch the existing contact or build the initial structure.
-      state.modalOpen = action.payload.modalOpen
+      // When the profile card modal is opened, we either fetch the existing contact or build the initial structure.
+      state.modalOpen = true
       state.addressModal = action.payload.address
-      if (state.contactList.contains(action.payload.address)) {
+      if (Object.keys(state.contacts).includes(action.payload.address)) {
         state.contactInEdit = state.contacts[action.payload.address]
+        state.contactInEditExists = true
       } else {
         state.contactInEdit = emptyProfile({ address: action.payload.address, isOneHop: action.payload.isOneHop })
       }
     },
+    closeModal: (state, action) => {
+      state.modalOpen = false
+      // Check if the contact in edit is different from the empty profile.
+      // If so, we need to update the contact in the store.
+      if (action.payload.saveContact) {
+        state.contacts[state.addressModal] = state.contactInEdit
+        state.isUpdated = true
+        console.log('Contact updated!')
+      } else {
+        console.log('Contact not saved!')
+      }
+      state.addressModal = null
+      state.contactInEdit = null
+      state.contactInEditExists = false
+    },
     setContacts: (state, action) => {
       state.contacts = action.payload.contacts
-      state.contactList = []
-      state.contactNames = {}
-      Object.keys(state.contacts).forEach((contact) => {
-        state.contactList.push(contact)
-        state.contactNames[contact] = action.payload.contacts[contact].bio.name
-      }
-      )
       // check if we already loaded data from the record
       if (action.payload.isInitialRecord) {
         state.hasInitialRecord = true
@@ -84,6 +94,6 @@ export const contactSlice = createSlice({
   }
 })
 
-export const { openModal, setContacts, updateContact, reset } = contactSlice.actions
+export const { openModal, closeModal, setContacts, updateContact, reset } = contactSlice.actions
 
 export default contactSlice.reducer

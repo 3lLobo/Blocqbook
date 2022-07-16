@@ -3,6 +3,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 
+// TODO: add all covalent chains. Also add timer considering requests/second limit
 const chainIds = [1, 42, 250, 80001]
 
 const axiosBaseQuery =

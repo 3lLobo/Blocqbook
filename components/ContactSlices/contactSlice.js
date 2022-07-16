@@ -3,7 +3,7 @@ import { Tag } from '../Profile/tag'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 
-export const Slice = () => {
+export const Slice = ({contact}) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
@@ -21,8 +21,7 @@ export const Slice = () => {
       onClick={onContactClick}
       className="mr-11 col-span-2 div-black dark:div-indigo-50 self-center hover:font-semibold hover:scale-105 transition-all duration-300 transform-gpu"
       >
-        {' '}
-        Dude{' '}
+        {contact.bio.name || contact.address}
       </button>
       <div className="mr-11 space-x-1  col-span-2 flex flex-row">
         {/* <div className="text-snow bg-indigo-400 hover:bg-indigo-600 rounded-bl-xl rounded-tr-xl px-3 py-1 text-center">

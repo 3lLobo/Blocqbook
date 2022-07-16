@@ -1,7 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { ChainLogo } from '../ChainLogo'
-import { balancesAddress } from './balanceResponse'
 import { CoinBalance } from './coinBalance'
 
 
@@ -12,7 +11,7 @@ export default function Balances({balances}) {
 
   return (
     // <div className="w-40 px-4 pt-16">
-      <div className="flex flex-col mx-auto rounded-2xl bg-white p-2">
+      <div className="flex flex-col mx-auto rounded-2xl bg-snow-muted dark:bg-indigo-300 p-2">
         {balances.map((chain) => (
           <Disclosure
           // TODO: Map the chainname instead of the chainid

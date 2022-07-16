@@ -4,7 +4,7 @@ import Sidebar from '../../components/SideBar'
 import ProfileCard from '../../components/Profile/profileCard'
 import { useViewerRecord } from '@self.id/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setContacts } from '../../app/contactSlice'
+import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useEffect } from 'react'
 import { dummyProfile } from '../../components/Profile/profileCard'
 import ProfileModal from '../../components/ProfileModal'
@@ -23,7 +23,12 @@ const Profile = () => {
     if (!store.hasInitialRecord && evmStore.connected) {
       dispatch(setContacts({ contacts: record.content?.contacts, isInitialRecord: true }))
     }
-  }, [record, evmStore.connected, store.hasInitialRecord, dispatch])
+    if (!store.isSyncedCeramic && store.hasInitialRecord && evmStore.connected) {
+      record.set({ contacts: store.contacts })
+      dispatch(setSyncedCeramic({ isSyncedCeramic: true }))
+    }
+  }, [record, evmStore.connected, dispatch])
+
 
   // async function clickContacts() {
   //   record.set({

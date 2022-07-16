@@ -42,7 +42,7 @@ export const dummyProfile = (name, address) => ({
 //  https://headlessui.com/react/dialog
 
 // TODO: get the address as props
-const ProfileCard = ({profile}) => {
+const ProfileCard = ({ profile }) => {
 
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
@@ -79,10 +79,10 @@ const ProfileCard = ({profile}) => {
         // TODO: onClick open a modal where the user can input a new image URL, which gets previews and upon confirmation, saved to the profile
         className="w-40 pb-4"
       >
-        <Avatar 
-        // TODO: make this clickable to enter a new image URL
-        w="60" 
-        scale={110} />
+        <Avatar
+          // TODO: make this clickable to enter a new image URL
+          w="60"
+          scale={110} />
       </div>
 
       <textarea
@@ -95,7 +95,7 @@ const ProfileCard = ({profile}) => {
         onChange={(e) => handleChange(e)}
       ></textarea>
       <div className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate">
-        {profile.bio.address }
+        {profile.bio.address}
       </div>
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
@@ -120,12 +120,10 @@ const ProfileCard = ({profile}) => {
         ></textarea>
       </div>
       <div className="flex justify-center items-center mt-4">
-        {loading ? (
+        {!data ? (
           <BezierSpinner />
         ) : (
-          data && (
-            <Balances balances={data} />
-          )
+          <Balances balances={data} />
         )}
       </div>
     </div>

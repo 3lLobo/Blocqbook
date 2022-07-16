@@ -96,10 +96,13 @@ export const contactSlice = createSlice({
       }
       state.isUpdated = true
     },
+    setSyncedCeramic: (state, action) => {
+      state.isSyncedCeramic = action.payload.isSyncedCeramic
+    },
     reset: () => initialState,
   }
 })
 
-export const { openModal, closeModal, setContacts, updateContact, reset } = contactSlice.actions
+export const { openModal, closeModal, setContacts, updateContact, setSyncedCeramic, reset } = contactSlice.actions
 
 export default contactSlice.reducer

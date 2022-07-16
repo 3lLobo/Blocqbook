@@ -36,6 +36,7 @@ export default function Header() {
   }, [dispatch])
 
   async function connectButtonHit() {
+    const ceramic = await tryAuthenticate()
     if (!store.connected) {
       try {
         //When connecting with ceramic it has a modal to metamask

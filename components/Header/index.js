@@ -85,7 +85,7 @@ export default function Header() {
     <>
       <div
         as="nav"
-        className="dark:backdrop-brightness-150 flex z-30 sticky top-0 shadow-xl overflow-hidden"
+        className="dark:backdrop-brightness-150 flex z-40 sticky top-0 shadow-xl overflow-hidden"
       > 
         <div className='flex items-center px-2 sm:px-6 h-16'>
           <h2 className='flex-nowrap items-center text-xl font-semibold text-indigo-600 dark:text-white'>

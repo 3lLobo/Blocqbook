@@ -3,18 +3,21 @@ import { Web3Storage } from 'web3.storage'
 import { Client } from '@xmtp/xmtp-js'
 import { ethers, Wallet } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
+import Link from 'next/link'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
 
   const [files, setFiles] = useState([])
   const [filesCID, setFilesCID] = useState([])
+  const [description, setDescription] = useState('')
   const [address, setAddress] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [receivedMedia, setReceivedMedia] = useState([])
   const contactBook = [
     '0x31ca5fF81B577216e038412DD879b998ae7b71Db',
     '0x5BCA9820F9e70B211055F96aB88e7103D5C304D2',
+    '0x7495F698C121569b6e1915d884e550B25Fa08615',
   ]
 
   async function handleUpload(event) {
@@ -65,7 +68,9 @@ const FileTransfer = () => {
 
     // Send a message
     console.log('Sending message...')
-    await conversation.send('/mediafile/' + filesCID)
+    await conversation.send(
+      '75BCD1575BCD15' + filesCID + '75BCD1575BCD15' + description
+    )
     console.log('Message sent.')
     // // Listen for new messages in the conversation
     // console.log('Loading conversations...')
@@ -78,6 +83,7 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
+    setReceivedMedia([]);
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
     const wallet = provider.getSigner()
@@ -87,25 +93,29 @@ const FileTransfer = () => {
       console.log(`Loading messages from ${contact}...`)
       const messages = await conversation.messages()
       for await (const message of messages) {
-        const sliced = message.content.slice(0, 11)
+        const sliced = message.content?.slice(0, 14)
+        console.log('message:', message)
+        console.log('sliced:', sliced)
         if (
-          (sliced === '/mediafile/') &
+          (sliced === '75BCD1575BCD15') &
           (message.senderAddress !== wallet.getAddress())
         ) {
+          const subject = message.content.split('75BCD1575BCD15')[2]
+          console.log('subject:', subject)
           const cid = message.content.slice(-59)
           const sender = message.senderAddress
-          setReceivedMedia(prevState => [...prevState, {sender, cid}])
+          setReceivedMedia((prevState) => [
+            ...prevState,
+            { sender, cid, subject },
+          ])
         }
       }
     }
-    console.log('receivedMedia FINAL:', receivedMedia)
-    console.log('receivedMedia.length:', receivedMedia.length);
   }
 
   // useEffect(() => {
   //   getFiles()
   // }, [])
-  
 
   return (
     <div className="flex flex-col items-center">
@@ -134,7 +144,14 @@ const FileTransfer = () => {
             required
           />
         </div>
-        <div></div>
+        <div className="">
+          <label htmlFor="descriptionPicker">You can add a subject</label>
+          <input
+            type="text"
+            name="descriptionPicker"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
         <button
           disabled={isUploading || filesCID.length === 0}
           onClick={sendFile}
@@ -148,7 +165,10 @@ const FileTransfer = () => {
           receivedMedia.map((m, i) => (
             <div key={i} className="flex flex-col">
               <div>{m.sender}</div>
-              <div>{m.cid}</div>
+              <div>{m.subject}</div>
+              <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
+                <a target="_blank">Go to file</a>
+              </Link>
             </div>
           ))}
         <button onClick={getFiles}>get</button>

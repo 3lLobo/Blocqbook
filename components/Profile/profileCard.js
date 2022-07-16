@@ -6,6 +6,9 @@ import { Avatar } from './Avatar'
 import Balances from './balances'
 import { PrivTags } from './privTags'
 import { PubTags } from './pubTags'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateContact } from '../../app/contactSlice'
+
 
 export const dummyProfile = (name, address) => ({
   bio: {
@@ -40,7 +43,12 @@ export const dummyProfile = (name, address) => ({
 
 // TODO: get the address as props
 const ProfileCard = () => {
-  // TODO: store the profile to the DB
+
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
+  // const profile = store.contactInEdit
+
   const [profile, setProfile] = useState(dummyProfile)
   const { data, loading, error } = useGetAllTokenBalancesQuery(
     {
@@ -55,16 +63,10 @@ const ProfileCard = () => {
     e.preventDefault()
     switch (e.target.id) {
       case 'notes':
-        setProfile((prevState) => ({
-          ...prevState,
-          bio: { ...prevState.bio, notes: e.target.value },
-        }))
+        dispatch(updateContact({ field1: 'bio', field2: 'notes', value: e.target.value }))
         break
       case 'name':
-        setProfile((prevState) => ({
-          ...prevState,
-          bio: { ...prevState.bio, name: e.target.value },
-        }))
+        dispatch(updateContact({ field1: 'bio', field2: 'name', value: e.target.value }))
     }
   }
   console.log(data)
@@ -95,12 +97,12 @@ const ProfileCard = () => {
       </div>
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
-      <div 
-      // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
-      className="mt-3"
+      <div
+        // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
+        className="mt-3"
       >
-        <PrivTags />
-        <PubTags />
+        <PrivTags profile={profile} />
+        <PubTags profile={profile} />
       </div>
       <div
         className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl"

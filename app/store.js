@@ -4,12 +4,14 @@ import { enableMapSet } from 'immer'
 
 import themeSliceReducer from './themeSlice'
 import evmSliceReducer from './evmSlice'
+import contactSliceReducer from './contactSlice'
 import { covApi } from './covApi'
 
 export const store = configureStore({
   reducer: {
     theme: themeSliceReducer,
     evm: evmSliceReducer,
+    contact: contactSliceReducer,
     [covApi.reducerPath]: covApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -15,7 +15,7 @@ const publicTags = [
   { id: 5, name: 'rippedMeOff', color: getRandomTailwindColor() },
 ]
 
-export function PubTags() {
+export function PubTags({}) {
   const [tags, setTags] = useState(publicTags)
   const [selected, setSelected] = useState([tags[0], tags[1]])
 

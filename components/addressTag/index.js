@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export const AddressTag = ({ address, onClick }) => {
 
-  const store = useSelector((state) => state.evm)
+  const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
   const contactName = store.contactNames[address] || address

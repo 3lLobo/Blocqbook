@@ -22,7 +22,7 @@ export const ChainLogo = ({ chainId }) => {
           />
         }
       </div >
-        <div className="text-xs text-indigo-900 dark:text-slate-400 text-left ml-1 truncate">{chain}</div>
+        <div className="text-xs text-indigo-900 dark:text-slate-400 text-left mx-1 truncate">{chain}</div>
     </div >
   )
 }

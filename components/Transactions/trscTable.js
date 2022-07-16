@@ -14,8 +14,6 @@ function classNames(...classes) {
 
 export const PrettyTable = ({ transactions }) => {
 
-  const store = useSelector((state) => state.evm)
-
   if (transactions.length === 0) {
     return (
       <div className="mx-auto mt-11 text-center">
@@ -29,7 +27,6 @@ export const PrettyTable = ({ transactions }) => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <AddressTag address={store.account} />
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
@@ -79,29 +76,40 @@ export const PrettyTable = ({ transactions }) => {
                       <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
-                          'whitespace-nowrap px-3 py-4 text-sm text-slate-500'
+                          'whitespace-nowrap px-3 py-4 text-xs text-slate-500 '
                         )}
                       >
-                        {parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
+                        <div
+                        title={parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
+                        className='truncate  w-12 '
+                        >
+
+                          {parseFloat(transaction.value / Math.pow(10, 18)).toPrecision()}
+                        </div>
                       </td>
                       <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
-                          'whitespace-nowrap px-3 py-4 text-sm text-slate-500'
+                          'relative whitespace-nowrap px-3 py-4 text-xs text-slate-500 sm:pr-6 lg:pr-8 truncate'
                         )}
                       >
+                        <div
+                        title={transaction.to_address_label || '🏴‍☠️'}
+                        className='truncate w-20 '
+                        >
                         {transaction.to_address_label || '🏴‍☠️'}
+                        </div>
                       </td>
-                      <td
+                      {/* <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1 ? 'border-b border-slate-300 dark:border-slate-800' : '',
-                          'relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-6 lg:pr-8'
+                          'relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-6 lg:pr-8 truncate'
                         )}
                       >
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
                           Add<span className="sr-only">, {transaction.from_address}</span>
                         </a>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.7.0-rc.0",
     "@self.id/react": "^0.3.2",
     "@self.id/web": "^0.4.2",
+    "@xmtp/xmtp-js": "^4.4.1",
     "axios": "^0.27.2",
     "dids": "^3.2.0",
     "ethers": "^5.6.9",
@@ -31,7 +32,8 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.2",
     "timeago-react": "^3.0.5",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "web3.storage": "^4.3.0"
   },
   "devDependencies": {
     "@glazed/devtools": "^0.2.0",

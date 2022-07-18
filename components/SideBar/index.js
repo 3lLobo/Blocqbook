@@ -10,7 +10,8 @@ import {
 import ProfileCard from '../Profile/profileCard'
 import { Transactions } from '../Transactions'
 import { useState } from 'react'
-import { ContactSlices } from '../ContactSlices'
+import { ContactSlices } from '../contactSlices'
+import FileTransfer from '../FileTransfer'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -158,9 +159,11 @@ const Sidebar = () => {
                       ) : tabName === 'Contacts' ? (
                         <ContactSlices />
                       ) : (
-                        <div>
-                          <h1>TODO: {tabName}</h1>
-                        </div>
+                        tabName === 'FileTransfer' ? (
+                          <FileTransfer />
+                        ) : (
+                          <ProfileCard />
+                        )
                       )}
                     </div>
                   </main>

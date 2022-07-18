@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Client, CompositeCodec } from '@xmtp/xmtp-js'
+import { Client, CompositeCodec, ContentTypeComposite } from '@xmtp/xmtp-js'
 import { ethers } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
@@ -65,7 +65,9 @@ const FileTransfer = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       await provider.send('eth_requestAccounts', [])
       const wallet = provider.getSigner()
-      const xmtp = await Client.create(wallet)
+      const xmtp = await Client.create(wallet, {
+        codecs: [new CompositeCodec()],
+      })
       const conversation = await xmtp.conversations.newConversation(address)
 
       // console.log('Loading messages...')
@@ -76,12 +78,15 @@ const FileTransfer = () => {
 
       // Send a message
       console.log('Sending file...')
-      const messageToSend = JSON.stringify({
+      const messageToSend = {
         message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
         cid: filesCID,
         description,
+      }
+      await conversation.send(messageToSend, {
+        contentType: ContentTypeComposite,
+        contentFallback: 'sending you a pie'
       })
-      await conversation.send(messageToSend)
       setFiles([])
       setFilesCID([])
       setDescription('')
@@ -106,7 +111,7 @@ const FileTransfer = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
     const wallet = provider.getSigner()
-    const xmtp = await Client.create(wallet)
+    const xmtp = await Client.create(wallet, { codecs: [new CompositeCodec()] })
     for await (const contact of contactBook) {
       const conversation = await xmtp.conversations.newConversation(contact)
       console.log(`Loading messages from ${contact}...`)

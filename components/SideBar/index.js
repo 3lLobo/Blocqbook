@@ -13,8 +13,9 @@ import { useState } from 'react'
 import { ContactSlice } from '../Profile/contactSlice'
 import FileTransfer from '../FileTransfer'
 
+// TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(1)
 
   const tabNames = [
     'Transactions',
@@ -156,7 +157,7 @@ const Sidebar = () => {
                       {tabName === 'Transactions' ? (
                         <Transactions />
                       ) : tabName === 'Contacts' ? (
-                        <ContactSlice />
+                        <ContactSlices />
                       ) : (
                         tabName === 'FileTransfer' ? (
                           <FileTransfer />

@@ -14,7 +14,6 @@ module.exports = {
   darkMode: ['class'],
   theme: {
     extend: {
-      
       scale: {
         500: '5',
         300: '3',
@@ -33,6 +32,7 @@ module.exports = {
         },
       },
       colors: {
+        neonPurple: 'rgba(111,76,255,1.0)',
         navy: '#0b3a53',
         'navy-muted': '#244e66',
         aqua: '#69c4cd',

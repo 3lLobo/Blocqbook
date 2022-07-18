@@ -1,9 +1,7 @@
 // My Button
 
-export function MyButton({ onClick, h, text, primary }) {
-  const baseStyle = `bg-indigo-600  w-${3 * h || 'fit'} h-${
-    h || 'fit'
-  } hover:bg-indigo-600 transition-colors duration-300`
+export function MyButton({ children, onClick, text, primary }) {
+  const baseStyle = `flex flex-row justify-center items-center bg-indigo-600  w-fit h-fit hover:bg-indigo-600 transition-colors duration-300`
   const primaryStyle =
     'px-4 py-2 outline-none rounded text-white shadow-indigo-200 font-medium'.concat(
       ' ',
@@ -21,7 +19,8 @@ export function MyButton({ onClick, h, text, primary }) {
       className={primary ? primaryStyle : secondaryStyle}
       onClick={onClick}
     >
-      {text}
+      <div>{text}</div>
+      <div>{children}</div>
     </button>
   )
 }

@@ -1,5 +1,5 @@
 import { useGetTransactionsQuery } from '../../app/covApi'
-import { TrscTable } from './trscTable'
+import { PrettyTable } from './trscTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useGetAllTransactionsQuery } from '../../app/covApi'
@@ -9,23 +9,20 @@ export const Transactions = () => {
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
-  const address = process.env.NEXT_PUBLIC_MYADDRESS
   const { data, loading, error } = useGetAllTransactionsQuery(
     store.connected
       ? {
           address: store.account,
-          // chain_id: store.chainId,
         }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
-  if (!loading)
+  if (!data || loading)
     return (
       <div className="flex justify-center items-center my-11">
-        <BezierSpinner
-        />
+        <BezierSpinner />
       </div>
     )
   if (error) {
@@ -33,12 +30,6 @@ export const Transactions = () => {
     // TODO: throw toast with error
     return <p>Error: {error.message}</p>
   }
-  if (!data)
-    return (
-      <div className="flex flex-col items-center justify-center mt-11 text-bold text-center dark:text-slate-500">
-        Zero transactions
-      </div>
-    )
 
   const allItems = []
   data.forEach((chainData) => {
@@ -60,7 +51,7 @@ export const Transactions = () => {
 
   return (
     <div>
-      <TrscTable transactions={allItems} address={address} />
+      <PrettyTable transactions={allItems} />
     </div>
   )
 }

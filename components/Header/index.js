@@ -21,6 +21,7 @@ async function createAuthProvider() {
 }
 
 export default function Header() {
+  const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
@@ -54,7 +55,11 @@ export default function Header() {
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
+      //since there's no way to disconnect metamask from frontend and
+      //we check if there's an account to rehydrate our app. We need a
+      //toast here to ask to disconnect metamask aswell
       disconnect()
+      setIsAbleToRefresh(false)
     } else {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
@@ -73,7 +78,7 @@ export default function Header() {
 
   const checkIfRefresh = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_accounts' })
-    if (accounts.length > 0) {
+    if (accounts.length > 0 & isAbleToRefresh) {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
     }

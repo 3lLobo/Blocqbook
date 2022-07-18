@@ -10,7 +10,7 @@ import {
 import ProfileCard from '../Profile/profileCard'
 import { Transactions } from '../Transactions'
 import { useState } from 'react'
-import { ContactSlice } from '../Profile/contactSlice'
+import { ContactSlices } from '../contactSlices'
 import FileTransfer from '../FileTransfer'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation

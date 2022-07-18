@@ -6,7 +6,8 @@ import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, setConnection } from '../../app/evmSlice'
+import { reset as resetEvm, setConnection } from '../../app/evmSlice'
+import { reset as resetContacts } from '../../app/contactSlice'
 import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
@@ -20,6 +21,7 @@ async function createAuthProvider() {
 }
 
 export default function Header() {
+  const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
@@ -28,6 +30,9 @@ export default function Header() {
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
+    if (connection.status === 'idle') {
+      checkIfRefresh()
+    }
     if (connection.status === 'connected') {
       setIsConnected(true)
       const chainId =
@@ -42,24 +47,40 @@ export default function Header() {
         })
       )
     } else {
-      dispatch(reset())
+      dispatch(resetEvm())
+      dispatch(resetContacts())
       setIsConnected(false)
     }
   }, [connection.status, dispatch])
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
+      //since there's no way to disconnect metamask from frontend and
+      //we check if there's an account to rehydrate our app. We need a
+      //toast here to ask to disconnect metamask aswell
       disconnect()
+      setIsAbleToRefresh(false)
     } else {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
-      // Set event listener for disconnecting a wallet
-      window.ethereum.on('disconnect', async () => {
-        // TODO: make this a toast
+    }
+    // Set event listener for disconnecting a wallet
+    window.ethereum.on('accountsChanged', (accounts) => {
+      // If user has locked/logout from MetaMask, this resets the accounts array to empty
+      if (!accounts.length) {
         console.log('Metamask disconnected!')
-        await disconnect()
-        dispatch(reset())
-      })
+        disconnect()
+        dispatch(resetEvm())
+        dispatch(resetContacts())
+      }
+    })
+  }
+
+  const checkIfRefresh = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+    if (accounts.length > 0 & isAbleToRefresh) {
+      const authProvider = await createAuthProvider()
+      await connect(authProvider)
     }
   }
 

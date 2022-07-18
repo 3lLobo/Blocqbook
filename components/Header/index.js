@@ -28,6 +28,9 @@ export default function Header() {
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
+    if (connection.status === 'idle') {
+      checkIfRefresh()
+    }
     if (connection.status === 'connected') {
       setIsConnected(true)
       const chainId =
@@ -60,6 +63,14 @@ export default function Header() {
         await disconnect()
         dispatch(reset())
       })
+    }
+  }
+
+  const checkIfRefresh = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+    if (accounts.length > 0) {
+      const authProvider = await createAuthProvider()
+      await connect(authProvider)
     }
   }
 

@@ -56,6 +56,18 @@ export const contactSlice = createSlice({
         if (Object.keys(state.contacts).includes(action.payload.address)) {
           state.contactInEdit = state.contacts[action.payload.address]
           state.contactInEditExists = true
+      //this else is duplicated but I can't come with a better solution that doesn't
+      //break when state.contacts is empty
+        } else {
+          const newProfile = emptyProfile(
+            action.payload.address,
+            action.payload.isOneHop
+          )
+          console.log(
+            '🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile',
+            newProfile
+          )
+          state.contactInEdit = newProfile
         }
       } else {
         const newProfile = emptyProfile(

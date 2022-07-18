@@ -52,9 +52,11 @@ export const contactSlice = createSlice({
     openModal: (state, action) => {
       console.log('🚀 ~ file: contactSlice.js ~ line 52 ~ action', action)
       // When the profile card modal is opened, we either fetch the existing contact or build the initial structure.
-      if (Object.keys(state.contacts).includes(action.payload.address)) {
-        state.contactInEdit = state.contacts[action.payload.address]
-        state.contactInEditExists = true
+      if (state.contacts) {
+        if (Object.keys(state.contacts).includes(action.payload.address)) {
+          state.contactInEdit = state.contacts[action.payload.address]
+          state.contactInEditExists = true
+        }
       } else {
         const newProfile = emptyProfile(
           action.payload.address,
@@ -74,7 +76,14 @@ export const contactSlice = createSlice({
       // Check if the contact in edit is different from the empty profile.
       // If so, we need to update the contact in the store.
       if (action.payload.saveContact) {
-        state.contacts[state.addressModal] = state.contactInEdit
+        if (state.contacts) {
+          state.contacts[state.addressModal] = state.contactInEdit
+        } else {
+          const initialContactState = {
+            [state.addressModal]: state.contactInEdit,
+          }
+          state.contacts = initialContactState
+        }
         state.isSyncedCeramic = false
         console.log('Contact updated!')
       } else {

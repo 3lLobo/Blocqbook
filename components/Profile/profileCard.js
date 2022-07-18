@@ -2,15 +2,17 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useState } from 'react'
 import { useGetAllTokenBalancesQuery } from '../../app/covApi'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
-import { Avatar } from './Avatar'
+import { Avatar } from './avatar'
 import Balances from './balances'
 import { PrivTags } from './privTags'
 import { PubTags } from './pubTags'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateContact } from '../../app/contactSlice'
 
-export const dummyProfile = {
+export const dummyProfile = (name, address) => ({
   bio: {
-    name: 'CryptoPanda',
-    address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
+    name: name || 'CryptoPanda',
+    address: address || '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
     avatar:
       'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
     notes: 'My First Note!!!',
@@ -34,14 +36,18 @@ export const dummyProfile = {
     isTransfer: false,
     transferData: [],
   },
-}
+})
 // TODO: make this a modal which pops up when you click on an address
 //  https://headlessui.com/react/dialog
 
 // TODO: get the address as props
-const ProfileCard = () => {
-  // TODO: store the profile to the DB
-  const [profile, setProfile] = useState(dummyProfile)
+const ProfileCard = ({ profile }) => {
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
+  // const profile = store.contactInEdit
+
+  // const [profile, setProfile] = useState(dummyProfile)
   const { data, loading, error } = useGetAllTokenBalancesQuery(
     {
       address: profile.bio.address,
@@ -55,19 +61,24 @@ const ProfileCard = () => {
     e.preventDefault()
     switch (e.target.id) {
       case 'notes':
-        setProfile((prevState) => ({
-          ...prevState,
-          bio: { ...prevState.bio, notes: e.target.value },
-        }))
+        dispatch(
+          updateContact({
+            field1: 'bio',
+            field2: 'notes',
+            value: e.target.value,
+          })
+        )
         break
       case 'name':
-        setProfile((prevState) => ({
-          ...prevState,
-          bio: { ...prevState.bio, name: e.target.value },
-        }))
+        dispatch(
+          updateContact({
+            field1: 'bio',
+            field2: 'name',
+            value: e.target.value,
+          })
+        )
     }
   }
-  console.log(data)
 
   return (
     <div
@@ -78,7 +89,11 @@ const ProfileCard = () => {
         // TODO: onClick open a modal where the user can input a new image URL, which gets previews and upon confirmation, saved to the profile
         className="w-40 pb-4"
       >
-        <Avatar w="60" scale={110} />
+        <Avatar
+          // TODO: make this clickable to enter a new image URL
+          w="60"
+          scale={110}
+        />
       </div>
 
       <textarea
@@ -87,7 +102,7 @@ const ProfileCard = () => {
         name="name"
         id="name"
         value={profile.bio.name}
-        placeholder="Add a nick-name..."
+        placeholder="Add a name..."
         onChange={(e) => handleChange(e)}
       ></textarea>
       <div className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate">
@@ -95,16 +110,14 @@ const ProfileCard = () => {
       </div>
       {/* <div className="text-slate-900 text-semibold text-xl dark:text-snow p-6">
       </div> */}
-      <div 
-      // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
-      className="mt-3"
-      >
-        <PrivTags />
-        <PubTags />
-      </div>
       <div
-        className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl"
+        // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
+        className="mt-3"
       >
+        <PrivTags profile={profile} />
+        <PubTags profile={profile} />
+      </div>
+      <div className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl">
         <textarea
           className="dark:text-snow bg-transparent border-0 rounded-xl p-3 form-textarea flex flex-grow resize-none"
           rows="4"
@@ -116,13 +129,7 @@ const ProfileCard = () => {
         ></textarea>
       </div>
       <div className="flex justify-center items-center mt-4">
-        {loading ? (
-          <BezierSpinner />
-        ) : (
-          data && (
-            <Balances />
-          )
-        )}
+        {!data ? <BezierSpinner /> : <Balances balances={data} />}
       </div>
     </div>
   )

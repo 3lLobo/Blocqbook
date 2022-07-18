@@ -43,3 +43,19 @@ record.merge({
   },
 })
 ```
+
+## Resources
+
+To understand Ceramic better:
+
+[Protocol Design](https://developers.ceramic.network/docs/advanced/standards/application-protocols/identity-index/#schemas)
+
+Examples for different Schemas:
+
+- https://github.com/ceramicstudio/datamodels/blob/main/models/identity-accounts-crypto/schemas/CryptoAccounts.json
+- https://github.com/ceramicstudio/datamodels/blob/main/models/3id-keychain/schemas/ThreeIdKeychain.json
+
+All the Ceramic-react hooks:
+[@seld.id/react](https://developers.ceramic.network/reference/self-id/modules/react/#read-a-viewer-record)
+
+[Glaze-cli docs](https://developers.ceramic.network/tools/glaze/development/#__tabbed_5_2)

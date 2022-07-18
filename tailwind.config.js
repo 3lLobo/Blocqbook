@@ -14,7 +14,6 @@ module.exports = {
   darkMode: ['class'],
   theme: {
     extend: {
-      
       scale: {
         500: '5',
         300: '3',

@@ -8,15 +8,18 @@ import Link from 'next/link'
 import { useViewerRecord } from '@self.id/react'
 import { useEffect, useState } from 'react'
 
-
 export default function Home() {
   const store = useSelector((state) => state.evm)
 
   // This is the entrypoint to the users database.
-  const record = useViewerRecord("kjzl6cwe1jw147ce8khc2sfyarq74tngnxehvjdxjb0ec472uvucknju7188ntp")
+  const record = useViewerRecord(
+    'kjzl6cwe1jw147ce8khc2sfyarq74tngnxehvjdxjb0ec472uvucknju7188ntp'
+  )
 
   useEffect(() => {
-    console.log("record", record)
+    if (record.content) {
+      console.log('record', record)
+    }
   }, [record])
 
   return (
@@ -32,9 +35,9 @@ export default function Home() {
           </h1>
           {store.connected && (
             <Link href={`/${store.account}`}>
-            <div className="mx-auto mt-11 justify-center flex">
-              <MyButton text="My ☎️ book" primary={true} />
-            </div>
+              <div className="mx-auto mt-11 justify-center flex">
+                <MyButton text="My ☎️ book" primary={true} />
+              </div>
             </Link>
           )}
         </main>

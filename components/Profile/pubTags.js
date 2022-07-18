@@ -15,9 +15,9 @@ const publicTags = [
   { id: 5, name: 'rippedMeOff', color: getRandomTailwindColor() },
 ]
 
-export function PubTags() {
+export function PubTags({ profile }) {
   const [tags, setTags] = useState(publicTags)
-  const [selected, setSelected] = useState([tags[0], tags[1]])
+  const [selected, setSelected] = useState(profile.tags.pubTags)
 
   return (
     <div className="z-30 w-full flex flex-row-reverse items-center">

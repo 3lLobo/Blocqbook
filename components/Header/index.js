@@ -12,12 +12,11 @@ import { ethers } from 'ethers'
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 
-
-
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
-  const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' })
-  return new EthereumAuthProvider(window.ethereum, addresses[0])
+  await window.ethereum.send('eth_requestAccounts')
+  const address = window.ethereum.selectedAddress
+  return new EthereumAuthProvider(window.ethereum, address)
 }
 
 export default function Header() {
@@ -25,6 +24,7 @@ export default function Header() {
   const dispatch = useDispatch()
 
   const [connection, connect, disconnect] = useViewerConnection()
+  console.log('🚀 ~ file: index.js ~ line 28 ~ Header ~ connection', connection)
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
@@ -43,41 +43,23 @@ export default function Header() {
       )
     } else {
       dispatch(reset())
+      setIsConnected(false)
     }
-
   }, [connection.status, dispatch])
-
-  // Manage Metamask changes and couple with state
-  useEffect(() => {
-    if (window?.ethereum?.isConnected()) {
-      const chainId =
-        ethers.utils.arrayify(window.ethereum.chainId, {
-          hexPad: 'left',
-        })[0] || 1
-      dispatch(
-        setConnection({
-          connected: true,
-          account: window.ethereum.selectedAddress,
-          chainId: chainId.toString(),
-        })
-      )
-      // Set event listener for disconnecting a wallet
-      window.ethereum.on('disconnect', () => {
-        // TODO: make this a toast
-        console.log('Metamask disconnected!')
-        disconnect()
-        dispatch(reset())
-
-      })
-    }
-  }, [dispatch, disconnect])
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
       disconnect()
     } else {
       const authProvider = await createAuthProvider()
-      connect(authProvider)
+      await connect(authProvider)
+      // Set event listener for disconnecting a wallet
+      window.ethereum.on('disconnect', async () => {
+        // TODO: make this a toast
+        console.log('Metamask disconnected!')
+        await disconnect()
+        dispatch(reset())
+      })
     }
   }
 
@@ -94,13 +76,11 @@ export default function Header() {
               onClick={connectButtonHit}
               primary={false}
             >
-              <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1" >
-                <Image
-                  alt='metamask'
-                  layout='fill'
-                  src='/metamask.png'
-                />
-              </div>
+              {!isConnected && (
+                <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1">
+                  <Image alt="metamask" layout="fill" src="/metamask.png" />
+                </div>
+              )}
             </MyButton>
             <motion.div
               initial={false}
@@ -112,7 +92,7 @@ export default function Header() {
                 hidden: { opacity: 0, x: -500 },
               }}
               title={store.account}
-              className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:text-semibold  hover:bg-indigo-600 transition-colors duration-300 truncate"
+              className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
             >
               {store.account}
             </motion.div>

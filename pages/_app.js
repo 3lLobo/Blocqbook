@@ -7,9 +7,9 @@ import { Provider as CeramicProvider } from '@self.id/react'
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <CeramicProvider client={{ ceramic: 'testnet-clay' }} >
-      <Component {...pageProps} />
-      </CeramicProvider >
+      <CeramicProvider client={{ ceramic: 'testnet-clay' }}>
+        <Component {...pageProps} />
+      </CeramicProvider>
     </Provider>
   )
 }

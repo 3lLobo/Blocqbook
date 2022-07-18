@@ -7,7 +7,6 @@ const initialState = {
   account: null,
   chainId: '1',
   connected: false,
-  ceramicConnected: false,
 }
 
 export const evmSlice = createSlice({
@@ -24,9 +23,6 @@ export const evmSlice = createSlice({
     },
     setConnection: (state, action) => {
       state.connected = action.payload.connected
-      if (action.payload.ceramicConnected) {
-        state.ceramicConnected = action.payload.ceramicConnected
-      }
       if (action.payload.connected) {
         state.account = action.payload.account
         state.chainId = action.payload.chainId

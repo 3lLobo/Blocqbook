@@ -6,7 +6,8 @@ import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, setConnection } from '../../app/evmSlice'
+import { reset as resetEvm, setConnection } from '../../app/evmSlice'
+import { reset as resetContacts } from '../../app/contactSlice'
 import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
@@ -45,7 +46,8 @@ export default function Header() {
         })
       )
     } else {
-      dispatch(reset())
+      dispatch(resetEvm())
+      dispatch(resetContacts())
       setIsConnected(false)
     }
   }, [connection.status, dispatch])
@@ -56,14 +58,17 @@ export default function Header() {
     } else {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
-      // Set event listener for disconnecting a wallet
-      window.ethereum.on('disconnect', async () => {
-        // TODO: make this a toast
-        console.log('Metamask disconnected!')
-        await disconnect()
-        dispatch(reset())
-      })
     }
+    // Set event listener for disconnecting a wallet
+    window.ethereum.on('accountsChanged', (accounts) => {
+      // If user has locked/logout from MetaMask, this resets the accounts array to empty
+      if (!accounts.length) {
+        console.log('Metamask disconnected!')
+        disconnect()
+        dispatch(resetEvm())
+        dispatch(resetContacts())
+      }
+    })
   }
 
   const checkIfRefresh = async () => {

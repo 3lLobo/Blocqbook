@@ -1,4 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
+import axios from 'axios'
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
@@ -17,6 +18,13 @@ export default function ProfileModal({ children }) {
   }, [store.modalOpen])
 
   async function onClose(saveContact) {
+    if ((Object.keys(store.contacts).length === 0) & saveContact) {
+      const poapUrl = await axios.get('/api/poap')
+      console.log(
+        'TOAST: Congratulations!! You have successfully saved your first contact. Here is your first conmemorative POAP: ',
+        poapUrl.data
+      )
+    }
     setIsOpen(false)
     setTimeout(() => {
       dispatch(closeModal({ saveContact }))

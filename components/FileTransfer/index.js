@@ -66,7 +66,7 @@ const FileTransfer = () => {
       console.log('Sending file...')
       //It would be nice to send also a timestramp
       const messageToSend = JSON.stringify({
-        message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
+        type: 'file',
         cid: filesCID,
         description,
       })
@@ -96,30 +96,42 @@ const FileTransfer = () => {
         )
         const messages = await conversation.messages()
         for await (const message of messages) {
-          console.log('message:', message)
-          const sliced = message.content?.slice(0, 64)
-          if (
-            (sliced ===
-              '{"message":"THIS IS A FILE. CHECK IT ON FILETRANSFER TAB","cid":') &
-            (message.senderAddress !== wallet.getAddress())
-          ) {
-            const newMedia = JSON.parse(message.content)
-            newMedia['sender'] = message.senderAddress
-            setReceivedMedia((prevState) => [...prevState, newMedia])
-          }
+          const recipientAddress = await wallet.getAddress()
+          addToMediaIfFile(message, recipientAddress)
         }
       } catch (error) {
         console.log('TOAST: ', error)
       }
     }
-    // Listen for new messages in the conversation
-    console.log('Loading conversations...')
-    const streamMessages = await conversation.streamMessages()
-    console.log('streamMessages:', streamMessages)
-    for await (const message of streamMessages) {
-      console.log(`[${message.senderAddress}]: ${message.text}`)
+    await backgroundStreaming(xmtp, wallet)
+  }
+
+  const backgroundStreaming = async (xmtp, wallet) => {
+    const stream = await xmtp.conversations.stream()
+    console.log('Background stream...')
+    for await (const conversation of stream) {
+      console.log(`New conversation started with ${conversation.peerAddress}`)
+      const messages = await conversation.messages()
+      for await (const message of messages) {
+        const recipientAddress = await wallet.getAddress()
+        addToMediaIfFile(message, recipientAddress)
+      }
+      // break
     }
-    console.log('Conversations loaded.')
+    console.log('Background stream ended.')
+  }
+
+  const addToMediaIfFile = (message, recipientAddress) => {
+    const sliced = message.content?.slice(0, 21)
+    if (
+      (sliced ===
+        '{"type":"file","cid":') &
+      (message.recipientAddress === recipientAddress)
+    ) {
+      const newMedia = JSON.parse(message.content)
+      newMedia['sender'] = message.senderAddress
+      setReceivedMedia((prevState) => [...prevState, newMedia])
+    }
   }
 
   useEffect(() => {
@@ -221,7 +233,7 @@ const FileTransfer = () => {
                 <Avatar scale={110} />
               </div>
               <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
-{/**WTF CERAMIC IS BRINGING THE ADDRESS LOWERCASES!! */}
+                {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
                 <AddressTag address={m.sender.toLowerCase()} isOneHop={true} />
               </div>
               <Link href={`https://ipfs.io/ipfs/${m.cid}`}>

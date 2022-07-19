@@ -3,7 +3,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Tag } from './tag'
+import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
 
 // TODO: add these to global/user database + set fixed colors

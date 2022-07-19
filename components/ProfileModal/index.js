@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
-import ProfileCard from '../Profile/profileCard'
+import ProfileCard from '../Profile/ProfileCard'
 
 export default function ProfileModal({ children }) {
   let [isOpen, setIsOpen] = useState(false)

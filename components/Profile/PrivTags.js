@@ -3,7 +3,7 @@
 import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Tag } from './tag'
+import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
 
 // TODO: add these to global/user database
@@ -24,8 +24,8 @@ export function PrivTags() {
   const filteredTags =
     query === ''
       ? tags
-      : tags.filter((person) =>
-          person.name
+      : tags.filter((tag) =>
+          tag.name
             .toLowerCase()
             .replace(/\s+/g, '')
             .includes(query.toLowerCase().replace(/\s+/g, ''))

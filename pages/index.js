@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { useViewerRecord } from '@self.id/react'
 import { useEffect, useState } from 'react'
 
+import ethLogo from '../public/eth_org_logo.svg'
+
 export default function Home() {
   const store = useSelector((state) => state.evm)
 
@@ -29,10 +31,19 @@ export default function Home() {
         <Header />
 
         <main className="mx-auto max-w-[100%] scrollbar-hide flex-grow place-content-center ">
-          <h1 className=" dark:text-indigo-50 div-center mt-20 z-20 p-8 font-bold text-4xl text-center ">
-            You don{"'"}t have to juggle <br />
-            between wallets anymore !
+          <h1 className=" dark:text-indigo-50 div-center mt-20 z-20 p-8 font-bold text-4xl text-center  ">
+            The PhoneBook <br />
+            For All Blocqchains
           </h1>
+          <div
+            className='w-50 flex relative mt-auto mx-auto'
+          >
+            <Image
+              layout='fill'
+              src='/blocqBookLogo/text/blocqbookTextonlyTrans.png'
+              alt='eth_org_logo'
+            />
+          </div>
           {store.connected && (
             <Link href={`/${store.account}`}>
               <div className="mx-auto mt-11 justify-center flex">

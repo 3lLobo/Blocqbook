@@ -1,5 +1,5 @@
-import { Avatar } from '../Profile/avatar'
-import { Tag } from '../Profile/tag'
+import { Avatar } from '../Profile/Avatar'
+import { Tag } from '../Profile/Tag'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 

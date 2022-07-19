@@ -1,4 +1,4 @@
-import { Slice } from './contactSlice'
+import { Slice } from './ContactSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const ContactSlices = () => {

@@ -14,10 +14,23 @@ import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 
 async function createAuthProvider() {
+  var provider
   // The following assumes there is an injected `window.ethereum` provider
-  await window.ethereum.send('eth_requestAccounts')
-  const address = window.ethereum.selectedAddress
-  return new EthereumAuthProvider(window.ethereum, address)
+  await window.ethereum
+    .request({ method: 'eth_requestAccounts' })
+    .then(() => {
+      const address = window.ethereum.selectedAddress
+      provider = new EthereumAuthProvider(window.ethereum, address)
+    })
+    .catch((error) => {
+      if (error.code === 4001) {
+        // EIP-1193 userRejectedRequest error
+        console.log('Please connect to MetaMask.')
+      } else {
+        console.error(error)
+      }
+    })
+  return provider
 }
 
 export default function Header() {
@@ -76,8 +89,8 @@ export default function Header() {
   }
 
   const checkIfRefresh = async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_accounts' })
-    if (accounts.length > 0 & isAbleToRefresh) {
+    const checkAccount = await window?.ethereum?.selectedAddress
+    if (checkAccount && isAbleToRefresh) {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
     }

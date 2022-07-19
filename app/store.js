@@ -20,9 +20,9 @@ export const store = configureStore({
     getDefaultMiddleware({
       //serializableCheck: false,
     })
-    .concat(poapApi.middleware)
-    .concat(covApi.middleware)
-  // 
+      .concat(poapApi.middleware)
+      .concat(covApi.middleware),
+  //
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

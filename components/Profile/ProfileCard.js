@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 import { useGetPoapsQuery } from '../../app/poapApi'
 
-
 export const dummyProfile = (name, address) => ({
   bio: {
     name: name || 'CryptoPanda',
@@ -40,32 +39,39 @@ export const dummyProfile = (name, address) => ({
   },
 })
 
-
 const ProfileCard = ({ profile }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
   const { data, loading, error } = useGetAllTokenBalancesQuery(
-    profile?.bio?.address ? {
-      address: profile.bio.address,
-    }
+    profile?.bio?.address
+      ? {
+          address: profile.bio.address,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
 
-  console.log("Tokenbalance: ", data)
+  console.log('Tokenbalance: ', data)
   // fetch poaps
-  const { data: poapData, loading: poapLoading, error: poapError } = useGetPoapsQuery(profile?.bio?.address ? {
-    address: profile.bio.address,
-  }
-    : skipToken,
+  const {
+    data: poapData,
+    loading: poapLoading,
+    error: poapError,
+  } = useGetPoapsQuery(
+    profile?.bio?.address
+      ? {
+          address: profile.bio.address,
+        }
+      : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
-    })
+    }
+  )
 
-  console.log("POAP data", poapData)
+  console.log('POAP data', poapData)
   function handleChange(e) {
     e.preventDefault()
     switch (e.target.id) {

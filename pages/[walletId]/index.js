@@ -19,8 +19,8 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('Ceramic record: ', record)
-    if (!store.hasInitialRecord && evmStore.connected) {
+    if (!store.hasInitialRecord && evmStore.connected && record.content) {
+      console.log('Ceramic record: ', record)
       dispatch(
         setContacts({
           contacts: record.content?.contacts,
@@ -36,7 +36,14 @@ const Profile = () => {
       record.set({ contacts: store.contacts })
       dispatch(setSyncedCeramic({ isSyncedCeramic: true }))
     }
-  }, [record, evmStore.connected, dispatch])
+  }, [
+    record,
+    evmStore.connected,
+    dispatch,
+    store.contacts,
+    store.hasInitialRecord,
+    store.isSyncedCeramic,
+  ])
 
   // async function clickContacts() {
   //   record.set({

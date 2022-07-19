@@ -112,20 +112,19 @@ const FileTransfer = () => {
     for await (const conversation of stream) {
       console.log(`New conversation started with ${conversation.peerAddress}`)
       const messages = await conversation.messages()
-      for await (const message of messages) {
-        const recipientAddress = await wallet.getAddress()
-        addToMediaIfFile(message, recipientAddress)
-      }
-      // break
+      const lastMessage = messages[messages.length-1]
+      const recipientAddress = await wallet.getAddress()
+      addToMediaIfFile(lastMessage, recipientAddress)
+      break
     }
     console.log('Background stream ended.')
+    backgroundStreaming(xmtp, wallet)
   }
 
   const addToMediaIfFile = (message, recipientAddress) => {
     const sliced = message.content?.slice(0, 21)
     if (
-      (sliced ===
-        '{"type":"file","cid":') &
+      (sliced === '{"type":"file","cid":') &
       (message.recipientAddress === recipientAddress)
     ) {
       const newMedia = JSON.parse(message.content)

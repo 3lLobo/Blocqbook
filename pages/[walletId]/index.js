@@ -19,7 +19,7 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('record', record)
+    console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected) {
       dispatch(
         setContacts({

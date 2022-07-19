@@ -9,7 +9,7 @@ import { useViewerRecord } from '@self.id/react'
 import { useEffect, useState } from 'react'
 
 import ethLogo from '../public/eth_org_logo.svg'
-
+import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbookTextTransparent.png'
 export default function Home() {
   const store = useSelector((state) => state.evm)
 
@@ -26,28 +26,44 @@ export default function Home() {
 
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark">
-      <div className="bg-hero-pattern bg-cover min-h-screen flex flex-col">
+      <div className=" bg-cover min-h-screen flex flex-col">
         <Head />
         <Header />
 
-        <main className="mx-auto max-w-[100%] scrollbar-hide flex-grow place-content-center ">
-          <h1 className=" dark:text-indigo-50 div-center mt-20 z-20 p-8 font-bold text-4xl text-center  ">
+        <main className="relative mx-auto max-w-[100%] scrollbar-hide flex-grow place-content-center ">
+          {/* <h1 
+          className=" dark:text-indigo-50 div-center mt-20 z-20 p-8 font-bold text-4xl text-center  "
+          >
             The PhoneBook <br />
             For All Blocqchains
-          </h1>
+          </h1> */}
           <div
-            className='w-50 flex relative mt-auto mx-auto'
+            className='flex justify-center mt-11'
           >
-            <Image
-              layout='fill'
+            <img
+              // TODO: fix this horrible layout
+              // layout='fill'
+              width={600}
+              // height={2000}
+              // src={blocqbookTextTransparent}
               src='/blocqBookLogo/text/blocqbookTextonlyTrans.png'
               alt='eth_org_logo'
             />
           </div>
           {store.connected && (
             <Link href={`/${store.account}`}>
-              <div className="mx-auto mt-11 justify-center flex">
-                <MyButton text="My ☎️ book" primary={true} />
+              <div className="flex justify-center">
+
+                <div className="absolute top-3 bg-neonPurple rounded-full hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300">
+                  {/* <MyButton text="My ☎️ book" primary={true} /> */}
+                  <Image
+                    // layout='fill'
+                    width={200}
+                    height={200}
+                    src={blocqbookTextTransparent}
+                    alt='eth_org_logo'
+                  />
+                </div>
               </div>
             </Link>
           )}

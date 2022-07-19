@@ -162,7 +162,8 @@ const Sidebar = () => {
                         tabName === 'FileTransfer' ? (
                           <FileTransfer />
                         ) : (
-                          <ProfileCard />
+                          // <ProfileCard />
+                          <div>TODO</div>
                         )
                       )}
                     </div>

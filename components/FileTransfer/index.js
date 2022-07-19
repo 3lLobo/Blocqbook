@@ -230,6 +230,7 @@ const FileTransfer = () => {
           <div className="text-2xl text-left">Files received</div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
+        {((!isFetchingMedia) && (receivedMedia.length===0)) && <div>No files were received.</div>}
         {receivedMedia.length > 0 &&
           receivedMedia.map((m, i) => (
             <div
@@ -246,7 +247,7 @@ const FileTransfer = () => {
               <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                 <a target="_blank">{m.description}</a>
               </Link>
-              <div className="flex gap-4 absolute right-2">
+              <div className="flex gap-4 absolute right-2 items-center">
                 <TimeAgo datetime={m.timestamp} />
                 <div className="mr-11 space-x-1 col-span-2 flex flex-row">
                   <Tag tagText="dude.eth" color="indigo-300" />

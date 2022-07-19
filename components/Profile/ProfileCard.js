@@ -37,10 +37,8 @@ export const dummyProfile = (name, address) => ({
     transferData: [],
   },
 })
-// TODO: make this a modal which pops up when you click on an address
-//  https://headlessui.com/react/dialog
 
-// TODO: get the address as props
+
 const ProfileCard = ({ profile }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
@@ -49,9 +47,10 @@ const ProfileCard = ({ profile }) => {
 
   // const [profile, setProfile] = useState(dummyProfile)
   const { data, loading, error } = useGetAllTokenBalancesQuery(
-    {
+    profile.bio.address ? {
       address: profile.bio.address,
-    } || skipToken,
+    }
+      : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }

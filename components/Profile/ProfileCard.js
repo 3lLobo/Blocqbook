@@ -56,20 +56,17 @@ const ProfileCard = ({ profile }) => {
 
   console.log('Tokenbalance: ', data)
   // fetch poaps
+  console.log('profile?.bio?.address:', profile?.bio?.address)
+
   const {
     data: poapData,
     loading: poapLoading,
     error: poapError,
-  } = useGetPoapsQuery(
-    profile?.bio?.address
-      ? {
-          address: profile.bio.address,
-        }
-      : skipToken,
-    {
-      pollingInterval: 300_000, // 5 minutes is the covalent update time
-    }
-  )
+  } = useGetPoapsQuery(profile.bio.address, {
+    pollingInterval: 300_000, // 5 minutes is the covalent update time
+  })
+
+  // const {data: poapData} = useGetPoapsQuery('pablito.eth')
 
   console.log('POAP data', poapData)
   function handleChange(e) {

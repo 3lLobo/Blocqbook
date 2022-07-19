@@ -6,6 +6,7 @@ import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
 import { Avatar } from '../Profile/Avatar'
 import { Tag } from '../Profile/tag'
+import { AddressTag } from '../AddressTag'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -62,15 +63,8 @@ const FileTransfer = () => {
       const wallet = provider.getSigner()
       const xmtp = await Client.create(wallet)
       const conversation = await xmtp.conversations.newConversation(address)
-
-      // console.log('Loading messages...')
-      // const messages = await conversation.messages()
-      // for await (const message of messages) {
-      //   console.log(`[${message.senderAddress}]: ${message.content}`)
-      // }
-
-      // Send a message
       console.log('Sending file...')
+      //It would be nice to send also a timestramp
       const messageToSend = JSON.stringify({
         message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
         cid: filesCID,
@@ -82,14 +76,6 @@ const FileTransfer = () => {
       setDescription('')
       setAddress('')
       console.log('Message sent.')
-      // // Listen for new messages in the conversation
-      // console.log('Loading conversations...')
-      // const streamMessages = await conversation.streamMessages();
-      // console.log('streamMessages:', streamMessages);
-      // for await (const message of streamMessages) {
-      //   console.log(`[${message.senderAddress}]: ${message.text}`)
-      // }
-      // console.log('Conversations loaded.')
     } catch (error) {
       console.log(error)
     }
@@ -105,7 +91,9 @@ const FileTransfer = () => {
     const allInteractions = await xmtp.conversations.list()
     for await (const interaction of allInteractions) {
       try {
-        const conversation = await xmtp.conversations.newConversation(interaction.peerAddress)
+        const conversation = await xmtp.conversations.newConversation(
+          interaction.peerAddress
+        )
         const messages = await conversation.messages()
         for await (const message of messages) {
           console.log('message:', message)
@@ -124,6 +112,14 @@ const FileTransfer = () => {
         console.log('TOAST: ', error)
       }
     }
+    // Listen for new messages in the conversation
+    console.log('Loading conversations...')
+    const streamMessages = await conversation.streamMessages()
+    console.log('streamMessages:', streamMessages)
+    for await (const message of streamMessages) {
+      console.log(`[${message.senderAddress}]: ${message.text}`)
+    }
+    console.log('Conversations loaded.')
   }
 
   useEffect(() => {
@@ -225,8 +221,8 @@ const FileTransfer = () => {
                 <Avatar scale={110} />
               </div>
               <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
-                {' '}
-                {m.sender}{' '}
+{/**WTF CERAMIC IS BRINGING THE ADDRESS LOWERCASES!! */}
+                <AddressTag address={m.sender.toLowerCase()} isOneHop={true} />
               </div>
               <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                 <a target="_blank">{m.description}</a>

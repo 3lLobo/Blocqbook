@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { Avatar } from '../Profile/Avatar'
 import { Tag } from '../Profile/tag'
 import { AddressTag } from '../AddressTag'
+import TimeAgo from 'timeago-react'
+
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -16,6 +18,7 @@ const FileTransfer = () => {
   const [address, setAddress] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [receivedMedia, setReceivedMedia] = useState([])
+  const [isFetchingMedia, setIsFetchingMedia] = useState(false)
 
   async function handleUpload() {
     setIsUploading(true)
@@ -64,7 +67,6 @@ const FileTransfer = () => {
       const xmtp = await Client.create(wallet)
       const conversation = await xmtp.conversations.newConversation(address)
       console.log('Sending file...')
-      //It would be nice to send also a timestramp
       const messageToSend = JSON.stringify({
         type: 'file',
         cid: filesCID,
@@ -83,6 +85,7 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
+    setIsFetchingMedia(true)
     setReceivedMedia([])
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
@@ -103,6 +106,10 @@ const FileTransfer = () => {
         console.log('TOAST: ', error)
       }
     }
+    receivedMedia.sort((a, b) => {
+      return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at)
+    })
+    setIsFetchingMedia(false)
     await backgroundStreaming(xmtp, wallet)
   }
 
@@ -129,7 +136,8 @@ const FileTransfer = () => {
     ) {
       const newMedia = JSON.parse(message.content)
       newMedia['sender'] = message.senderAddress
-      setReceivedMedia((prevState) => [...prevState, newMedia])
+      newMedia['timestamp'] = message.header.timestamp
+      setReceivedMedia((prevState) => [newMedia, ...prevState])
     }
   }
 
@@ -222,6 +230,7 @@ const FileTransfer = () => {
               : 'Click here to refresh your inbox'}
           </button>
         </div>
+        {isFetchingMedia && <BezierSpinner />}
         {receivedMedia.length > 0 &&
           receivedMedia.map((m, i) => (
             <div
@@ -239,6 +248,7 @@ const FileTransfer = () => {
                 <a target="_blank">{m.description}</a>
               </Link>
               <div className="flex gap-4 absolute right-2">
+                <TimeAgo datetime={m.timestamp} />
                 <div className="mr-11 space-x-1 col-span-2 flex flex-row">
                   <Tag tagText="dude.eth" color="indigo-300" />
                   <Tag tagText="dude.eth" />

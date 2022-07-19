@@ -21,7 +21,7 @@ export const Transactions = () => {
   )
   if (!data || loading)
     return (
-      <div className="flex justify-center items-center my-11">
+      <div className="flex justify-center items-center my-11" key="Tspin">
         <BezierSpinner />
       </div>
     )

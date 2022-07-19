@@ -158,13 +158,11 @@ const Sidebar = () => {
                         <Transactions />
                       ) : tabName === 'Contacts' ? (
                         <ContactSlices />
+                      ) : tabName === 'FileTransfer' ? (
+                        <FileTransfer />
                       ) : (
-                        tabName === 'FileTransfer' ? (
-                          <FileTransfer />
-                        ) : (
-                          // <ProfileCard />
-                          <div>TODO</div>
-                        )
+                        // <ProfileCard />
+                        <div>TODO</div>
                       )}
                     </div>
                   </main>

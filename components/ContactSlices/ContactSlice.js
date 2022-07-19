@@ -8,9 +8,7 @@ export const Slice = ({ contact }) => {
   const dispatch = useDispatch()
 
   function onContactClick() {
-    dispatch(
-      openModal({ address: contact.bio.address })
-    )
+    dispatch(openModal({ address: contact.bio.address }))
   }
 
   return (

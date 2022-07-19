@@ -13,17 +13,6 @@ import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbook
 export default function Home() {
   const store = useSelector((state) => state.evm)
 
-  // This is the entrypoint to the users database.
-  const record = useViewerRecord(
-    'kjzl6cwe1jw147ce8khc2sfyarq74tngnxehvjdxjb0ec472uvucknju7188ntp'
-  )
-
-  useEffect(() => {
-    if (record.content) {
-      console.log('record', record)
-    }
-  }, [record])
-
   return (
     <div className="bg-mybg-light dark:bg-mybg-dark">
       <div className=" bg-cover min-h-screen flex flex-col">
@@ -37,23 +26,20 @@ export default function Home() {
             The PhoneBook <br />
             For All Blocqchains
           </h1> */}
-          <div
-            className='flex justify-center mt-11'
-          >
+          <div className="flex justify-center mt-11">
             <img
               // TODO: fix this horrible layout
               // layout='fill'
               width={600}
               // height={2000}
               // src={blocqbookTextTransparent}
-              src='/blocqBookLogo/text/blocqbookTextonlyTrans.png'
-              alt='eth_org_logo'
+              src="/blocqBookLogo/text/blocqbookTextonlyTrans.png"
+              alt="eth_org_logo"
             />
           </div>
           {store.connected && (
             <Link href={`/${store.account}`}>
               <div className="flex justify-center">
-
                 <div className="absolute top-3 bg-neonPurple rounded-full hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300">
                   {/* <MyButton text="My ☎️ book" primary={true} /> */}
                   <Image
@@ -61,7 +47,7 @@ export default function Home() {
                     width={200}
                     height={200}
                     src={blocqbookTextTransparent}
-                    alt='eth_org_logo'
+                    alt="eth_org_logo"
                   />
                 </div>
               </div>

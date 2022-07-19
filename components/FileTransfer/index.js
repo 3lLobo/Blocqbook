@@ -85,7 +85,7 @@ const FileTransfer = () => {
       }
       await conversation.send(messageToSend, {
         contentType: ContentTypeComposite,
-        contentFallback: 'sending you a pie'
+        contentFallback: 'sending you a pie',
       })
       setFiles([])
       setFilesCID([])

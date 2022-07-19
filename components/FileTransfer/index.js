@@ -85,6 +85,8 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
+    console.log('Fetching files...')
+    console.log('TOAST: Please verify your identity with xmtp')
     setIsFetchingMedia(true)
     setReceivedMedia([])
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -144,6 +146,11 @@ const FileTransfer = () => {
   useEffect(() => {
     if (files.length > 0) handleUpload()
   }, [files])
+
+  useEffect(() => {
+    if (!isFetchingMedia) getFiles()
+  }, [])
+  
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -219,16 +226,8 @@ const FileTransfer = () => {
         </div>
       </div>
       <div className="flex flex-col items-center gap-4 mt-8 w-11/12">
-        <div className="flex justify-between w-full">
-          <div className="text-2xl">Files received</div>
-          <button
-            onClick={getFiles}
-            className="bg-slate-900 text-slate-300 hover:bg-indigo-900 hover:text-snow group w-64 flex items-center justify-center px-2 py-2 text-sm font-medium rounded-md"
-          >
-            {receivedMedia.length === 0
-              ? 'To check your inbox LogIn to XMTP'
-              : 'Click here to refresh your inbox'}
-          </button>
+        <div className="w-full">
+          <div className="text-2xl text-left">Files received</div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
         {receivedMedia.length > 0 &&

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Client, CompositeCodec, ContentTypeComposite } from '@xmtp/xmtp-js'
+import { Client } from '@xmtp/xmtp-js'
 import { ethers } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
@@ -15,11 +15,6 @@ const FileTransfer = () => {
   const [address, setAddress] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [receivedMedia, setReceivedMedia] = useState([])
-  const contactBook = [
-    '0x31ca5fF81B577216e038412DD879b998ae7b71Db',
-    '0x5BCA9820F9e70B211055F96aB88e7103D5C304D2',
-    '0x7495F698C121569b6e1915d884e550B25Fa08615',
-  ]
 
   async function handleUpload() {
     setIsUploading(true)
@@ -65,9 +60,7 @@ const FileTransfer = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       await provider.send('eth_requestAccounts', [])
       const wallet = provider.getSigner()
-      const xmtp = await Client.create(wallet, {
-        codecs: [new CompositeCodec()],
-      })
+      const xmtp = await Client.create(wallet)
       const conversation = await xmtp.conversations.newConversation(address)
 
       // console.log('Loading messages...')
@@ -78,15 +71,12 @@ const FileTransfer = () => {
 
       // Send a message
       console.log('Sending file...')
-      const messageToSend = {
+      const messageToSend = JSON.stringify({
         message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
         cid: filesCID,
         description,
-      }
-      await conversation.send(messageToSend, {
-        contentType: ContentTypeComposite,
-        contentFallback: 'sending you a pie'
       })
+      await conversation.send(messageToSend)
       setFiles([])
       setFilesCID([])
       setDescription('')
@@ -111,23 +101,27 @@ const FileTransfer = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
     const wallet = provider.getSigner()
-    const xmtp = await Client.create(wallet, { codecs: [new CompositeCodec()] })
-    for await (const contact of contactBook) {
-      const conversation = await xmtp.conversations.newConversation(contact)
-      console.log(`Loading messages from ${contact}...`)
-      const messages = await conversation.messages()
-      for await (const message of messages) {
-        console.log('message:', message)
-        const sliced = message.content?.slice(0, 64)
-        if (
-          (sliced ===
-            '{"message":"THIS IS A FILE. CHECK IT ON FILETRANSFER TAB","cid":') &
-          (message.senderAddress !== wallet.getAddress())
-        ) {
-          const newMedia = JSON.parse(message.content)
-          newMedia['sender'] = message.senderAddress
-          setReceivedMedia((prevState) => [...prevState, newMedia])
+    const xmtp = await Client.create(wallet)
+    const allInteractions = await xmtp.conversations.list()
+    for await (const interaction of allInteractions) {
+      try {
+        const conversation = await xmtp.conversations.newConversation(interaction.peerAddress)
+        const messages = await conversation.messages()
+        for await (const message of messages) {
+          console.log('message:', message)
+          const sliced = message.content?.slice(0, 64)
+          if (
+            (sliced ===
+              '{"message":"THIS IS A FILE. CHECK IT ON FILETRANSFER TAB","cid":') &
+            (message.senderAddress !== wallet.getAddress())
+          ) {
+            const newMedia = JSON.parse(message.content)
+            newMedia['sender'] = message.senderAddress
+            setReceivedMedia((prevState) => [...prevState, newMedia])
+          }
         }
+      } catch (error) {
+        console.log('TOAST: ', error)
       }
     }
   }

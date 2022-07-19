@@ -7,11 +7,8 @@ export const AddressTag = ({ address, isOneHop }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
-  const contactName = store.contacts
-    ? store.contacts[address]
-      ? store.contacts[address].bio.name
-      : address
-    : address
+  const contactName = store.contacts[address] ?  store.contacts[address].bio?.name : address
+
 
   function onClick() {
     dispatch(

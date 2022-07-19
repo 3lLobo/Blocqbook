@@ -1,5 +1,5 @@
-import { Avatar } from '../Profile/avatar'
-import { Tag } from '../Profile/tag'
+import { Avatar } from '../Profile/Avatar'
+import { Tag } from '../Profile/Tag'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 
@@ -9,18 +9,21 @@ export const Slice = ({ contact }) => {
 
   function onContactClick() {
     dispatch(
-      openModal({ address: '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa' })
+      openModal({ address: contact.bio.address })
     )
   }
 
   return (
     <div className="bg-white dark:bg-slate-800 p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow">
-      <div className="w-10 ml-0 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer">
+      <div
+        onClick={onContactClick}
+        className="w-10 ml-0 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer"
+      >
         <Avatar scale={110} />
       </div>
       <button
         onClick={onContactClick}
-        className="mr-11 col-span-2 div-black dark:div-indigo-50 self-center hover:font-semibold hover:scale-105 transition-all duration-300 transform-gpu"
+        className="mr-11 col-span-2 div-black dark:div-indigo-50 self-center hover:font-semibold transition-all duration-300 transform-gpu"
       >
         {contact.bio.name || contact.address}
       </button>

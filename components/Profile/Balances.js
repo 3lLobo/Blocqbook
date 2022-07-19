@@ -1,7 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { ChainLogo } from '../ChainLogo'
-import { CoinBalance } from './coinBalance'
+import { CoinBalance } from './CoinBalance'
 
 export default function Balances({ balances }) {
   // const balances = balancesAddress

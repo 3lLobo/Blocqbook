@@ -2,12 +2,14 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useState } from 'react'
 import { useGetAllTokenBalancesQuery } from '../../app/covApi'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
-import { Avatar } from './avatar'
-import Balances from './balances'
-import { PrivTags } from './privTags'
-import { PubTags } from './pubTags'
+import { Avatar } from './Avatar'
+import Balances from './Balances'
+import { PrivTags } from './PrivTags'
+import { PubTags } from './PubTags'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
+import { useGetPoapsQuery } from '../../app/poapApi'
+
 
 export const dummyProfile = (name, address) => ({
   bio: {
@@ -37,26 +39,33 @@ export const dummyProfile = (name, address) => ({
     transferData: [],
   },
 })
-// TODO: make this a modal which pops up when you click on an address
-//  https://headlessui.com/react/dialog
 
-// TODO: get the address as props
+
 const ProfileCard = ({ profile }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
-  // const profile = store.contactInEdit
-
-  // const [profile, setProfile] = useState(dummyProfile)
   const { data, loading, error } = useGetAllTokenBalancesQuery(
-    {
+    profile?.bio?.address ? {
       address: profile.bio.address,
-    } || skipToken,
+    }
+      : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
 
+  console.log("Tokenbalance: ", data)
+  // fetch poaps
+  const { data: poapData, loading: poapLoading, error: poapError } = useGetPoapsQuery(profile?.bio?.address ? {
+    address: profile.bio.address,
+  }
+    : skipToken,
+    {
+      pollingInterval: 300_000, // 5 minutes is the covalent update time
+    })
+
+  console.log("POAP data", poapData)
   function handleChange(e) {
     e.preventDefault()
     switch (e.target.id) {
@@ -97,7 +106,7 @@ const ProfileCard = ({ profile }) => {
       </div>
 
       <textarea
-        className=" text-center backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-fit  border-slate-300 rounded-xl bg-transparent border-0 form-textarea resize-none text-bold text-3xl dark:text-indigo-50 mb-4"
+        className=" text-center backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-fit  border-slate-300 rounded-xl bg-transparent border-0 form-textarea resize-none text-bold text-3xl dark:text-indigo-50 mb-4 mx-2"
         rows="1"
         name="name"
         id="name"

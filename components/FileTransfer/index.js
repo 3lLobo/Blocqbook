@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
 import { Avatar } from '../Profile/Avatar'
-import { Tag } from '../Profile/tag'
+import { Tag } from '../Profile/Tag'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE

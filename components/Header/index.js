@@ -26,10 +26,10 @@ export default function Header() {
   const dispatch = useDispatch()
 
   const [connection, connect, disconnect] = useViewerConnection()
-  console.log('🚀 ~ file: index.js ~ line 28 ~ Header ~ connection', connection)
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
+    console.log('Ceramic client: ', connection)
     if (connection.status === 'idle') {
       checkIfRefresh()
     }
@@ -71,7 +71,6 @@ export default function Header() {
         console.log('Metamask disconnected!')
         disconnect()
         dispatch(resetEvm())
-        dispatch(resetContacts())
       }
     })
   }
@@ -113,11 +112,11 @@ export default function Header() {
                 hidden: { opacity: 0, x: -500 },
               }}
               title={store.account}
-              className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
+              className="ml-3 mr-auto px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
             >
               {store.account}
             </motion.div>
-            <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
+            {/* <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
               <motion.div
                 animate={{
                   rotate: [0, 0, 16, -11, 0, 0],
@@ -131,7 +130,7 @@ export default function Header() {
                   alt="ETHsvg"
                 />
               </motion.div>
-            </div>
+            </div> */}
             <div className="sm:inset-auto sm:ml-6 flex gap-2">
               <ColorModeToggle />
             </div>

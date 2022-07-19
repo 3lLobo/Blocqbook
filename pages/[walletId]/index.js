@@ -1,12 +1,12 @@
 import { Head } from '../../components/Head/index'
 import Header from '../../components/Header/index'
 import Sidebar from '../../components/SideBar'
-import ProfileCard from '../../components/Profile/profileCard'
+import ProfileCard from '../../components/Profile/ProfileCard'
 import { useViewerRecord } from '@self.id/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useEffect } from 'react'
-import { dummyProfile } from '../../components/Profile/profileCard'
+import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
 
 const Profile = () => {
@@ -19,7 +19,7 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('record', record)
+    console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected) {
       dispatch(
         setContacts({

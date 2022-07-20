@@ -1,20 +1,20 @@
 //  multiple nullable
 
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
-
+import { v4 as uuid } from 'uuid'
 
 // TODO: add these to global/user database
 const privateTags = [
   { id: 1, name: 'myContact', color: 'cyan-300' },
   { id: 2, name: 'besties', color: 'purple-400' },
   { id: 3, name: 'favo', color: 'amber-300' },
-  { id: 4, name: 'noFun', color: 'fuchsia-500' },
+  { id: 4, name: 'noFun', color: 'fuchsia-400' },
   { id: 5, name: 'rippedMeOff', color: 'red-600' },
 ]
 
@@ -22,25 +22,30 @@ export function PrivTags() {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
-  const [tags, setTags] = useState(privateTags)
+  const getTagList = () => {
+    // filter out the objects whos ids occur twice in the array of tags
+    const uniqueTags = store.contactInEdit.tags.privTags.filter((tag) => {
+      if (!privateTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+    const concatTags = [...privateTags, ...uniqueTags]
+    console.log("🚀 ~ file: PrivTags.js ~ line 33 ~ setOfTags ~ concatTags", concatTags)
 
-  // TODO: fix this logic
-  // useEffect(() => {
-  //   // Check which tags from the user profile are not included in the tag list and add them to the tag list.
-  //   const newTags = store.contactInEdit.tags.privTags.map((tag) => {
-  //     if (!privateTags.find((t) => t.id === tag.id)) {
-  //       return tag
-  //     }
-  //   }
-  //   )
-  //   setTags(() => [...privateTags, ...newTags])
-  // }, [store.contactInEdit.tags.privTags])
+    return [...privateTags, ...uniqueTags]
+  }
 
-  const [selected, setSelected] = useState(store.contactInEdit.tags.privTags.length !== 0
-    ? store.contactInEdit.tags.privTags
-    : [tags[0]])
 
-  console.log("🚀 ~ file: PrivTags.js ~ line 27 ~ PrivTags ~ store.contactInEdit.tags.privTags", store.contactInEdit.tags.privTags)
+  const [tags, setTags] = useState(() => getTagList())
+
+  const [selected, setSelected] = useState(
+    getTagList().filter((tag) => {
+      if (store.contactInEdit.tags.privTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+  )
+
   const [query, setQuery] = useState('')
   const [newColor, setNewColor] = useState(getRandomTailwindColor())
 
@@ -105,10 +110,7 @@ export function PrivTags() {
                   displayValue={query}
                   // value={query}
                   onChange={(event) => {
-                    // event.preventDefault()
-                    if (event.target.value != '') {
-                      setQuery(() => event.target.value)
-                    }
+                    setQuery(() => event.target.value)
                   }}
                 />
                 <Combobox.Button className="relative w-fit cursor-default rounded-lg py-2 px-1 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -133,7 +135,7 @@ export function PrivTags() {
                     query !== '' && (
                       <Combobox.Option
                         value={{
-                          id: tags.length + 1,
+                          id: uuid(),
                           name: query,
                           color: newColor,
                         }}

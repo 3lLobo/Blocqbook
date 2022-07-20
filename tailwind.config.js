@@ -8,7 +8,7 @@ module.exports = {
   ],
   safelist: [
     {
-      pattern: /bg-([a-z]+)-(100|200|300|400)/,
+      pattern: /bg-([a-z]+)-(100|200|300|400|600)/,
     },
   ],
   darkMode: ['class'],

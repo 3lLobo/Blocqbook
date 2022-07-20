@@ -5,19 +5,37 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateContact } from '../../app/contactSlice'
 
-// TODO: add these to global/user database + set fixed colors
+
+// TODO: add these to global/user database
 const publicTags = [
-  { id: 1, name: 'legit', color: getRandomTailwindColor() },
-  { id: 2, name: 'trust', color: getRandomTailwindColor() },
-  { id: 3, name: 'suspicious', color: getRandomTailwindColor() },
-  { id: 4, name: 'fraud', color: getRandomTailwindColor() },
-  { id: 5, name: 'rippedMeOff', color: getRandomTailwindColor() },
+  { id: 1, name: 'human', color: 'cyan-300' },
+  { id: 2, name: 'trust', color: 'green-300' },
+  { id: 3, name: 'smrtCntrct', color: 'violet-300' },
+  { id: 4, name: 'fraud', color: 'red-600' },
+  { id: 5, name: 'spam', color: 'rose-400' },
 ]
 
-export function PubTags({ profile }) {
+
+export function PubTags() {
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
   const [tags, setTags] = useState(publicTags)
-  const [selected, setSelected] = useState(profile.tags.pubTags)
+  const [selected, setSelected] = useState(store.contactInEdit.tags.pubTags)
+
+  function onChange(selectedTags) {
+    setSelected(selectedTags)
+    dispatch(
+      updateContact({
+        field1: 'tags',
+        field2: 'pubTags',
+        value: selectedTags,
+      })
+    )
+  }
 
   return (
     <div className="z-30 w-full flex flex-row-reverse items-center">
@@ -35,7 +53,7 @@ export function PubTags({ profile }) {
       <div className="w-full z-30  ">
         <Listbox
           value={selected}
-          onChange={setSelected}
+          onChange={onChange}
           name="assignee"
           multiple
         >
@@ -59,8 +77,7 @@ export function PubTags({ profile }) {
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? ' text-bold' : 'text-indigo-900'
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? ' text-bold' : 'text-indigo-900'
                       }`
                     }
                     value={person}
@@ -68,9 +85,8 @@ export function PubTags({ profile }) {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={`block truncate ${
-                            selected ? 'font-medium' : 'font-normal'
-                          }`}
+                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'
+                            }`}
                         >
                           {person.name}
                         </span>

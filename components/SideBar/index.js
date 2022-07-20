@@ -12,6 +12,7 @@ import { Transactions } from '../Transactions'
 import { useState } from 'react'
 import { ContactSlices } from '../ContactSlices'
 import FileTransfer from '../FileTransfer'
+import Image from 'next/image'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -172,6 +173,16 @@ const Sidebar = () => {
           </Tab.Panels>
         </div>
       </Tab.Group>
+      {/* <div
+      // TODO: position the image.
+        className='relative flex flex-grow w-64 h-64 aspect-1 mt-11'
+      >
+        <Image
+          layout='fill'
+          alt='pbLogo'
+          src='/blocqBookLogo/icon/blocqbookTransparent2.png'
+        />
+      </div> */}
     </div>
 
     // <div className='flex flex-row relative'>

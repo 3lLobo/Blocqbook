@@ -129,8 +129,8 @@ const ProfileCard = ({ profile }) => {
         // TODO: open a separate modal to choose the tags and confirm. display the tags here without choice to change
         className="mt-3"
       >
-        <PrivTags profile={profile} />
-        <PubTags profile={profile} />
+        <PrivTags />
+        <PubTags />
       </div>
       <div className="mt-3 prose backdrop-blur-xl dark:backdrop-brightness-110 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex flex-grow w-full sm:text-sm border-slate-300 rounded-xl">
         <textarea

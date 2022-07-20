@@ -20,15 +20,14 @@ const Profile = () => {
 
   useEffect(() => {
     if (!store.hasInitialRecord && evmStore.connected && record.content) {
-      console.log('Ceramic record: ', record)
+      console.log('Ceramic record loaded: ', record)
       dispatch(
         setContacts({
           contacts: record.content?.contacts,
           isInitialRecord: true,
         })
       )
-    }
-    if (
+    } else if (
       !store.isSyncedCeramic &&
       store.hasInitialRecord &&
       evmStore.connected

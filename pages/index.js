@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useViewerRecord } from '@self.id/react'
 import { useEffect, useState } from 'react'
 
-import ethLogo from '../public/eth_org_logo.svg'
+import blocqbookLogo from '../public/blocqBookLogo/logoText/blocqbookTextTransparentBanner.png'
 import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbookTextTransparent.png'
 export default function Home() {
   const store = useSelector((state) => state.evm)
@@ -26,33 +26,40 @@ export default function Home() {
             The PhoneBook <br />
             For All Blocqchains
           </h1> */}
-          <div className="flex justify-center mt-11">
+          <div className="flex flex-col justify-center mt-11">
+            {store.connected && (
+              <Link href={`/${store.account}`}>
+                <div className="flex justify-center">
+                  <div
+                    // TODO: make this button rounded
+                    className="mx-5 relative flex flex-grow max-w-xl h-24 rounded-full bg-neonPurple dark:bg-[#441B94] hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300"
+                    style={{ width: '100%' }}
+                  >
+                    <Image
+                      layout="fill"
+                      // width={200}
+                      // height={200}
+                      src={blocqbookLogo}
+                      alt="bannerButton"
+                    />
+                  </div>
+                </div>
+              </Link>
+            )}
             <img
               // TODO: fix this horrible layout
               // layout='fill'
-              width={600}
+              width={630}
               // height={2000}
               // src={blocqbookTextTransparent}
-              src="/blocqBookLogo/text/blocqbookTextonlyTrans.png"
+              src={
+                store.connected
+                  ? '/blocqBookLogo/text/blocqbookTextonlyTrans.png'
+                  : '/blocqBookLogo/text/blocqbookTextTransparent.png'
+              }
               alt="eth_org_logo"
             />
           </div>
-          {store.connected && (
-            <Link href={`/${store.account}`}>
-              <div className="flex justify-center">
-                <div className="absolute top-3 bg-neonPurple rounded-full hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300">
-                  {/* <MyButton text="My ☎️ book" primary={true} /> */}
-                  <Image
-                    // layout='fill'
-                    width={200}
-                    height={200}
-                    src={blocqbookTextTransparent}
-                    alt="eth_org_logo"
-                  />
-                </div>
-              </div>
-            </Link>
-          )}
         </main>
         <footer className="mt-auto mb-0"></footer>
       </div>

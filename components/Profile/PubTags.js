@@ -8,7 +8,6 @@ import { getRandomTailwindColor } from '../../lib/randomColors'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 
-
 // TODO: add these to global/user database
 const publicTags = [
   { id: 1, name: 'human', color: 'cyan-300' },
@@ -18,13 +17,18 @@ const publicTags = [
   { id: 5, name: 'spam', color: 'rose-400' },
 ]
 
-
 export function PubTags() {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
-  const [tags, setTags] = useState(publicTags)
-  const [selected, setSelected] = useState(store.contactInEdit.tags.pubTags)
+  const [tags, setTags] = useState(() => publicTags)
+  const [selected, setSelected] = useState(() =>
+    publicTags.filter((tag) => {
+      if (store.contactInEdit.tags.pubTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+  )
 
   function onChange(selectedTags) {
     setSelected(selectedTags)
@@ -51,12 +55,7 @@ export function PubTags() {
         )}
       </div>
       <div className="w-full z-30  ">
-        <Listbox
-          value={selected}
-          onChange={onChange}
-          name="assignee"
-          multiple
-        >
+        <Listbox value={selected} onChange={onChange} name="assignee" multiple>
           <div className="relative mt-1 flex flex-col">
             <div className="relative w-fit cursor-default rounded-lg py-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
               <Listbox.Button className=" inset-y-0 right-0 flex items-center px-1 ">
@@ -77,7 +76,8 @@ export function PubTags() {
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? ' text-bold' : 'text-indigo-900'
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                        active ? ' text-bold' : 'text-indigo-900'
                       }`
                     }
                     value={person}
@@ -85,8 +85,9 @@ export function PubTags() {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'
-                            }`}
+                          className={`block truncate ${
+                            selected ? 'font-medium' : 'font-normal'
+                          }`}
                         >
                           {person.name}
                         </span>

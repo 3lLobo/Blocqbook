@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useViewerRecord } from '@self.id/react'
 import { useEffect, useState } from 'react'
 
-import blocqbookLogo from '../public/blocqBookLogo/logoText/blocqbookTextTransparentBanner.png' 
+import blocqbookLogo from '../public/blocqBookLogo/logoText/blocqbookTextTransparentBanner.png'
 import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbookTextTransparent.png'
 export default function Home() {
   const store = useSelector((state) => state.evm)
@@ -30,13 +30,13 @@ export default function Home() {
             {store.connected && (
               <Link href={`/${store.account}`}>
                 <div className="flex justify-center">
-                  <div 
-                  // TODO: make this button rounded
-                  className="mx-5 relative flex flex-grow max-w-xl h-24 rounded-full bg-neonPurple dark:bg-[#441B94] hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300"
-                  style={{width: '100%', }}
+                  <div
+                    // TODO: make this button rounded
+                    className="mx-5 relative flex flex-grow max-w-xl h-24 rounded-full bg-neonPurple dark:bg-[#441B94] hover:cursor-pointer hover:brightness-105 hover:scale-105 transition-all ease-in-out duration-300"
+                    style={{ width: '100%' }}
                   >
                     <Image
-                      layout='fill'
+                      layout="fill"
                       // width={200}
                       // height={200}
                       src={blocqbookLogo}
@@ -52,9 +52,11 @@ export default function Home() {
               width={630}
               // height={2000}
               // src={blocqbookTextTransparent}
-              src={store.connected
-                ? "/blocqBookLogo/text/blocqbookTextonlyTrans.png"
-                : "/blocqBookLogo/text/blocqbookTextTransparent.png"}
+              src={
+                store.connected
+                  ? '/blocqBookLogo/text/blocqbookTextonlyTrans.png'
+                  : '/blocqBookLogo/text/blocqbookTextTransparent.png'
+              }
               alt="eth_org_logo"
             />
           </div>

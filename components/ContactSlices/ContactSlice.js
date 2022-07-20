@@ -14,14 +14,10 @@ export const Slice = ({ contact }) => {
   return (
     <div
       // TODO: make this a grid.
-      className="bg-indigo-200 dark:bg-indigo-400 p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  ">
-      <div
-        onClick={onContactClick}
-        className="w-10 ml-0 hover:cursor-pointer"
-      >
-        <div
-          className="hover:scale-105 transition-all duration-300 transform-gpu"
-        >
+      className="bg-indigo-200 dark:bg-indigo-400 p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  "
+    >
+      <div onClick={onContactClick} className="w-10 ml-0 hover:cursor-pointer">
+        <div className="hover:scale-105 transition-all duration-300 transform-gpu">
           <Avatar scale={110} />
         </div>
       </div>
@@ -33,12 +29,19 @@ export const Slice = ({ contact }) => {
       </button>
       <div
         // TODO: align tags to the left
-        className="mr-11 w-44 space-x-1 col-span-2 flex flex-row overflow-x-scroll scrollbar-hide">
+        className="mr-11 w-44 space-x-1 col-span-2 flex flex-row overflow-x-scroll scrollbar-hide"
+      >
         {contact.tags.privTags.map((tag) => (
           <Tag tagText={tag.name} color={tag.color} key={tag.id} />
-        ))
-        }
-
+        ))}
+      </div>
+      <div
+        // TODO: align tags to the left
+        className="mr-11 w-44 space-x-1 col-span-2 flex flex-row overflow-x-scroll scrollbar-hide"
+      >
+        {contact.tags.pubTags.map((tag) => (
+          <Tag tagText={tag.name} color={tag.color} key={tag.id} isPub={true} />
+        ))}
       </div>
       <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
         {

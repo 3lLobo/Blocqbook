@@ -16,9 +16,7 @@ const emptyProfile = (address, isOneHop) => ({
   isSelf: false,
   isOneHop: isOneHop || false,
   tags: {
-    privTags: [
-      { id: 1, name: 'myContact', color: 'cyan-300' },
-    ],
+    privTags: [{ id: 1, name: 'myContact', color: 'cyan-300' }],
     pubTags: [],
   },
   poap: {

@@ -16,7 +16,9 @@ const emptyProfile = (address, isOneHop) => ({
   isSelf: false,
   isOneHop: isOneHop || false,
   tags: {
-    privTags: [],
+    privTags: [
+      { id: 1, name: 'myContact', color: 'cyan-300' },
+    ],
     pubTags: [],
   },
   poap: {
@@ -91,15 +93,15 @@ export const contactSlice = createSlice({
     },
     updateContact: (state, action) => {
       // update a field of the contact
-      if (
-        ['bio', 'tags', 'poap', 'xmltChat', 'fileTransfer'].includes(
-          action.payload.field1
-        )
-      ) {
+      // Depending on how many arguments the payload has, we know how deeply nested the update field lays.
+      if (Object.keys(action.payload).length === 3) {
         state.contactInEdit[action.payload.field1][action.payload.field2] =
           action.payload.value
-      } else {
+      } else if (Object.keys(action.payload).length === 2) {
         state.contactInEdit[action.payload.field1] = action.payload.value
+      } else {
+        console.error('Invalid payload for updateContact!')
+        return
       }
       state.isUpdated = true
     },

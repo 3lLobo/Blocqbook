@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { ContactSlices } from '../ContactSlices'
 import FileTransfer from '../FileTransfer'
 import Image from 'next/image'
+import Messenger from '../Messenger'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -159,6 +160,8 @@ const Sidebar = () => {
                         <Transactions />
                       ) : tabName === 'Contacts' ? (
                         <ContactSlices />
+                      ) : tabName === 'Messenger' ? (
+                        <Messenger />
                       ) : tabName === 'FileTransfer' ? (
                         <FileTransfer />
                       ) : (

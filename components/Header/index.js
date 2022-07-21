@@ -12,14 +12,16 @@ import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
+import { useRouter } from 'next/router'
+
 
 async function createAuthProvider() {
   var provider
   // The following assumes there is an injected `window.ethereum` provider
   await window.ethereum
-    .request({ method: 'eth_requestAccounts' })
-    .then(() => {
-      const address = window.ethereum.selectedAddress
+  .request({ method: 'eth_requestAccounts' })
+  .then(() => {
+    const address = window.ethereum.selectedAddress
       provider = new EthereumAuthProvider(window.ethereum, address)
     })
     .catch((error) => {
@@ -30,10 +32,11 @@ async function createAuthProvider() {
         console.error(error)
       }
     })
-  return provider
-}
-
-export default function Header() {
+    return provider
+  }
+  
+  export default function Header() {
+  const router = useRouter()
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
@@ -59,6 +62,7 @@ export default function Header() {
           chainId: chainId.toString(),
         })
       )
+      router.push('/rotarydial')
     } else {
       dispatch(resetEvm())
       dispatch(resetContacts())

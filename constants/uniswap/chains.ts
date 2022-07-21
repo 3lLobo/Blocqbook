@@ -46,7 +46,7 @@ export const CHAIN_IDS_TO_NAMES = {
   [SupportedChainId.OPTIMISTIC_KOVAN]: 'optimistic_kovan',
   [SupportedChainId.AVALANCHE]: 'avalanche',
   [SupportedChainId.AVALANCHE_FUJI]: 'avalanche_fuji',
-  [SupportedChainId.BSC]: 'bsc'
+  [SupportedChainId.BSC]: 'bsc',
 }
 
 /**
@@ -87,7 +87,6 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.AVALANCHE_FUJI,
   SupportedChainId.FANTOM,
   SupportedChainId.FANTOM_TESTNET,
-
 ] as const
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]

@@ -126,9 +126,7 @@ export function PrivTags() {
                 enterTo="opacity-1000"
                 afterLeave={() => setQuery('')}
               >
-                <Combobox.Options 
-                className="absolute mt-1 max-h-60 w-full overflow-auto scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm  dark:bg-zinc-800 dark:bg-opacity-80"
-                >
+                <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm  dark:bg-zinc-800 dark:bg-opacity-80">
                   {!filteredTags?.map((fTag) => fTag.name).includes(query) &&
                     query !== '' && (
                       <Combobox.Option
@@ -155,7 +153,9 @@ export function PrivTags() {
                         key={person.id}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? ' text-bold' : 'text-indigo-900  dark:text-snow'
+                            active
+                              ? ' text-bold'
+                              : 'text-indigo-900  dark:text-snow'
                           }`
                         }
                         value={person}

@@ -3,7 +3,6 @@ import { Tag } from '../Profile/Tag'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 
-
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()

@@ -97,8 +97,7 @@ const ProfileCard = ({ profile }) => {
 
   return (
     <div
-      borderRadius="md"
-      className="border-2 self-center grid justify-items-center m-8 p-4 shadow-lg"
+      className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg"
     >
       <div
         // TODO: onClick open a modal where the user can input a new image URL, which gets previews and upon confirmation, saved to the profile

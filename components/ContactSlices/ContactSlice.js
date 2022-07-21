@@ -3,6 +3,7 @@ import { Tag } from '../Profile/Tag'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
 
+
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ export const Slice = ({ contact }) => {
   return (
     <div
       // TODO: make this a grid.
-      className="bg-indigo-200 dark:bg-indigo-400 p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  "
+      className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  "
     >
       <div onClick={onContactClick} className="w-10 ml-0 hover:cursor-pointer">
         <div className="hover:scale-105 transition-all duration-300 transform-gpu">

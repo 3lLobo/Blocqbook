@@ -37,10 +37,17 @@ const useConversation = (
       console.log('Listing messages for peer address', conversation.peerAddress)
       setLoading(true)
       const msgs = await conversation.messages({ pageSize: 100 })
+      const msgsUpdated = msgs.map(m => (
+        m.content.slice(0,21) === '{"type":"file","cid":' 
+          ? {...m, content: 'This is a File. You can check it on FileTransfer tab.'} 
+          : (m)
+      ))
+      console.log('msgs:', msgs);
+console.log('msgsUpdated:', msgsUpdated);
       if (dispatchMessages) {
         dispatchMessages({
           peerAddress: conversation.peerAddress,
-          messages: msgs,
+          messages: msgsUpdated,
         })
       }
 

@@ -14,14 +14,8 @@ import XmtpInfoPanel from './XmtpInfoPanel.tsx'
 import UserMenu from './UserMenu.tsx'
 import BackArrow from './BackArrow.tsx'
 
-const LayoutFlex: React.FC = ({ children }) => (
-    <div className="flex">
-      {children}
-    </div>
-)
-
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-full md:w-80 flex-col flex-grow fixed inset-y-0">
+  <aside className="flex w-full md:w-84 flex-col flex-grow fixed inset-y-0">
     <div className="flex flex-col flex-grow md:border-r md:border-gray-200 bg-white overflow-y-auto">
       {children}
     </div>
@@ -63,7 +57,7 @@ const ConversationLayout: React.FC = ({ children }) => {
   return (
     <>
       <TopBarLayout>
-        <div className="flex items-center ml-3">
+        <div className="md:hidden flex items-center ml-3">
           <BackArrow onClick={handleBackArrowClick} />
         </div>
         <RecipientControl
@@ -127,7 +121,13 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <>
-      <LayoutFlex>
+        <Head>
+          <title>Chat via XMTP</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+          />
+        </Head>
         <NavigationView>
           <NavigationColumnLayout>
             <NavigationHeaderLayout>
@@ -152,7 +152,6 @@ const Layout: React.FC = ({ children }) => {
             <XmtpInfoPanel onConnect={handleConnect} />
           )} */}
         </ConversationView>
-      </LayoutFlex>
       </>
   )
 }

@@ -9,7 +9,6 @@ export const ContactSlices = () => {
 
   return (
     <div className=" w-full place-items-center">
-      <Slice key={1234} contact={emptyProfile("0x111", true)} />
       {contacts?.map((contact) => {
         return <Slice key={contact.address} contact={contact} />
       })}

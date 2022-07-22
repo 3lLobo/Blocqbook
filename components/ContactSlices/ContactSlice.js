@@ -22,7 +22,6 @@ export const Slice = ({ contact }) => {
         dispatch(deleteContact({ address: contact.bio.address }))
       }} />
       <div
-        // TODO: make this a nice grid.
         className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  "
       >
         <div onClick={onContactClick} className="w-10 ml-0 hover:cursor-pointer">

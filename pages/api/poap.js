@@ -3,7 +3,7 @@ import fs from 'fs'
 //Dispenser of URLs. We have 100 assigned. Now it's on dev mode
 //I have made a 'config.poap copy' so we don't waste urls
 
-//If we claim an NFT we need to delete the copy and make a copy 
+//If we claim an NFT we need to delete the copy and make a copy
 //of the functional one.
 
 export default function handler(req, res) {

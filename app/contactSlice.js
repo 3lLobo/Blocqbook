@@ -16,7 +16,7 @@ const emptyProfile = (address, isOneHop) => ({
   isSelf: false,
   isOneHop: isOneHop || false,
   tags: {
-    privTags: [],
+    privTags: [{ id: 1, name: 'myContact', color: 'cyan-300' }],
     pubTags: [],
   },
   poap: {
@@ -50,33 +50,15 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action) => {
-      console.log('🚀 ~ file: contactSlice.js ~ line 52 ~ action', action)
+      console.log('Open modal: ', action)
       // When the profile card modal is opened, we either fetch the existing contact or build the initial structure.
-      if (state.contacts) {
-        if (Object.keys(state.contacts).includes(action.payload.address)) {
-          state.contactInEdit = state.contacts[action.payload.address]
-          state.contactInEditExists = true
-      //this else is duplicated but I can't come with a better solution that doesn't
-      //break when state.contacts is empty
-        } else {
-          const newProfile = emptyProfile(
-            action.payload.address,
-            action.payload.isOneHop
-          )
-          console.log(
-            '🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile',
-            newProfile
-          )
-          state.contactInEdit = newProfile
-        }
+      if (Object.keys(state.contacts).includes(action.payload.address)) {
+        state.contactInEdit = state.contacts[action.payload.address]
+        state.contactInEditExists = true
       } else {
         const newProfile = emptyProfile(
           action.payload.address,
           action.payload.isOneHop
-        )
-        console.log(
-          '🚀 ~ file: contactSlice.js ~ line 61 ~ newProfile',
-          newProfile
         )
         state.contactInEdit = newProfile
       }
@@ -88,14 +70,7 @@ export const contactSlice = createSlice({
       // Check if the contact in edit is different from the empty profile.
       // If so, we need to update the contact in the store.
       if (action.payload.saveContact) {
-        if (state.contacts) {
-          state.contacts[state.addressModal] = state.contactInEdit
-        } else {
-          const initialContactState = {
-            [state.addressModal]: state.contactInEdit,
-          }
-          state.contacts = initialContactState
-        }
+        state.contacts[state.addressModal] = state.contactInEdit
         state.isSyncedCeramic = false
         console.log('Contact updated!')
       } else {
@@ -116,15 +91,15 @@ export const contactSlice = createSlice({
     },
     updateContact: (state, action) => {
       // update a field of the contact
-      if (
-        ['bio', 'tags', 'poap', 'xmltChat', 'fileTransfer'].includes(
-          action.payload.field1
-        )
-      ) {
+      // Depending on how many arguments the payload has, we know how deeply nested the update field lays.
+      if (Object.keys(action.payload).length === 3) {
         state.contactInEdit[action.payload.field1][action.payload.field2] =
           action.payload.value
-      } else {
+      } else if (Object.keys(action.payload).length === 2) {
         state.contactInEdit[action.payload.field1] = action.payload.value
+      } else {
+        console.error('Invalid payload for updateContact!')
+        return
       }
       state.isUpdated = true
     },

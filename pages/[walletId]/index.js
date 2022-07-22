@@ -1,12 +1,12 @@
 import { Head } from '../../components/Head/index'
 import Header from '../../components/Header/index'
 import Sidebar from '../../components/SideBar'
-import ProfileCard from '../../components/Profile/profileCard'
+import ProfileCard from '../../components/Profile/ProfileCard'
 import { useViewerRecord } from '@self.id/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useEffect } from 'react'
-import { dummyProfile } from '../../components/Profile/profileCard'
+import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
 
 const Profile = () => {
@@ -19,16 +19,15 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('record', record)
-    if (!store.hasInitialRecord && evmStore.connected) {
+    if (!store.hasInitialRecord && evmStore.connected && record.content) {
+      console.log('Ceramic record loaded: ', record)
       dispatch(
         setContacts({
           contacts: record.content?.contacts,
           isInitialRecord: true,
         })
       )
-    }
-    if (
+    } else if (
       !store.isSyncedCeramic &&
       store.hasInitialRecord &&
       evmStore.connected
@@ -36,7 +35,14 @@ const Profile = () => {
       record.set({ contacts: store.contacts })
       dispatch(setSyncedCeramic({ isSyncedCeramic: true }))
     }
-  }, [record, evmStore.connected, dispatch])
+  }, [
+    record,
+    evmStore.connected,
+    dispatch,
+    store.contacts,
+    store.hasInitialRecord,
+    store.isSyncedCeramic,
+  ])
 
   // async function clickContacts() {
   //   record.set({

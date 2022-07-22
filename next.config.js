@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     domains: ['i.etsystatic.com', 'www.covalenthq.com', 'logos.covalenthq.com'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {

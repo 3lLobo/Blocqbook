@@ -3,21 +3,43 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Tag } from './tag'
+import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateContact } from '../../app/contactSlice'
 
-// TODO: add these to global/user database + set fixed colors
+// TODO: add these to global/user database
 const publicTags = [
-  { id: 1, name: 'legit', color: getRandomTailwindColor() },
-  { id: 2, name: 'trust', color: getRandomTailwindColor() },
-  { id: 3, name: 'suspicious', color: getRandomTailwindColor() },
-  { id: 4, name: 'fraud', color: getRandomTailwindColor() },
-  { id: 5, name: 'rippedMeOff', color: getRandomTailwindColor() },
+  { id: 1, name: 'human', color: 'cyan-300' },
+  { id: 2, name: 'trust', color: 'green-300' },
+  { id: 3, name: 'smrtCntrct', color: 'violet-300' },
+  { id: 4, name: 'fraud', color: 'red-600' },
+  { id: 5, name: 'spam', color: 'rose-400' },
 ]
 
-export function PubTags({ profile }) {
-  const [tags, setTags] = useState(publicTags)
-  const [selected, setSelected] = useState(profile.tags.pubTags)
+export function PubTags() {
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
+  const [tags, setTags] = useState(() => publicTags)
+  const [selected, setSelected] = useState(() =>
+    publicTags.filter((tag) => {
+      if (store.contactInEdit.tags.pubTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+  )
+
+  function onChange(selectedTags) {
+    setSelected(selectedTags)
+    dispatch(
+      updateContact({
+        field1: 'tags',
+        field2: 'pubTags',
+        value: selectedTags,
+      })
+    )
+  }
 
   return (
     <div className="z-30 w-full flex flex-row-reverse items-center">
@@ -33,12 +55,7 @@ export function PubTags({ profile }) {
         )}
       </div>
       <div className="w-full z-30  ">
-        <Listbox
-          value={selected}
-          onChange={setSelected}
-          name="assignee"
-          multiple
-        >
+        <Listbox value={selected} onChange={onChange} name="assignee" multiple>
           <div className="relative mt-1 flex flex-col">
             <div className="relative w-fit cursor-default rounded-lg py-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
               <Listbox.Button className=" inset-y-0 right-0 flex items-center px-1 ">

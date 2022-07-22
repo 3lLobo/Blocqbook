@@ -6,28 +6,46 @@ import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, setConnection } from '../../app/evmSlice'
+import { reset as resetEvm, setConnection } from '../../app/evmSlice'
+import { reset as resetContacts } from '../../app/contactSlice'
 import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 
 async function createAuthProvider() {
+  var provider
   // The following assumes there is an injected `window.ethereum` provider
-  await window.ethereum.send('eth_requestAccounts')
-  const address = window.ethereum.selectedAddress
-  return new EthereumAuthProvider(window.ethereum, address)
+  await window.ethereum
+    .request({ method: 'eth_requestAccounts' })
+    .then(() => {
+      const address = window.ethereum.selectedAddress
+      provider = new EthereumAuthProvider(window.ethereum, address)
+    })
+    .catch((error) => {
+      if (error.code === 4001) {
+        // EIP-1193 userRejectedRequest error
+        console.log('Please connect to MetaMask.')
+      } else {
+        console.error(error)
+      }
+    })
+  return provider
 }
 
 export default function Header() {
+  const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
   const [connection, connect, disconnect] = useViewerConnection()
-  console.log('🚀 ~ file: index.js ~ line 28 ~ Header ~ connection', connection)
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
+    console.log('Ceramic client: ', connection)
+    if (connection.status === 'idle') {
+      checkIfRefresh()
+    }
     if (connection.status === 'connected') {
       setIsConnected(true)
       const chainId =
@@ -42,24 +60,39 @@ export default function Header() {
         })
       )
     } else {
-      dispatch(reset())
+      dispatch(resetEvm())
+      dispatch(resetContacts())
       setIsConnected(false)
     }
   }, [connection.status, dispatch])
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
+      //since there's no way to disconnect metamask from frontend and
+      //we check if there's an account to rehydrate our app. We need a
+      //toast here to ask to disconnect metamask aswell
       disconnect()
+      setIsAbleToRefresh(false)
     } else {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
-      // Set event listener for disconnecting a wallet
-      window.ethereum.on('disconnect', async () => {
-        // TODO: make this a toast
+    }
+    // Set event listener for disconnecting a wallet
+    window.ethereum.on('accountsChanged', (accounts) => {
+      // If user has locked/logout from MetaMask, this resets the accounts array to empty
+      if (!accounts.length) {
         console.log('Metamask disconnected!')
-        await disconnect()
-        dispatch(reset())
-      })
+        disconnect()
+        dispatch(resetEvm())
+      }
+    })
+  }
+
+  const checkIfRefresh = async () => {
+    const checkAccount = await window?.ethereum?.selectedAddress
+    if (checkAccount && isAbleToRefresh) {
+      const authProvider = await createAuthProvider()
+      await connect(authProvider)
     }
   }
 
@@ -92,11 +125,11 @@ export default function Header() {
                 hidden: { opacity: 0, x: -500 },
               }}
               title={store.account}
-              className="ml-3 px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
+              className="ml-3 mr-auto px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
             >
               {store.account}
             </motion.div>
-            <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
+            {/* <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
               <motion.div
                 animate={{
                   rotate: [0, 0, 16, -11, 0, 0],
@@ -110,7 +143,7 @@ export default function Header() {
                   alt="ETHsvg"
                 />
               </motion.div>
-            </div>
+            </div> */}
             <div className="sm:inset-auto sm:ml-6 flex gap-2">
               <ColorModeToggle />
             </div>

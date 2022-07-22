@@ -5,6 +5,7 @@ export const poapApi = createApi({
   reducerPath: 'poapApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.poap.tech/actions/',
+    // mode: 'no-cors',
     headers: {
       Accept: 'application/json',
       'X-API-Key': process.env.NEXT_PUBLIC_POAP_API_KEY,

@@ -1,31 +1,55 @@
 //  multiple nullable
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Tag } from './tag'
+import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateContact } from '../../app/contactSlice'
+import { v4 as uuid } from 'uuid'
 
 // TODO: add these to global/user database
 const privateTags = [
-  { id: 1, name: 'myContact', color: getRandomTailwindColor() },
-  { id: 2, name: 'besties', color: getRandomTailwindColor() },
-  { id: 3, name: 'favo', color: getRandomTailwindColor() },
-  { id: 4, name: 'noFun', color: getRandomTailwindColor() },
-  { id: 5, name: 'rippedMeOff', color: getRandomTailwindColor() },
+  { id: 1, name: 'myContact', color: 'cyan-300' },
+  { id: 2, name: 'besties', color: 'purple-400' },
+  { id: 3, name: 'favo', color: 'amber-300' },
+  { id: 4, name: 'noFun', color: 'fuchsia-400' },
+  { id: 5, name: 'rippedMeOff', color: 'red-600' },
 ]
 
 export function PrivTags() {
-  const [tags, setTags] = useState(privateTags)
-  const [selected, setSelected] = useState([tags[0], tags[1]])
+  const store = useSelector((state) => state.contact)
+  const dispatch = useDispatch()
+
+  const getTagList = () => {
+    // filter out the objects whos ids occur twice in the array of tags
+    const uniqueTags = store.contactInEdit.tags.privTags.filter((tag) => {
+      if (!privateTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+    return [...privateTags, ...uniqueTags]
+  }
+
+  // Need to use the same input source for the list of tags.
+  const [tags, setTags] = useState(() => getTagList())
+  const [selected, setSelected] = useState(() =>
+    getTagList().filter((tag) => {
+      if (store.contactInEdit.tags.privTags.map((t) => t.id).includes(tag.id)) {
+        return tag
+      }
+    })
+  )
+
   const [query, setQuery] = useState('')
   const [newColor, setNewColor] = useState(getRandomTailwindColor())
 
   const filteredTags =
     query === ''
       ? tags
-      : tags.filter((person) =>
-          person.name
+      : tags.filter((tag) =>
+          tag.name
             .toLowerCase()
             .replace(/\s+/g, '')
             .includes(query.toLowerCase().replace(/\s+/g, ''))
@@ -42,6 +66,13 @@ export function PrivTags() {
       })
     }
     setSelected(selectedTags)
+    dispatch(
+      updateContact({
+        field1: 'tags',
+        field2: 'privTags',
+        value: selectedTags,
+      })
+    )
   }
 
   return (
@@ -75,10 +106,7 @@ export function PrivTags() {
                   displayValue={query}
                   // value={query}
                   onChange={(event) => {
-                    event.preventDefault()
-                    if (event.target.value != '') {
-                      setQuery(() => event.target.value)
-                    }
+                    setQuery(() => event.target.value)
                   }}
                 />
                 <Combobox.Button className="relative w-fit cursor-default rounded-lg py-2 px-1 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -103,7 +131,7 @@ export function PrivTags() {
                     query !== '' && (
                       <Combobox.Option
                         value={{
-                          id: tags.length + 1,
+                          id: uuid(),
                           name: query,
                           color: newColor,
                         }}

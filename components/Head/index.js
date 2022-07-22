@@ -4,10 +4,10 @@ export const Head = () => {
   return (
     <div>
       <HeadContainer>
-        <title>Blocqchain☎️book</title>
+        <title>Blocq☎️book</title>
         <meta
           name="description"
-          content="Manage your blockchain acquaintances."
+          content="Your Phonebook for all Blocqchains."
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </HeadContainer>

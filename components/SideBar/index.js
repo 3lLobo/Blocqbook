@@ -7,11 +7,12 @@ import {
   MenuAlt3Icon,
   SearchIcon,
 } from '@heroicons/react/solid'
-import ProfileCard from '../Profile/profileCard'
+import ProfileCard from '../Profile/ProfileCard'
 import { Transactions } from '../Transactions'
 import { useState } from 'react'
-import { ContactSlices } from '../contactSlices'
+import { ContactSlices } from '../ContactSlices'
 import FileTransfer from '../FileTransfer'
+import Image from 'next/image'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -158,12 +159,11 @@ const Sidebar = () => {
                         <Transactions />
                       ) : tabName === 'Contacts' ? (
                         <ContactSlices />
+                      ) : tabName === 'FileTransfer' ? (
+                        <FileTransfer />
                       ) : (
-                        tabName === 'FileTransfer' ? (
-                          <FileTransfer />
-                        ) : (
-                          <ProfileCard />
-                        )
+                        // <ProfileCard />
+                        <div>TODO</div>
                       )}
                     </div>
                   </main>
@@ -173,6 +173,16 @@ const Sidebar = () => {
           </Tab.Panels>
         </div>
       </Tab.Group>
+      {/* <div
+      // TODO: position the image.
+        className='relative flex flex-grow w-64 h-64 aspect-1 mt-11'
+      >
+        <Image
+          layout='fill'
+          alt='pbLogo'
+          src='/blocqBookLogo/icon/blocqbookTransparent2.png'
+        />
+      </div> */}
     </div>
 
     // <div className='flex flex-row relative'>

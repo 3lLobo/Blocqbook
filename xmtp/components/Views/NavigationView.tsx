@@ -13,7 +13,7 @@ const NavigationView = ({ children }: NavigationViewProps): JSX.Element => {
   return (
     <>
       <Transition.Root show={show} as={Fragment}>
-        <div className="fixed inset-0 flex bg-white md:hidden">
+        <div className="fixed inset-0 flex bg-white ">
           <Transition.Child
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
@@ -31,7 +31,7 @@ const NavigationView = ({ children }: NavigationViewProps): JSX.Element => {
       </Transition.Root>
 
       {/* Always show in desktop layout */}
-      <div className="hidden md:flex">{children}</div>
+      <div className="flex">{children}</div>
     </>
   )
 }

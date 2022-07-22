@@ -13,7 +13,7 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
   return (
     <>
       <Transition.Root show={show} as={Fragment}>
-        <div className="md:hidden inset-0 flex flex-col h-screen bg-white ">
+        <div className="inset-0 flex flex-col h-screen bg-white ">
           <Transition.Child
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
@@ -23,7 +23,7 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <div className="md:hidden relative flex-1 flex flex-col w-full">
+            <div className="relative flex-1 flex flex-col w-full">
               {children}
             </div>
           </Transition.Child>
@@ -31,7 +31,7 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
       </Transition.Root>
 
       {/* Always show in desktop layout */}
-      <div className="hidden md:bg-white md:pl-84 md:flex md:flex-col md:flex-1 md:h-screen md:overflow-y-auto">
+      <div className="bg-white pl-84 flex flex-col flex-1 h-screen overflow-y-auto">
         {children}
       </div>
     </>

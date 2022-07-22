@@ -7,11 +7,18 @@ import useWallet from '../hooks/useWallet.ts'
 import NavigationView from './Views/NavigationView.tsx'
 import ConversationView from './Views/ConversationView.tsx'
 import RecipientControl from './Conversation/RecipientControl.tsx'
+import Conversation from './Conversation/Conversation.tsx'
 import NewMessageButton from './NewMessageButton.tsx'
 import NavigationPanel from './NavigationPanel.tsx'
 import XmtpInfoPanel from './XmtpInfoPanel.tsx'
 import UserMenu from './UserMenu.tsx'
 import BackArrow from './BackArrow.tsx'
+
+const LayoutFlex: React.FC = ({ children }) => (
+    <div className="flex">
+      {children}
+    </div>
+)
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
   <aside className="flex w-full md:w-80 flex-col flex-grow fixed inset-y-0">
@@ -51,10 +58,12 @@ const ConversationLayout: React.FC = ({ children }) => {
     router.push('/')
   }, [router])
 
+  console.log('children:', children);
+
   return (
     <>
       <TopBarLayout>
-        <div className="md:hidden flex items-center ml-3">
+        <div className="flex items-center ml-3">
           <BackArrow onClick={handleBackArrowClick} />
         </div>
         <RecipientControl
@@ -80,6 +89,7 @@ const Layout: React.FC = ({ children }) => {
     connect: connectWallet,
     disconnect: disconnectWallet,
   } = useWallet()
+  const recipientWalletAddr = router.query.recipientWalletAddr as string
 
   const handleDisconnect = useCallback(async () => {
     disconnectXmtp()
@@ -113,11 +123,11 @@ const Layout: React.FC = ({ children }) => {
     }
     connect()
   }, [signer, prevSigner, connectXmtp, disconnectXmtp])
-  console.log('walletAddress:', walletAddress);
-  console.log('client:', client);
+
 
   return (
-      <div>
+    <>
+      <LayoutFlex>
         <NavigationView>
           <NavigationColumnLayout>
             <NavigationHeaderLayout>
@@ -132,12 +142,18 @@ const Layout: React.FC = ({ children }) => {
         </NavigationView>
         <ConversationView>
           {walletAddress && client ? (
-            <ConversationLayout>{children}</ConversationLayout>
+            <Conversation recipientWalletAddr={recipientWalletAddr} />
           ) : (
             <XmtpInfoPanel onConnect={handleConnect} />
           )}
+          {/* {walletAddress && client ? (
+            <ConversationLayout>{children}</ConversationLayout>
+          ) : (
+            <XmtpInfoPanel onConnect={handleConnect} />
+          )} */}
         </ConversationView>
-      </div>
+      </LayoutFlex>
+      </>
   )
 }
 

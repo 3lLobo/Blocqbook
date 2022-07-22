@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import useXmtp from '../../hooks/useXmtp.ts'
 import useConversation from '../../hooks/useConversation.ts'
-import { MessagesList, MessageComposer } from './'
+import MessagesList  from './MessagesList.tsx'
+import MessageComposer from './MessageComposer.tsx'
 import Loader from '../../components/Loader.tsx'
 
 type ConversationProps = {
@@ -32,8 +33,12 @@ const Conversation = ({
     initScroll()
   }, [recipientWalletAddr, hasMessages, scrollToMessagesEndRef])
 
+  console.log('recipientWalletAddr:', recipientWalletAddr);
+  console.log('walletAddress:', walletAddress);
+  console.log('client:', client);
   if (!recipientWalletAddr || !walletAddress || !client) {
     return <div />
+    // return <div>aca1</div>
   }
   if (loading && !messages?.length) {
     return (
@@ -43,6 +48,7 @@ const Conversation = ({
         isLoading
       />
     )
+    // return <div>aca2</div>
   }
 
   return (
@@ -55,6 +61,7 @@ const Conversation = ({
       {walletAddress && <MessageComposer onSend={sendMessage} />}
     </main>
   )
+  // return <div>aca3</div>
 }
 
 export default Conversation

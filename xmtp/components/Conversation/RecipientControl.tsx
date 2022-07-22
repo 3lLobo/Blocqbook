@@ -127,7 +127,7 @@ const RecipientControl = ({
             lookupAddress={lookupAddress}
             onInputChange={handleInputChange}
           />
-          <button type="submit" className="hidden" />
+          <button type="submit" className="" />
         </div>
       </form>
 

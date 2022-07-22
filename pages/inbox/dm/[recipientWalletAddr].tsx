@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Conversation } from '../../components/Conversation'
+import Conversation from '../../../xmtp/components/Conversation/Conversation.tsx'
 
 const ConversationPage: NextPage = () => {
   const router = useRouter()

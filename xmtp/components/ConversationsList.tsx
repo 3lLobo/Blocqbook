@@ -34,13 +34,17 @@ const ConversationTile = ({
     conversation.peerAddress
   )
   const loading = isLoadingEns || isLoadingConversation
+  const router = useRouter()
   const latestMessage = getLatestMessage(messages)
-  const path = `/dm/${conversation.peerAddress}`
+  const path = `/inbox/dm/${conversation.peerAddress}`
+
+  const handleClick = () => {router.push(`/inbox/${conversation.peerAddress}`)}
   if (!latestMessage) {
     return null
   }
   return (
-    <Link href={path} key={conversation.peerAddress}>
+    // <Link href={path} key={conversation.peerAddress}>
+    <div onClick={handleClick} className='cursor-pointer'>
       <a onClick={onClick}>
         <div
           className={classNames(
@@ -92,7 +96,8 @@ const ConversationTile = ({
           </div>
         </div>
       </a>
-    </Link>
+      </div>
+    // </Link>
   )
 }
 

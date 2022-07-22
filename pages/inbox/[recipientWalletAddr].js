@@ -1,9 +1,9 @@
 import Messenger from '../../components/Messenger'
 
-const Inbox = () => {
+const Conversation = () => {
   return (
     <Messenger />
   )
 }
 
-export default Inbox
+export default Conversation

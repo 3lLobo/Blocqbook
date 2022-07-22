@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import useXmtp from '../hooks/useXmtp.ts'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -71,6 +71,7 @@ const ConversationLayout: React.FC = ({ children }) => {
 }
 
 const Layout: React.FC = ({ children }) => {
+  const [addressToSend, setAddressToSend] = useState(null)
   const {
     connect: connectXmtp,
     disconnect: disconnectXmtp,
@@ -97,6 +98,18 @@ const Layout: React.FC = ({ children }) => {
   const handleConnect = useCallback(async () => {
     await connectWallet()
   }, [connectWallet])
+
+  const handleSubmit = useCallback(
+    async (address: string) => {
+      router.push(address ? `/inbox/${address}` : '/inbox/0')
+    },
+    [router]
+  )
+
+  const handleNewConversation = (e) => {
+    e.preventDefault()
+    router.push(`/inbox/${addressToSend}`)
+  }
 
   const usePrevious = <T,>(value: T): T | undefined => {
     const ref = useRef<T>()
@@ -126,9 +139,13 @@ const Layout: React.FC = ({ children }) => {
     <div className='relative'>
         <NavigationView>
           <NavigationColumnLayout>
-            <NavigationHeaderLayout>
-              {walletAddress && client && <NewMessageButton />}
-            </NavigationHeaderLayout>
+            {/* <NavigationHeaderLayout> */}
+              {walletAddress && client && 
+              <div className=''>
+                  <input type='text' onChange={e => setAddressToSend(e.target.value)} value={addressToSend} />
+                  <button onClick={handleNewConversation}>New conversation</button>
+              </div>}
+            {/* </NavigationHeaderLayout> */}
             <NavigationPanel onConnect={handleConnect} />
             {/* <UserMenu
               onConnect={handleConnect}

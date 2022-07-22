@@ -15,24 +15,24 @@ import UserMenu from './UserMenu.tsx'
 import BackArrow from './BackArrow.tsx'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-full md:w-84 flex-col flex-grow fixed inset-y-0">
-    <div className="flex flex-col flex-grow md:border-r md:border-gray-200 bg-white overflow-y-auto">
+  <aside className="flex w-96 flex-col flex-grow fixed inset-y-0 right-0">
+    <div className="flex flex-col flex-grow border-r border-gray-200 bg-white overflow-y-auto">
       {children}
     </div>
   </aside>
 )
 
 const NavigationHeaderLayout: React.FC = ({ children }) => (
-  <div className="h-[72px] bg-p-600 flex items-center justify-between flex-shrink-0 px-4">
+  <div className="h-[72px] flex items-center justify-between flex-shrink-0 p-4">
     <Link href="/" passHref={true}>
-      <img className="h-8 w-auto" src="/xmtp-icon.png" alt="XMTP" />
+      BLOCQBOOK
     </Link>
     {children}
   </div>
 )
 
 const TopBarLayout: React.FC = ({ children }) => (
-  <div className="sticky top-0 z-10 flex-shrink-0 flex bg-zinc-50 border-b border-gray-200 md:bg-white md:border-0">
+  <div className="sticky top-0 z-10 flex-shrink-0 flex bg-zinc-50 border-b border-gray-200 bg-white border-0">
     {children}
   </div>
 )
@@ -43,7 +43,7 @@ const ConversationLayout: React.FC = ({ children }) => {
 
   const handleSubmit = useCallback(
     async (address: string) => {
-      router.push(address ? `/dm/${address}` : '/dm/')
+      router.push(address ? `/inbox/${address}` : '/inbox/0')
     },
     [router]
   )
@@ -76,7 +76,10 @@ const Layout: React.FC = ({ children }) => {
     disconnect: disconnectXmtp,
     walletAddress,
     client,
+    conversations,
+    loadingConversations,
   } = useXmtp()
+  console.log('conversations:', conversations);
   const router = useRouter()
   const {
     signer,
@@ -88,7 +91,7 @@ const Layout: React.FC = ({ children }) => {
   const handleDisconnect = useCallback(async () => {
     disconnectXmtp()
     await disconnectWallet()
-    router.push('/')
+    router.push('/inbox/0')
   }, [disconnectWallet, disconnectXmtp, router])
 
   const handleConnect = useCallback(async () => {
@@ -120,39 +123,30 @@ const Layout: React.FC = ({ children }) => {
 
 
   return (
-    <>
-        <Head>
-          <title>Chat via XMTP</title>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
-          />
-        </Head>
+    <div className='relative'>
         <NavigationView>
           <NavigationColumnLayout>
             <NavigationHeaderLayout>
               {walletAddress && client && <NewMessageButton />}
             </NavigationHeaderLayout>
             <NavigationPanel onConnect={handleConnect} />
-            <UserMenu
+            {/* <UserMenu
               onConnect={handleConnect}
               onDisconnect={handleDisconnect}
-            />
+            /> */}
           </NavigationColumnLayout>
         </NavigationView>
-        <ConversationView>
-          {walletAddress && client ? (
+        {/* <ConversationView> */}
+          {walletAddress && client && recipientWalletAddr!=='0' &&
             <Conversation recipientWalletAddr={recipientWalletAddr} />
-          ) : (
-            <XmtpInfoPanel onConnect={handleConnect} />
-          )}
+          }
           {/* {walletAddress && client ? (
             <ConversationLayout>{children}</ConversationLayout>
           ) : (
             <XmtpInfoPanel onConnect={handleConnect} />
           )} */}
-        </ConversationView>
-      </>
+        {/* </ConversationView> */}
+      </div>
   )
 }
 

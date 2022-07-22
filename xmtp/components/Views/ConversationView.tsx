@@ -13,7 +13,8 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
   return (
     <>
       <Transition.Root show={show} as={Fragment}>
-        <div className="inset-0 flex flex-col h-screen bg-white ">
+        {/* <div className="inset-0 flex flex-col h-screen bg-white "> */}
+        <div className="flex flex-col h-screen bg-white ">
           <Transition.Child
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
@@ -23,7 +24,8 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col w-full">
+            {/* <div className="relative flex-1 flex flex-col w-full"> */}
+            <div className="relative ml-96 flex-1 flex flex-col w-full">
               {children}
             </div>
           </Transition.Child>

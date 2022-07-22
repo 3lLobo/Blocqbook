@@ -47,7 +47,8 @@ const Conversation = ({
   }
 
   return (
-    <main className="flex flex-col flex-1 bg-white h-screen">
+    <main className="flex flex-col bg-white h-screen w-[calc(100%-384px)]">
+    {/* <main className="flex flex-col flex-1 bg-white h-screen"> */}
       <MessagesList
         messagesEndRef={messagesEndRef}
         messages={messages}

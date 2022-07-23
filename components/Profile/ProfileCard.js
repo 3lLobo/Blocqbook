@@ -48,8 +48,8 @@ const ProfileCard = ({ profile }) => {
   const { data, loading, error } = useGetAllTokenBalancesQuery(
     profile?.bio?.address
       ? {
-        address: profile.bio.address,
-      }
+          address: profile.bio.address,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -65,8 +65,8 @@ const ProfileCard = ({ profile }) => {
   } = useGetPoapsQuery(
     profile?.bio?.address
       ? {
-        address: profile.bio.address,
-      }
+          address: profile.bio.address,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -99,36 +99,30 @@ const ProfileCard = ({ profile }) => {
 
   return (
     <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
-      {(poapLoading || poapData) &&
+      {(poapLoading || poapData) && (
         <div className="fixed ml-32 justify-start items-center h-14 w-full mb-3 flex flex-row gap-x-1 ">
-          <div
-            className="relative h-full scale-300 aspect-1 mr-8 dark:hue-rotate-180 dark:invert"
-          >
+          <div className="relative h-full scale-300 aspect-1 mr-8 dark:hue-rotate-180 dark:invert">
             <Image
               className=""
               layout="fill"
-              src='/poap-badge.png'
+              src="/poap-badge.png"
               alt="poapbadge"
             />
           </div>
-          {!poapLoading
-            ? poapData?.map((poap) => {
+          {!poapLoading ? (
+            poapData?.map((poap) => {
               console.log('POAP: ', poap)
               return (
-                <div
-                  className=" h-full  aspect-1"
-                  key={poap.address}>
-                  <PoapAvatar
-                    poapData={poap}
-                  />
+                <div className=" h-full  aspect-1" key={poap.address}>
+                  <PoapAvatar poapData={poap} />
                 </div>
-
               )
             })
-            : <BezierSpinner />
-          }
+          ) : (
+            <BezierSpinner />
+          )}
         </div>
-      }
+      )}
       <div className="hover:scale-105 hover:cursor-pointer transition-all duration-300 transform-gpu w-20 sm:w-36 mb-3">
         <Avatar src={profile.bio.avatar} />
       </div>

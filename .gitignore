@@ -3,8 +3,11 @@ yarn.lock
 package-lock.json
 .next/
 .env
+.swc
 app/example/*
 localtest/
+.build
+.output
 
 # Logs
 logs

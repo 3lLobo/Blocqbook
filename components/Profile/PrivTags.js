@@ -49,11 +49,11 @@ export function PrivTags() {
     query === ''
       ? tags
       : tags.filter((tag) =>
-        tag.name
-          .toLowerCase()
-          .replace(/\s+/g, '')
-          .includes(query.toLowerCase().replace(/\s+/g, ''))
-      )
+          tag.name
+            .toLowerCase()
+            .replace(/\s+/g, '')
+            .includes(query.toLowerCase().replace(/\s+/g, ''))
+        )
 
   function onSelected(selectedTags) {
     if (selectedTags.length > 0) {
@@ -100,8 +100,9 @@ export function PrivTags() {
             <div className="relative mt-1">
               <div className="relative flex cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <Combobox.Input
-                  className={`${!open && 'hidden'
-                    } flex border-none py-2 pl-3 text-sm leading-5 text-indigo-900 focus:ring-0 bg-transparent backdrop-blur-md backdrop-brightness-125 rounded-l-lg dark:text-indigo-100 dark:bg-zinc-800 dark:bg-opacity-80`}
+                  className={`${
+                    !open && 'hidden'
+                  } flex border-none py-2 pl-3 text-sm leading-5 text-indigo-900 focus:ring-0 bg-transparent backdrop-blur-md backdrop-brightness-125 rounded-l-lg dark:text-indigo-100 dark:bg-zinc-800 dark:bg-opacity-80`}
                   displayValue={query}
                   // value={query}
                   onChange={(event) => {
@@ -141,7 +142,7 @@ export function PrivTags() {
                       >
                         <div className="m-2">Create:</div>
                         <button
-                          onClick={() => { }}
+                          onClick={() => {}}
                           className="w-fit flex items-center justify-between "
                           value={query}
                         >
@@ -154,9 +155,10 @@ export function PrivTags() {
                       <Combobox.Option
                         key={person.id}
                         className={({ active }) =>
-                          `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                            ? ' text-bold'
-                            : 'text-indigo-900  dark:text-snow'
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active
+                              ? ' text-bold'
+                              : 'text-indigo-900  dark:text-snow'
                           }`
                         }
                         value={person}
@@ -164,15 +166,17 @@ export function PrivTags() {
                         {({ selected, active }) => (
                           <>
                             <span
-                              className={`block truncate ${selected ? 'font-medium' : 'font-normal'
-                                }`}
+                              className={`block truncate ${
+                                selected ? 'font-medium' : 'font-normal'
+                              }`}
                             >
                               {person.name}
                             </span>
                             {selected ? (
                               <span
-                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-semibold' : 'text-teal-600'
-                                  }`}
+                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                  active ? 'text-semibold' : 'text-teal-600'
+                                }`}
                               >
                                 <CheckIcon
                                   className="h-5 w-5"

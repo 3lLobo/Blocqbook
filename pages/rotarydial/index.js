@@ -8,9 +8,7 @@ import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
 import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
-import {WalletProvider} from '../../xmtp/components/WalletProvider.tsx'
-
-
+import { WalletProvider } from '../../xmtp/components/WalletProvider.tsx'
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -20,8 +18,6 @@ const Profile = () => {
   const store = useSelector((state) => state.contact)
   const evmStore = useSelector((state) => state.evm)
   const dispatch = useDispatch()
-
-
 
   useEffect(() => {
     if (!store.hasInitialRecord && evmStore.connected && record.content) {
@@ -49,9 +45,6 @@ const Profile = () => {
     store.isSyncedCeramic,
   ])
 
-  
-  
-
   // async function clickContacts() {
   //   record.set({
   //     'contacts': {
@@ -64,17 +57,15 @@ const Profile = () => {
 
   return (
     <WalletProvider>
-
-    <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
-      <Head />
-      {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
+      <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
+        <Head />
+        {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
         ClickMEEE
       </button> */}
-      <Sidebar />
-      <ProfileModal />
-    </div>
+        <Sidebar />
+        <ProfileModal />
+      </div>
     </WalletProvider>
-
   )
 }
 

@@ -157,7 +157,6 @@ export const WalletProvider = ({
       }
     }
     setWeb3Modal(new Web3Modal({ cacheProvider: true, providerOptions }))
-
   }, [])
 
   useEffect(() => {
@@ -179,8 +178,6 @@ export const WalletProvider = ({
       setProvider(provider)
       setSigner(signer)
       setAddress(await signer.getAddress())
-      console.log('signer:', signer);
-      console.log('address:', address);
     }
     initCached()
   }, [web3Modal, handleAccountsChanged, handleChainChanged])

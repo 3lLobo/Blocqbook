@@ -3,7 +3,7 @@ import { ColorModeToggle } from './colorModeToggle'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset as resetEvm, setConnection } from '../../app/evmSlice'
@@ -13,6 +13,9 @@ import { ethers } from 'ethers'
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
+
+import useWallet from '../../xmtp/hooks/useWallet.ts'
+import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 
 async function createAuthProvider() {
   var provider
@@ -39,6 +42,48 @@ export default function Header() {
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
+
+    //XTPM
+    const {
+      connect: connectXmtp,
+      disconnect: disconnectXmtp,
+      walletAddress,
+      client,
+      conversations,
+      loadingConversations,
+    } = useXmtp()
+    const {
+      signer,
+      connect: connectWallet,
+      disconnect: disconnectWallet,
+    } = useWallet()
+  
+    const handleConnect = useCallback(async () => {
+      await connectWallet()
+    }, [connectWallet])
+  
+    const usePrevious = (value) => {
+      const ref = useRef()
+      useEffect(() => {
+        ref.current = value
+      })
+      return ref.current
+    }
+    const prevSigner = usePrevious(signer)
+    
+    useEffect(() => {
+      if (!signer && prevSigner) {
+        disconnectXmtp()
+      }
+      if (!signer || signer === prevSigner) return
+      const connect = async () => {
+        const prevAddress = await prevSigner?.getAddress()
+        const address = await signer.getAddress()
+        if (address === prevAddress) return
+        connectXmtp(signer)
+      }
+      connect()
+    }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
@@ -79,6 +124,7 @@ export default function Header() {
     } else {
       const authProvider = await createAuthProvider()
       await connect(authProvider)
+      await handleConnect()
     }
     // Set event listener for disconnecting a wallet
     window.ethereum.on('accountsChanged', (accounts) => {

@@ -8,11 +8,11 @@ type AppProps = {
 
 function App({ children }: AppProps) {
   return (
-    <WalletProvider>
-      <XmtpProvider>
+    // <WalletProvider>
+    //   <XmtpProvider>
         <Layout>{children}</Layout>
-      </XmtpProvider>
-    </WalletProvider>
+    //   </XmtpProvider>
+    // </WalletProvider>
   )
 }
 

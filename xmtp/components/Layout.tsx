@@ -49,7 +49,6 @@ const Layout: React.FC = ({ children }) => {
     conversations,
     loadingConversations,
   } = useXmtp()
-  console.log('conversations:', conversations);
   const router = useRouter()
   const {
     signer,
@@ -80,21 +79,6 @@ const Layout: React.FC = ({ children }) => {
     return ref.current
   }
   const prevSigner = usePrevious(signer)
-
-  useEffect(() => {
-    if (!signer && prevSigner) {
-      disconnectXmtp()
-    }
-    if (!signer || signer === prevSigner) return
-    const connect = async () => {
-      const prevAddress = await prevSigner?.getAddress()
-      const address = await signer.getAddress()
-      if (address === prevAddress) return
-      connectXmtp(signer)
-    }
-    connect()
-  }, [signer, prevSigner, connectXmtp, disconnectXmtp])
-
 
   return (
     <div className='relative'>

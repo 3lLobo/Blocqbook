@@ -33,6 +33,7 @@
     "react-blockies": "^1.4.1",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.2",
+    "sharp": "^0.30.7",
     "timeago-react": "^3.0.5",
     "uuid": "^8.3.2",
     "walletlink": "^2.5.0",

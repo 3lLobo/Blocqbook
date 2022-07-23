@@ -12,6 +12,7 @@ import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
+import { useRouter } from 'next/router'
 
 async function createAuthProvider() {
   var provider
@@ -34,6 +35,7 @@ async function createAuthProvider() {
 }
 
 export default function Header() {
+  const router = useRouter()
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
@@ -59,6 +61,7 @@ export default function Header() {
           chainId: chainId.toString(),
         })
       )
+      router.push('/rotarydial')
     } else {
       dispatch(resetEvm())
       dispatch(resetContacts())

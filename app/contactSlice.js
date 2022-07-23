@@ -5,12 +5,11 @@ import { QueryStatus } from '@reduxjs/toolkit/dist/query'
 import { deepEqual } from 'assert'
 import qs from 'qs'
 
-const emptyProfile = (address, isOneHop) => ({
+export const emptyProfile = (address, isOneHop) => ({
   bio: {
     name: '',
     address: address || '',
-    avatar:
-      'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
+    avatar: '/blocqBookLogo/icon/blocqbookSolid2.png',
     notes: '',
   },
   isSelf: false,
@@ -35,13 +34,21 @@ const emptyProfile = (address, isOneHop) => ({
 })
 
 const initialState = {
+  // is the modal open
   modalOpen: false,
+  // the address of the contact in the modal
   addressModal: null,
+  // the contact in the open modal
   contactInEdit: null,
+  // is the contact in the modal already a contact
   contactInEditExists: false,
+  // did the contact in the open modal change
   isUpdated: false,
+  // the phonebook
   contacts: {},
+  // if the initial data is read from ceramic record
   hasInitialRecord: false,
+  // are the contacts synced with ceramic record
   isSyncedCeramic: false,
 }
 
@@ -103,6 +110,11 @@ export const contactSlice = createSlice({
       }
       state.isUpdated = true
     },
+    deleteContact: (state, action) => {
+      // delete a contact
+      delete state.contacts[action.payload.address]
+      state.isSyncedCeramic = false
+    },
     setSyncedCeramic: (state, action) => {
       state.isSyncedCeramic = action.payload.isSyncedCeramic
     },
@@ -116,6 +128,7 @@ export const {
   setContacts,
   updateContact,
   setSyncedCeramic,
+  deleteContact,
   reset,
 } = contactSlice.actions
 

@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Web3Storage } from 'web3.storage'
-import { Client, CompositeCodec, ContentTypeComposite } from '@xmtp/xmtp-js'
+import { Client } from '@xmtp/xmtp-js'
 import { ethers } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
 import { Avatar } from '../Profile/Avatar'
 import { Tag } from '../Profile/Tag'
+import { AddressTag } from '../AddressTag'
+import TimeAgo from 'timeago-react'
+
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -15,11 +18,7 @@ const FileTransfer = () => {
   const [address, setAddress] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [receivedMedia, setReceivedMedia] = useState([])
-  const contactBook = [
-    '0x31ca5fF81B577216e038412DD879b998ae7b71Db',
-    '0x5BCA9820F9e70B211055F96aB88e7103D5C304D2',
-    '0x7495F698C121569b6e1915d884e550B25Fa08615',
-  ]
+  const [isFetchingMedia, setIsFetchingMedia] = useState(false)
 
   async function handleUpload() {
     setIsUploading(true)
@@ -65,41 +64,20 @@ const FileTransfer = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       await provider.send('eth_requestAccounts', [])
       const wallet = provider.getSigner()
-      const xmtp = await Client.create(wallet, {
-        codecs: [new CompositeCodec()],
-      })
+      const xmtp = await Client.create(wallet)
       const conversation = await xmtp.conversations.newConversation(address)
-
-      // console.log('Loading messages...')
-      // const messages = await conversation.messages()
-      // for await (const message of messages) {
-      //   console.log(`[${message.senderAddress}]: ${message.content}`)
-      // }
-
-      // Send a message
       console.log('Sending file...')
-      const messageToSend = {
-        message: 'THIS IS A FILE. CHECK IT ON FILETRANSFER TAB',
+      const messageToSend = JSON.stringify({
+        type: 'file',
         cid: filesCID,
         description,
-      }
-      await conversation.send(messageToSend, {
-        contentType: ContentTypeComposite,
-        contentFallback: 'sending you a pie',
       })
+      await conversation.send(messageToSend)
       setFiles([])
       setFilesCID([])
       setDescription('')
       setAddress('')
       console.log('Message sent.')
-      // // Listen for new messages in the conversation
-      // console.log('Loading conversations...')
-      // const streamMessages = await conversation.streamMessages();
-      // console.log('streamMessages:', streamMessages);
-      // for await (const message of streamMessages) {
-      //   console.log(`[${message.senderAddress}]: ${message.text}`)
-      // }
-      // console.log('Conversations loaded.')
     } catch (error) {
       console.log(error)
     }
@@ -107,34 +85,72 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
+    console.log('Fetching files...')
+    console.log('TOAST: Please verify your identity with xmtp')
+    setIsFetchingMedia(true)
     setReceivedMedia([])
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', [])
     const wallet = provider.getSigner()
-    const xmtp = await Client.create(wallet, { codecs: [new CompositeCodec()] })
-    for await (const contact of contactBook) {
-      const conversation = await xmtp.conversations.newConversation(contact)
-      console.log(`Loading messages from ${contact}...`)
-      const messages = await conversation.messages()
-      for await (const message of messages) {
-        console.log('message:', message)
-        const sliced = message.content?.slice(0, 64)
-        if (
-          (sliced ===
-            '{"message":"THIS IS A FILE. CHECK IT ON FILETRANSFER TAB","cid":') &
-          (message.senderAddress !== wallet.getAddress())
-        ) {
-          const newMedia = JSON.parse(message.content)
-          newMedia['sender'] = message.senderAddress
-          setReceivedMedia((prevState) => [...prevState, newMedia])
+    const xmtp = await Client.create(wallet)
+    const allInteractions = await xmtp.conversations.list()
+    for await (const interaction of allInteractions) {
+      try {
+        const conversation = await xmtp.conversations.newConversation(
+          interaction.peerAddress
+        )
+        const messages = await conversation.messages()
+        for await (const message of messages) {
+          const recipientAddress = await wallet.getAddress()
+          addToMediaIfFile(message, recipientAddress)
         }
+      } catch (error) {
+        console.log('TOAST: ', error)
       }
+    }
+    receivedMedia.sort((a, b) => {
+      return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at)
+    })
+    setIsFetchingMedia(false)
+    await backgroundStreaming(xmtp, wallet)
+  }
+
+  const backgroundStreaming = async (xmtp, wallet) => {
+    const stream = await xmtp.conversations.stream()
+    console.log('Background stream...')
+    for await (const conversation of stream) {
+      console.log(`New conversation started with ${conversation.peerAddress}`)
+      const messages = await conversation.messages()
+      const lastMessage = messages[messages.length-1]
+      const recipientAddress = await wallet.getAddress()
+      addToMediaIfFile(lastMessage, recipientAddress)
+      break
+    }
+    console.log('Background stream ended.')
+    backgroundStreaming(xmtp, wallet)
+  }
+
+  const addToMediaIfFile = (message, recipientAddress) => {
+    const sliced = message?.content?.slice(0, 21)
+    if (
+      (sliced === '{"type":"file","cid":') &
+      (message.recipientAddress === recipientAddress)
+    ) {
+      const newMedia = JSON.parse(message.content)
+      newMedia['sender'] = message.senderAddress
+      newMedia['timestamp'] = message.header.timestamp
+      setReceivedMedia((prevState) => [newMedia, ...prevState])
     }
   }
 
   useEffect(() => {
     if (files.length > 0) handleUpload()
   }, [files])
+
+  useEffect(() => {
+    if (!isFetchingMedia) getFiles()
+  }, [])
+  
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -210,17 +226,11 @@ const FileTransfer = () => {
         </div>
       </div>
       <div className="flex flex-col items-center gap-4 mt-8 w-11/12">
-        <div className="flex justify-between w-full">
-          <div className="text-2xl">Files received</div>
-          <button
-            onClick={getFiles}
-            className="bg-slate-900 text-slate-300 hover:bg-indigo-900 hover:text-snow group w-64 flex items-center justify-center px-2 py-2 text-sm font-medium rounded-md"
-          >
-            {receivedMedia.length === 0
-              ? 'To check your inbox LogIn to XMTP'
-              : 'Click here to refresh your inbox'}
-          </button>
+        <div className="w-full">
+          <div className="text-2xl text-left">Files received</div>
         </div>
+        {isFetchingMedia && <BezierSpinner />}
+        {((!isFetchingMedia) && (receivedMedia.length===0)) && <div>No files were received.</div>}
         {receivedMedia.length > 0 &&
           receivedMedia.map((m, i) => (
             <div
@@ -231,13 +241,14 @@ const FileTransfer = () => {
                 <Avatar scale={110} />
               </div>
               <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
-                {' '}
-                {m.sender}{' '}
+                {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
+                <AddressTag address={m.sender.toLowerCase()} isOneHop={true} />
               </div>
               <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                 <a target="_blank">{m.description}</a>
               </Link>
-              <div className="flex gap-4 absolute right-2">
+              <div className="flex gap-4 absolute right-2 items-center">
+                <TimeAgo datetime={m.timestamp} />
                 <div className="mr-11 space-x-1 col-span-2 flex flex-row">
                   <Tag tagText="dude.eth" color="indigo-300" />
                   <Tag tagText="dude.eth" />

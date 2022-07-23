@@ -9,6 +9,8 @@ import { PubTags } from './PubTags'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 import { useGetPoapsQuery } from '../../app/poapApi'
+import { PoapAvatar } from '../Poap'
+import Image from 'next/image'
 
 export const dummyProfile = (name, address) => ({
   bio: {
@@ -96,19 +98,33 @@ const ProfileCard = ({ profile }) => {
   }
 
   return (
-    <div
-      borderRadius="md"
-      className="border-2 self-center grid justify-items-center m-8 p-4 shadow-lg"
-    >
-      <div
-        // TODO: onClick open a modal where the user can input a new image URL, which gets previews and upon confirmation, saved to the profile
-        className="w-40 pb-4"
-      >
-        <Avatar
-          // TODO: make this clickable to enter a new image URL
-          w="60"
-          scale={110}
-        />
+    <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
+      {(poapLoading || poapData) && (
+        <div className="fixed ml-32 justify-start items-center h-14 w-full mb-3 flex flex-row gap-x-1 ">
+          <div className="relative h-full scale-300 aspect-1 mr-8 dark:hue-rotate-180 dark:invert">
+            <Image
+              className=""
+              layout="fill"
+              src="/poap-badge.png"
+              alt="poapbadge"
+            />
+          </div>
+          {!poapLoading ? (
+            poapData?.map((poap) => {
+              console.log('POAP: ', poap)
+              return (
+                <div className=" h-full  aspect-1" key={poap.address}>
+                  <PoapAvatar poapData={poap} />
+                </div>
+              )
+            })
+          ) : (
+            <BezierSpinner />
+          )}
+        </div>
+      )}
+      <div className="hover:scale-105 hover:cursor-pointer transition-all duration-300 transform-gpu w-20 sm:w-36 mb-3">
+        <Avatar src={profile.bio.avatar} />
       </div>
 
       <textarea
@@ -139,7 +155,7 @@ const ProfileCard = ({ profile }) => {
           name="notes"
           id="notes"
           value={profile.bio.notes}
-          placeholder="Add your comment ..."
+          placeholder="Notes ..."
           onChange={(e) => handleChange(e)}
         ></textarea>
       </div>

@@ -9,8 +9,7 @@ export const emptyProfile = (address, isOneHop) => ({
   bio: {
     name: '',
     address: address || '',
-    avatar:
-      '/blocqBookLogo/icon/blocqbookSolid2.png',
+    avatar: '/blocqBookLogo/icon/blocqbookSolid2.png',
     notes: '',
   },
   isSelf: false,
@@ -41,14 +40,14 @@ const initialState = {
   addressModal: null,
   // the contact in the open modal
   contactInEdit: null,
-  // is the contact in the modal already a contact 
+  // is the contact in the modal already a contact
   contactInEditExists: false,
   // did the contact in the open modal change
   isUpdated: false,
   // the phonebook
   contacts: {},
   // if the initial data is read from ceramic record
-  hasInitialRecord: false, 
+  hasInitialRecord: false,
   // are the contacts synced with ceramic record
   isSyncedCeramic: false,
 }

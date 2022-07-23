@@ -9,9 +9,11 @@ export const ContactSlices = () => {
 
   return (
     <div className=" w-full place-items-center">
-      {contacts?.sort((a, b) => a.bio.name + b.bio.name).map((contact) => {
-        return <Slice key={contact.address} contact={contact} />
-      })}
+      {contacts
+        ?.sort((a, b) => a.bio.name + b.bio.name)
+        .map((contact) => {
+          return <Slice key={contact.address} contact={contact} />
+        })}
     </div>
   )
 }

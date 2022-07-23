@@ -100,6 +100,7 @@ const FileTransfer = () => {
           interaction.peerAddress
         )
         const messages = await conversation.messages()
+        console.log('messages:', messages);
         for await (const message of messages) {
           const recipientAddress = await wallet.getAddress()
           addToMediaIfFile(message, recipientAddress)

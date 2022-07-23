@@ -6,7 +6,7 @@ const NewMessageButton = (): JSX.Element => {
 
   const onNewMessageButtonClick = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    router.push('/inbox/')
+    router.push('/rotarydial/')
   }, [router])
 
   return (

@@ -36,9 +36,13 @@ const ConversationTile = ({
   const loading = isLoadingEns || isLoadingConversation
   const router = useRouter()
   const latestMessage = getLatestMessage(messages)
-  const path = `/inbox/dm/${conversation.peerAddress}`
 
-  const handleClick = () => {router.push(`/inbox/${conversation.peerAddress}`)}
+  const handleClick = () => {router.push({
+    pathname: '/rotarydial', 
+    query: {to: conversation.peerAddress}
+  }, 
+    {shallow: true}
+  )}
   if (!latestMessage) {
     return null
   }

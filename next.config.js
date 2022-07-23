@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['i.etsystatic.com', 'www.covalenthq.com', 'logos.covalenthq.com', "pbs.twimg.com"],
+    domains: ['i.etsystatic.com', 'www.covalenthq.com', 'logos.covalenthq.com', "pbs.twimg.com", "assets.poap.xyz"],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },

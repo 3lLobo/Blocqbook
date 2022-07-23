@@ -60,8 +60,8 @@ export default function ProfileModal({ children }) {
                       <ProfileCard profile={store.contactInEdit} />
                     )}
                   </div>
-                  <div className="flex flex-row-reverse justify-between items-center">
-                    <div className="mt-4">
+                  <div className="flex justify-center items-start mt-0">
+                    {/* <div className="mt-4">
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-orange-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -69,12 +69,11 @@ export default function ProfileModal({ children }) {
                       >
                         Close
                       </button>
-                    </div>
+                    </div> */}
                     <div className="mt-4">
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        // TODO: delete contact instead of close
+                        className="inline-flex justify-center rounded-md border border-transparent bg-aqua-muted  px-4 py-2 text-sm font-medium text-blue-900 hover:bg-aqua focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={() => onClose(true)}
                       >
                         Save!

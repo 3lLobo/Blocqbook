@@ -13,7 +13,7 @@ export const poapApi = createApi({
   }),
   endpoints: (builder) => ({
     getPoaps: builder.query({
-      query: (address) => `scan/${address}`,
+      query: ({ address }) => `scan/${address}`,
     }),
   }),
 })

@@ -12,7 +12,13 @@ export const ContactSlices = () => {
       {contacts
         ?.sort((a, b) => a.bio.name + b.bio.name)
         .map((contact) => {
-          return <Slice key={contact.address} contact={contact} />
+          return (
+            <div
+              key={contact.address}
+            >
+              <Slice contact={contact} />
+            </div>
+          )
         })}
     </div>
   )

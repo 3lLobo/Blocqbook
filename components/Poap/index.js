@@ -15,6 +15,7 @@ export const PoapAvatar = ({ poapData }) => {
             layout="fill"
             src={poapData.event.image_url}
             alt="avatar"
+            title={poapData.event.name}
           />
         </Link>
       </div>

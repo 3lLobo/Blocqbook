@@ -159,7 +159,7 @@ const Sidebar = () => {
                       {tabName === 'Transactions' ? (
                         <Transactions />
                       ) : tabName === 'Contacts' ? (
-                        <ContactSlices />
+                        <ContactSlices setSelectedIndex={setSelectedIndex} />
                       ) : tabName === 'Messenger' ? (
                         <Messenger />
                       ) : tabName === 'FileTransfer' ? (

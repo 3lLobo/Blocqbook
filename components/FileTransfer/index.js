@@ -11,6 +11,7 @@ import TimeAgo from 'timeago-react'
 import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 import { useAddressAvatar } from '../../hooks/useAddressAvatar'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -23,6 +24,8 @@ const FileTransfer = () => {
   const [isFetchingMedia, setIsFetchingMedia] = useState(false)
 
   const store = useSelector((state) => state.contact)
+  const router = useRouter()
+  const sendFileTo = router.query.sendFileTo
 
   const {
     connect: connectXmtp,
@@ -130,6 +133,10 @@ const FileTransfer = () => {
       setReceivedMedia((prevState) => [newMedia, ...prevState])
     }
   }
+
+  useEffect(() => {
+    if(sendFileTo) setAddress(sendFileTo)
+  }, [sendFileTo])
 
   useEffect(() => {
     if (files.length > 0) handleUpload()

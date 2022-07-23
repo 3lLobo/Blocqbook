@@ -2,7 +2,7 @@ import { Slice } from './ContactSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { emptyProfile } from '../../app/contactSlice'
 
-export const ContactSlices = () => {
+export const ContactSlices = ({setSelectedIndex}) => {
   const store = useSelector((state) => state.contact)
 
   const contacts = store.contacts ? Object.values(store.contacts) : []
@@ -12,7 +12,7 @@ export const ContactSlices = () => {
       {contacts
         ?.sort((a, b) => a.bio.name + b.bio.name)
         .map((contact) => {
-          return <Slice key={contact.address} contact={contact} />
+          return <Slice key={contact.address} setSelectedIndex={setSelectedIndex} contact={contact} />
         })}
     </div>
   )

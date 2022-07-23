@@ -9,8 +9,10 @@ import { XmtpContext } from '../contexts/xmtp.ts'
 import { Message } from '@xmtp/xmtp-js'
 import useEns from '../hooks/useEns.ts'
 import Avatar from './Avatar.tsx'
+import {Avatar as Avatar2} from '../../components/Profile/Avatar.js'
 import { useContext } from 'react'
 import {useAddressName} from '../../hooks/useAddressName.js'
+import {useAddressAvatar} from '../../hooks/useAddressAvatar.js'
 
 type ConversationsListProps = {
   conversations: Conversation[]
@@ -38,6 +40,7 @@ const ConversationTile = ({
   const router = useRouter()
   const latestMessage = getLatestMessage(messages)
   const nickname = useAddressName({address: conversation.peerAddress.toLowerCase()})
+  const savedAvatar = useAddressAvatar({address: conversation.peerAddress.toLowerCase()})
 
   const handleClick = () => {router.push({
     pathname: '/rotarydial', 
@@ -73,8 +76,14 @@ const ConversationTile = ({
             isSelected ? 'bg-bt-200' : null
           )}
         >
-          <Avatar peerAddress={conversation.peerAddress} />
-          <div className="py-4 sm:text-left text w-full">
+            {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
+          {
+            savedAvatar!==null? 
+              (<div className='h-full w-12 rounded-full overflow-hidden flex items-center justify-center'><img src={savedAvatar} alt="avatar"/></div>) 
+            : 
+              (<Avatar peerAddress={conversation.peerAddress} />)
+          }
+          <div className="py-4 sm:text-left ml-3 text w-full">
             <div className="grid-cols-2 grid">
               {nickname.length < 41 ? 
                 (<div 

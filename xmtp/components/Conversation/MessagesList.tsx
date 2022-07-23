@@ -5,6 +5,8 @@ import Avatar from '../Avatar.tsx'
 import { formatTime } from '../../helpers/string.ts'
 import AddressPill from '../AddressPill.tsx'
 import {AddressTag} from '../../../components/AddressTag'
+import {useAddressAvatar} from '../../../hooks/useAddressAvatar.js'
+
 
 export type MessageListProps = {
   messages: Message[]
@@ -24,9 +26,17 @@ const isOnSameDay = (d1?: Date, d2?: Date): boolean => {
 const formatDate = (d?: Date) =>
   d?.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
-const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => (
+const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
+  const savedAvatar = useAddressAvatar({address: message.senderAddress.toLowerCase()})
+  return(
   <div className="flex items-start mx-auto mb-4">
-    <Avatar peerAddress={message.senderAddress as string} />
+    {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
+    {
+      savedAvatar!==null? 
+        (<div className='h-12 w-12 rounded-full overflow-hidden flex items-center justify-center'><img src={savedAvatar} alt="avatar"/></div>) 
+      : 
+        (<Avatar peerAddress={message.senderAddress as string} />)
+    }
     <div className="ml-2">
       <div className='flex items-center gap-2'>
         {/**COVALENT IS BRINGING JUST LOWERCASE ADDRESSES */}
@@ -45,7 +55,7 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => (
       </span>
     </div>
   </div>
-)
+)}
 
 const DateDividerBorder: React.FC = ({ children }) => (
   <>

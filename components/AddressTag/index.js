@@ -2,14 +2,12 @@
 
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
+import { useAddressName } from '../../hooks/useAddressName'
 
 export const AddressTag = ({ address, isOneHop }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
-
-  const contactName = Object.keys(store.contacts).includes(address)
-    ? store.contacts[address].bio?.name
-    : address
+  const contactName = useAddressName({ address })
 
   function onClick() {
     dispatch(

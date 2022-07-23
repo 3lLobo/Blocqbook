@@ -51,16 +51,18 @@ export default function Header() {
     }
     console.log('Ceramic client: ', connection)
     if (connection.status === 'idle') {
+      if (store.isConnected && !isAbleToRefresh) {
+        setIsAbleToRefresh(true)
+      }
       checkIfRefresh()
-    } else if (connection.status === 'connected') {
-      setIsAbleToRefresh(true)
-    }
-  }, [connection.status, connection, isAbleToRefresh])
+    } 
+  }, [connection.status, isAbleToRefresh])
 
   async function connectCeramic() {
     const authProvider = await createAuthProvider()
     await connect(authProvider).then(() => {
       setIsConnected(true)
+      setIsAbleToRefresh(true)
       const chainId =
         ethers.utils.arrayify(window.ethereum.chainId, {
           hexPad: 'left',

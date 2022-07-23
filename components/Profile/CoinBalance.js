@@ -4,6 +4,7 @@
 // Style the component with tailwind.
 
 import Image from 'next/image'
+import { v4 } from 'uuid'
 
 export function CoinBalance({ item, quote_currency }) {
   const {
@@ -31,9 +32,12 @@ export function CoinBalance({ item, quote_currency }) {
   console.log(contract_ticker_symbol, logo_url)
 
   return (
-    <div className="grid grid-cols-5 justify-center place-items-center even:bg-indigo-100 rounded-bl-xl rounded-tr-xl px-3">
-      <div className="relative flex col-span-1 h-6 w-6 rounded-full bg-slate-100 my-1">
-        <Image layout="fill" src={logo_url} alt={contract_name} />
+    <div
+      key={v4()}
+      className="grid grid-cols-5 justify-center place-items-center even:border-t-2 border-zinc-300 even:shadow-lg rounded-bl-xl rounded-tr-xl px-3">
+      <div className={`relative w-6 h-6 aspect-1 items-center justify-center flex flex-grow my-1`}>
+        <Image
+          className="rounded-full  " layout="fill" src={logo_url} alt={contract_name} />
       </div>
       <div className="col-span-2">
         <div className=" grid grid-cols-2 space-x-1">

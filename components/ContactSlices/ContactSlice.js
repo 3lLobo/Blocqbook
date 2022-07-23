@@ -26,7 +26,7 @@ export const Slice = ({ contact }) => {
       >
         <div onClick={onContactClick} className="w-10 ml-0 hover:cursor-pointer">
           <div className="hover:scale-105 transition-all duration-300 transform-gpu">
-            <Avatar scale={110} />
+            <Avatar src={contact.bio.avatar} />
           </div>
         </div>
         <button

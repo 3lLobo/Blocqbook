@@ -10,7 +10,7 @@ export const emptyProfile = (address, isOneHop) => ({
     name: '',
     address: address || '',
     avatar:
-      'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
+      '/blocqBookLogo/icon/blocqbookSolid2.png',
     notes: '',
   },
   isSelf: false,

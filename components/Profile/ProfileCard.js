@@ -46,8 +46,8 @@ const ProfileCard = ({ profile }) => {
   const { data, loading, error } = useGetAllTokenBalancesQuery(
     profile?.bio?.address
       ? {
-          address: profile.bio.address,
-        }
+        address: profile.bio.address,
+      }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -63,8 +63,8 @@ const ProfileCard = ({ profile }) => {
   } = useGetPoapsQuery(
     profile?.bio?.address
       ? {
-          address: profile.bio.address,
-        }
+        address: profile.bio.address,
+      }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -97,15 +97,8 @@ const ProfileCard = ({ profile }) => {
 
   return (
     <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
-      <div
-        // TODO: onClick open a modal where the user can input a new image URL, which gets previews and upon confirmation, saved to the profile
-        className="w-40 pb-4"
-      >
-        <Avatar
-          // TODO: make this clickable to enter a new image URL
-          w="60"
-          scale={110}
-        />
+      <div className="hover:scale-105 hover:cursor-pointer transition-all duration-300 transform-gpu w-20 sm:w-36 mb-3">
+        <Avatar src={profile.bio.avatar} />
       </div>
 
       <textarea

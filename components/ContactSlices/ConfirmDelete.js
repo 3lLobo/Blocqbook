@@ -7,8 +7,6 @@ export function ConfirmDelete({ open, setOpen, onConfirm }) {
 
   const cancelButtonRef = useRef(null)
 
-  console.log("OPEN = ", open)
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>

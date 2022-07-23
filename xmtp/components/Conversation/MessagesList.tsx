@@ -1,9 +1,10 @@
 import { Message } from '@xmtp/xmtp-js'
 import React, { MutableRefObject } from 'react'
-// import Emoji from 'react-emoji-render'
+import Emoji from 'react-emoji-render'
 import Avatar from '../Avatar.tsx'
 import { formatTime } from '../../helpers/string.ts'
 import AddressPill from '../AddressPill.tsx'
+import {AddressTag} from '../../../components/AddressTag'
 
 export type MessageListProps = {
   messages: Message[]
@@ -27,11 +28,9 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => (
   <div className="flex items-start mx-auto mb-4">
     <Avatar peerAddress={message.senderAddress as string} />
     <div className="ml-2">
-      <div>
-        <AddressPill
-          address={message.senderAddress as string}
-          userIsSender={isSender}
-        />
+      <div className='flex items-center gap-2'>
+        {/**COVALENT IS BRINGING JUST LOWERCASE ADDRESSES */}
+        <AddressTag address={message.senderAddress.toLowerCase()} />
         <span className="text-sm font-normal place-self-end text-n-300 text-md uppercase">
           {formatTime(message.sent)}
         </span>
@@ -40,8 +39,8 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => (
         {message.error ? (
           `Error: ${message.error?.message}`
         ) : (
-          // <Emoji text={message.content || ''} />
-          <div>{message.content}</div>
+          <Emoji text={message.content || ''} />
+          // <div>{message.content}</div>
         )}
       </span>
     </div>

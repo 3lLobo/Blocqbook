@@ -13,7 +13,7 @@ export function Tag({ tagText, color, isPub }) {
     <div
       className={
         bg +
-        ' mx-auto w-fit rounded-bl-xl rounded-tr-xl px-2 py-1 shadow-lg ' +
+        ' w-fit rounded-bl-xl rounded-tr-xl px-2 py-1 shadow-lg ' +
         opa
       }
     >

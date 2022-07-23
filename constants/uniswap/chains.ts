@@ -3,19 +3,33 @@
  */
 export enum SupportedChainId {
   MAINNET = 1,
-  ROPSTEN = 3,
-  RINKEBY = 4,
-  GOERLI = 5,
+  // ROPSTEN = 3,
+  // RINKEBY = 4,
+  // GOERLI = 5,
   KOVAN = 42,
+
+  POLYGON = 137,
+  POLYGON_MUMBAI = 80001,
+
+  BSC = 56,
+
+  FANTOM = 250,
+  FANTOM_TESTNET = 4002,
 
   ARBITRUM_ONE = 42161,
   ARBITRUM_RINKEBY = 421611,
 
-  OPTIMISM = 10,
-  OPTIMISTIC_KOVAN = 69,
+  // OPTIMISM = 10,
+  // OPTIMISTIC_KOVAN = 69,
 
-  POLYGON = 137,
-  POLYGON_MUMBAI = 80001,
+  AVALANCHE = 43114,
+  AVALANCHE_FUJI = 43113,
+
+  HARMONY = 1666600000,
+
+  AURORA = 1313161554,
+
+  // CRONOS = 25,
 }
 
 export const CHAIN_IDS_TO_NAMES = {
@@ -30,6 +44,9 @@ export const CHAIN_IDS_TO_NAMES = {
   [SupportedChainId.ARBITRUM_RINKEBY]: 'arbitrum_rinkeby',
   [SupportedChainId.OPTIMISM]: 'optimism',
   [SupportedChainId.OPTIMISTIC_KOVAN]: 'optimistic_kovan',
+  [SupportedChainId.AVALANCHE]: 'avalanche',
+  [SupportedChainId.AVALANCHE_FUJI]: 'avalanche_fuji',
+  [SupportedChainId.BSC]: 'bsc',
 }
 
 /**
@@ -66,6 +83,10 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.KOVAN,
   SupportedChainId.POLYGON,
   SupportedChainId.POLYGON_MUMBAI,
+  SupportedChainId.AVALANCHE,
+  SupportedChainId.AVALANCHE_FUJI,
+  SupportedChainId.FANTOM,
+  SupportedChainId.FANTOM_TESTNET,
 ] as const
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]

@@ -71,13 +71,13 @@ export function PubTags() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute w-40 top-10 max-h-60 scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
+              <Listbox.Options className="absolute w-40 top-10 max-h-60 scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 dark:bg-zinc-800 dark:bg-opacity-80 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
                 {tags.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? ' text-bold' : 'text-indigo-900'
+                      `relative cursor-default select-none py-2 pl-10 pr-4  ${
+                        active ? ' text-bold' : 'text-indigo-900 dark:text-snow'
                       }`
                     }
                     value={person}
@@ -85,14 +85,14 @@ export function PubTags() {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={`block truncate ${
+                          className={`block truncate  ${
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
                           {person.name}
                         </span>
                         {selected ? (
-                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600 ">
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
                         ) : null}

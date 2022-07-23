@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import Link from 'next/link'
 import { Avatar } from '../Profile/Avatar'
-import { Tag } from '../Profile/tag'
+import { Tag } from '../Profile/Tag'
 import { AddressTag } from '../AddressTag'
 import TimeAgo from 'timeago-react'
 
@@ -131,7 +131,7 @@ const FileTransfer = () => {
   }
 
   const addToMediaIfFile = (message, recipientAddress) => {
-    const sliced = message.content?.slice(0, 21)
+    const sliced = message?.content?.slice(0, 21)
     if (
       (sliced === '{"type":"file","cid":') &
       (message.recipientAddress === recipientAddress)

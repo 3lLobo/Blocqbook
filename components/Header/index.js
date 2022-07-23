@@ -6,13 +6,14 @@ import { MyButton } from '../Buttons/MyButton'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset as resetEvm, setConnection } from '../../app/evmSlice'
+import { reset as resetEvm, setConnection, setPoaps } from '../../app/evmSlice'
 import { reset as resetContacts } from '../../app/contactSlice'
 import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
+import { useLazyGetPoapsQuery } from '../../app/poapApi'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
@@ -39,6 +40,19 @@ export default function Header() {
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(false)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
+  const [poapTrigger, poapResult, poapLastPromiseInfo] = useLazyGetPoapsQuery()
+
+  // Wait for poap result and store it.
+  useEffect(() => {
+    if (poapResult.isSuccess) {
+      if (poapResult.data.length !== store.poaps.length) {
+        const poaps = poapResult.data.map((poap) => {
+          return poap.event.id
+        })
+        dispatch(setPoaps({ poaps }))
+      }
+    }
+  }, [poapResult, store.poaps, dispatch])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
@@ -55,11 +69,13 @@ export default function Header() {
         setIsAbleToRefresh(true)
       }
       checkIfRefresh()
-    } 
+    }
   }, [connection.status, isAbleToRefresh])
 
   async function connectCeramic() {
     const authProvider = await createAuthProvider()
+    // trigger POAP fetching
+    poapTrigger({ address: window.ethereum.selectedAddress }, true)
     await connect(authProvider).then(() => {
       setIsConnected(true)
       setIsAbleToRefresh(true)
@@ -138,21 +154,6 @@ export default function Header() {
             >
               {store.account}
             </motion.div>
-            {/* <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
-              <motion.div
-                animate={{
-                  rotate: [0, 0, 16, -11, 0, 0],
-                }}
-                transition={{ duration: 2 }}
-              >
-                <Image
-                  height={55}
-                  width={111}
-                  src="/ethereum-eth-logo-full-horizontal.svg"
-                  alt="ETHsvg"
-                />
-              </motion.div>
-            </div> */}
             <div className="sm:inset-auto sm:ml-6 flex gap-2">
               <ColorModeToggle />
             </div>

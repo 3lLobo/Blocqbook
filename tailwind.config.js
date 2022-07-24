@@ -55,8 +55,8 @@ module.exports = {
         'washed-blue': '#F0F6FA',
       },
       backgroundImage: {
-        'mybg-light': 'linear-gradient(183deg, #edf0f4, 70%, #818cf8)',
-        'mybg-dark': 'linear-gradient(186deg, #0f172a, 60%, #312e81)',
+        'mybg-light': 'linear-gradient(170deg, #edf0f4, 90%, #B88DFF)',
+        'mybg-dark': 'linear-gradient(170deg, #11002D, 90%, #270067)',
         'hero-pattern': 'url("/hero.svg")',
         'logo-black':
           'url("/blocqBookLogo/icon/blocqbookTextTransparentBanner.png")',

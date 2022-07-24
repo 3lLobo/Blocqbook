@@ -3,15 +3,17 @@
 <!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
 
 ![blocqbookTextTransparentBannerLight](https://user-images.githubusercontent.com/70228821/180654920-7a1d72bc-da2a-410b-9130-33e764f89c3c.png)
-An awesome web-3 app which allows you to retrive your transactions, add contacts, send text messages to peers & transfer files as well. Built by a team of three developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
+An awesome web-3 app which allows you to retrieve your transactions, add contacts, send text messages to peers & transfer files as well. Built by a team of three developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
 
 ## Live Site
 
 Try out our app here : [Blocqbook](https://blocqbook.netlify.app/)
 
+For the oldest news, have an eye on your [local Newspaper](https://twitter.com/blocqbook)
+
 ## Covalent
 
-We've used the [Covalent](https://www.covalenthq.com/) API to fetch transactions from the blockchain. All transactions are displayed in the transactions tab of the app. We display the token balances of around 13 chains in the profile section, namely -
+The Blocqbook uses the [Covalent](https://www.covalenthq.com/) API to fetch transactions from the blockchain. All transactions are displayed in the transactions tab of the app. We display the token-balances of 13 chains in the profile section, namely -
 
 ```
 Ethereum Mainnet
@@ -31,27 +33,28 @@ Aurora
 
 ## Ceramic
 
-Ceramic was our go to option for database as we wanted the app to be Web 3.0 and not Web 2.5 . We used [Ceramic](https://ceramic.network/) to initialize a database for every wallet registered. Users can connect their wallet and choose to link their pre-existing DID or get a new one. This way, all user data is stored in the blockchain and not in any centralized server. Checkout the [Ceramic Cook-Book](./ceramic/ceramicCookBook.md).
+Ceramic is our go to option for database as we wanted the app to be Web 3.0 and not Web 2.5 . We use [Ceramic](https://ceramic.network/) to initialize a database for every wallet registered. Users can connect their wallet and choose to link their pre-existing DID or get a new one. This way, all user data is stored in the blockchain. Blocqbook provides you the full data-driven web-experience, while collecting zero of your data. Check-out our [Ceramic Cook-Book](./ceramic/ceramicCookBook.md).
 
 ## XMTP
 
-We've used [XMTP](https://xmtp.com/) to enable decentralized messaging across wallets. To chat with an address, navigate to the 'Messenger' tab on the sidebar and Initiate a conversation by pasting your peer's address in the input area & hit the arrow button. Another way to initiate a conversation is to save a contact & then click on the chat icon in the contact card.
+We use [XMTP](https://xmtp.com/) to enable decentralized messaging across wallets. To chat with an address, navigate to the 'Messenger' tab on the sidebar and Initiate a conversation by pasting your peer's address in the input area & hit the arrow button. Another way to initiate a conversation is to save a contact & then click on the chat icon in the contact card.
 
 ## IPFS
 
-We've used [IPFS](https://ipfs.io/) to allow decentralized file sharing without the hassle of juggling with the CIDs. Navigate to the File Transfer tab & drop your files with the receiver's address or you can click on the IPFS icon on the receiver's contact card. The file is uploaded to IPFS and the CID is sent to the receiver via messenger powered by XMTP.
+[IPFS](https://ipfs.io/) is awesome! The Blocqbook 💙 IPFS and uses it for decentralized, interplanetary file sharing, while saving you the hassle of juggling with CIDs. Navigate to the File Transfer tab & drop your files with the receiver's address or you can click on the IPFS icon on the receiver's contact card. The file is uploaded to IPFS and the CID is sent to the receiver via messenger powered by XMTP.
 
 ## Polygon & The Graph
 
-We've used deployed a smart contract on [Polygon Mumbai](https://mumbai.polygonscan.com/) which emits an event when an address is tagged a public tag ( such as - `scam` or `airdrop` ). We deployed a subgraph using [The Graph](https://thegraph.com/hosted-service) to index the events. All the addresses that have been given a public tag are now on the blockchain and can be retrieved by querying the subgraph. This helps in fraud detection & address identification.
+The Blockbook's smart contract is deployed on [Polygon Mumbai](https://mumbai.polygonscan.com/) and emits an event every time an address is tagged with a public tag ( such as - `scam` or `airdrop` ). Our [The Graph](https://thegraph.com/hosted-service) subgraph indexes the events. All the addresses that have been given a public tag are now on the blockchain and can be graph-queried from [The Graph](https://thegraph.com/hosted-service) api. Possible use-cases are fraud detection & address identification. We build this feature in the hope to contribute to a safer and more transparent web3 🤍
 
-Contract Address : [0xde4d7f0a42aa7df311b3cc18ef5231f501168695](https://mumbai.polygonscan.com/address/0xde4d7f0a42aa7df311b3cc18ef5231f501168695#events)
+Contract : [0xde4d7f0a42aa7df311b3cc18ef5231f501168695](https://mumbai.polygonscan.com/address/0xde4d7f0a42aa7df311b3cc18ef5231f501168695#events)
 
 Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/contract-polygon)
 
 ## Poaps
 
-Did we say [POAPS](https://poap.xyz/)? Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPS of other wallets and notify when we have POAPS in common.
+Did we say [POAPS](https://poap.xyz/)? 🎉🎉🎉
+Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPS of other wallets and notify when we have POAPs in common.
 
 ## Tech Stack
 
@@ -59,7 +62,7 @@ Did we say [POAPS](https://poap.xyz/)? Hell Yeah, we did. We are giving out POAP
 Next.js
 React.js
 Redux Tookit
-Tailwind CSS
+Tailwind CSS 💫
 Ethers.js
 ```
 

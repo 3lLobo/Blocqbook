@@ -1,8 +1,12 @@
-# Blocqbook
+# The Blocqbook
 
 <!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
 
-![blocqbookTextTransparentBannerLight](https://user-images.githubusercontent.com/70228821/180654920-7a1d72bc-da2a-410b-9130-33e764f89c3c.png)
+![bbBanner](public/blocqBookLogo/logoText/blocqbookTextSolidBanner.png)
+
+Picture a phonebook for the blockchain.
+
+Or, if you never browsed the white-pages for your crush's number, ios-contact app for all of the W3b.
 An awesome web-3 app which allows you to retrieve your transactions, add contacts, send text messages to peers & transfer files as well. Built by a team of three developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
 
 ## Live Site
@@ -55,6 +59,8 @@ Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/co
 
 Did we say [POAPS](https://poap.xyz/)? 🎉🎉🎉
 Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPS of other wallets and notify when we have POAPs in common.
+
+![blocqbookTextTransparentBannerLight](public/blocqBookLogo/icon/blocqbookTextTransparentBannerLight.png)
 
 ## Tech Stack
 

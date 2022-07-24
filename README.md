@@ -36,7 +36,7 @@ We've used [IPFS](https://ipfs.io/) to allow decentralized file sharing without 
 
 ## Polygon & The Graph
 
-We've used deployed a smart contract on [Polygon Mumbai](https://mumbai.polygonscan.com/) which emits an event when an address is tagged a public tag ( such as - ``scam`` or ``airdrop`` ). We deployed a subgraph using [The Graph](https://thegraph.com/hosted-service) to index the events. All the addresses that have been given a public tag are now on the blockchain and can be retrieved by querying the subgraph.
+We've used deployed a smart contract on [Polygon Mumbai](https://mumbai.polygonscan.com/) which emits an event when an address is tagged a public tag ( such as - ``scam`` or ``airdrop`` ). We deployed a subgraph using [The Graph](https://thegraph.com/hosted-service) to index the events. All the addresses that have been given a public tag are now on the blockchain and can be retrieved by querying the subgraph. This helps in fraud detection & address identification.
 
 Contract Address : [0xde4d7f0a42aa7df311b3cc18ef5231f501168695](https://mumbai.polygonscan.com/address/0xde4d7f0a42aa7df311b3cc18ef5231f501168695#events)
 

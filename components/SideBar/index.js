@@ -46,35 +46,23 @@ const Sidebar = () => {
         selectedIndex={selectedIndex}
         onChange={setSelectedIndex}
       >
-        {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed h-full backdrop-blur-xl backdrop-brightness-50">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex-1 flex flex-col min-h-0 bg-white shadow-lg dark:bg-[#0E0026] ">
-            <div className="flex items-center h-16 flex-shrink-0 bg-slate-900">
-              {/* <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow" /> */}
+          <div className="flex-1 flex flex-col min-h-0 bg-indigo-100 shadow-lg dark:bg-[#0E0026] ">
+            <div className="flex items-center h-16 flex-shrink-0">
               <Header />
             </div>
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="flex-1 px-2 py-4 space-y-1 flex flex-col ">
-                {/* Current: "bg-slate-900 text-white", Default: "text-slate-300 hover:bg-slate-700 hover:text-white" */}
-                {/*
-            Heroicon name: outline/home
-
-            Current: "text-slate-300", Default: "text-slate-400 group-hover:text-slate-300"
-          */}
-                {/* <svg className="text-slate-300 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg> */}
                 {tabNames.map((tabName) => (
                   <Tab as={Fragment} key={tabName}>
                     {({ selected }) => (
                       <a
                         key={tabName}
                         href="#"
-                        className={`dark:text-slate-300 hover:bg-[#270067] hover:text-snow group flex gap-2 items-center px-3 p-3 text-sm font-medium rounded-md`.concat(
+                        className={`dark:text-slate-4000 hover:bg-violet-400 dark:hover:bg-[#270067] hover:text-snow group flex gap-2 items-center px-3 py-11 text-sm font-medium rounded-md`.concat(
                           ' ',
                           selected
-                            ? 'text-white bg-[#270067]'
+                            ? 'text-indigo-100 bg-violet-400 dark:bg-[#270067]'
                             : 'text-slate-500'
                         )}
                       >

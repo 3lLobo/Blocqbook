@@ -3,7 +3,7 @@ import { ColorModeToggle } from './colorModeToggle'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset as resetEvm, setConnection } from '../../app/evmSlice'
@@ -14,14 +14,17 @@ import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
 
+import useWallet from '../../xmtp/hooks/useWallet.ts'
+import useXmtp from '../../xmtp/hooks/useXmtp.ts'
+
 async function createAuthProvider() {
-  var provider
   // The following assumes there is an injected `window.ethereum` provider
-  await window.ethereum
+  const provider = await window.ethereum
     .request({ method: 'eth_requestAccounts' })
     .then(() => {
       const address = window.ethereum.selectedAddress
       provider = new EthereumAuthProvider(window.ethereum, address)
+      return provider
     })
     .catch((error) => {
       if (error.code === 4001) {
@@ -36,20 +39,73 @@ async function createAuthProvider() {
 
 export default function Header() {
   const router = useRouter()
-  const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
+  const [isAbleToRefresh, setIsAbleToRefresh] = useState(false)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
+  const [signer, setSigner] = useState(null)
+
+    //XTPM
+    const {
+      connect: connectXmtp,
+      disconnect: disconnectXmtp,
+    } = useXmtp()
+    // const {
+    //   signer,
+    //   connect: connectWallet,
+    //   disconnect: disconnectWallet,
+    // } = useWallet()
+  
+    // const handleConnect = useCallback(async () => {
+    //   await connectWallet()
+    // }, [connectWallet])
+  
+    const usePrevious = (value) => {
+      const ref = useRef()
+      useEffect(() => {
+        ref.current = value
+      })
+      return ref.current
+    }
+    const prevSigner = usePrevious(signer)
+    
+    useEffect(() => {
+      if (!signer && prevSigner) {
+        disconnectXmtp()
+      }
+      if (!signer || signer === prevSigner) return
+      const connect = async () => {
+        const prevAddress = await prevSigner?.getAddress()
+        const address = await signer.getAddress()
+        if (address === prevAddress) return
+        connectXmtp(signer)
+      }
+      connect()
+    }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
   const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
+    const checkIfRefresh = async () => {
+      if (isAbleToRefresh) {
+        connectCeramic()
+        // handleConnect()
+      }
+    }
     console.log('Ceramic client: ', connection)
     if (connection.status === 'idle') {
+      if (store.isConnected && !isAbleToRefresh) {
+        setIsAbleToRefresh(true)
+      }
       checkIfRefresh()
-    }
-    if (connection.status === 'connected') {
+    } 
+  }, [connection.status, isAbleToRefresh])
+
+  async function connectCeramic() {
+    const authProvider = await createAuthProvider()
+    await connect(authProvider).then(() => {
       setIsConnected(true)
+      setIsAbleToRefresh(true)
       const chainId =
         ethers.utils.arrayify(window.ethereum.chainId, {
           hexPad: 'left',
@@ -61,13 +117,16 @@ export default function Header() {
           chainId: chainId.toString(),
         })
       )
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      setSigner(provider.getSigner())
       router.push('/rotarydial')
-    } else {
+    }).catch((error) => {
+      console.log(error)
       dispatch(resetEvm())
       dispatch(resetContacts())
       setIsConnected(false)
-    }
-  }, [connection.status, dispatch])
+    })
+  }
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {
@@ -77,8 +136,8 @@ export default function Header() {
       disconnect()
       setIsAbleToRefresh(false)
     } else {
-      const authProvider = await createAuthProvider()
-      await connect(authProvider)
+      // await handleConnect()
+      connectCeramic()
     }
     // Set event listener for disconnecting a wallet
     window.ethereum.on('accountsChanged', (accounts) => {
@@ -91,13 +150,6 @@ export default function Header() {
     })
   }
 
-  const checkIfRefresh = async () => {
-    const checkAccount = await window?.ethereum?.selectedAddress
-    if (checkAccount && isAbleToRefresh) {
-      const authProvider = await createAuthProvider()
-      await connect(authProvider)
-    }
-  }
 
   return (
     <>

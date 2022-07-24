@@ -98,7 +98,7 @@ const ProfileCard = ({ profile }) => {
   }
 
   return (
-    <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
+    <div className="self-center grid justify-items-center m-8 p-4">
       {(poapLoading || poapData) && (
         <div className="fixed ml-32 justify-start items-center h-14 w-full mb-3 flex flex-row gap-x-1 ">
           <div className="relative h-full scale-300 aspect-1 mr-8 dark:hue-rotate-180 dark:invert">

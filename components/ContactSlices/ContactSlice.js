@@ -21,20 +21,20 @@ export const Slice = ({ contact, setSelectedIndex }) => {
 
   const handleIPFSTransfer = () => {
     router.push({
-      pathname: '/rotarydial', 
-      query: {sendFileTo: contact.bio.address}
-    }, 
-      {shallow: true}
+      pathname: '/rotarydial',
+      query: { sendFileTo: contact.bio.address }
+    },
+      { shallow: true }
     )
     setSelectedIndex(4)
   }
 
   const handleConversation = () => {
     router.push({
-      pathname: '/rotarydial', 
-      query: {to: contact.bio.address}
-    }, 
-      {shallow: true}
+      pathname: '/rotarydial',
+      query: { to: contact.bio.address }
+    },
+      { shallow: true }
     )
     setSelectedIndex(3)
   }
@@ -48,7 +48,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-white dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
+      <div className="bg-indigo-50 dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
         <div
           onClick={onContactClick}
           className="w-full col-span-1 flex flex-row"
@@ -58,22 +58,22 @@ export const Slice = ({ contact, setSelectedIndex }) => {
           </div>
           <div className="relative w-10 aspect-1 dark:hue-rotate-180 dark:invert">
             {contact.poap.poaps.length > 0 &&
-            <div
-            // className='relative'
-            >
-              <Image
-                className=""
-                layout="fill"
-                src="/poap-badge.png"
-                alt="poapbadge"
-                title='This contact has POAPs.'
-              />
-              {contact.poap.hasCommonPoap &&
-          <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple" >
-            <CommonCheck />
-          </span>}
+              <div
+              // className='relative'
+              >
+                <Image
+                  className=""
+                  layout="fill"
+                  src="/poap-badge.png"
+                  alt="poapbadge"
+                  title='This contact has POAPs.'
+                />
+                {contact.poap.hasCommonPoap &&
+                  <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple" >
+                    <CommonCheck />
+                  </span>}
               </div>
-              }
+            }
           </div>
         </div>
         <button

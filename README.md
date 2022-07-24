@@ -1,8 +1,8 @@
-# The Blocqbook
 
 <!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
 
 ![bbBanner](public/blocqBookLogo/logoText/blocqbookTextSolidBanner.png)
+# The Blocqbook
 
 Picture a phonebook for the blockchain.
 

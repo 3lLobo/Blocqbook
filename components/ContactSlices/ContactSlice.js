@@ -101,7 +101,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
             />
           ))}
         </div>
-        <div className="flex justify-end col-span-2 gap-x-1">
+        <div className="flex justify-center col-span-2 gap-x-1 ">
           <button
             onClick={() => {
               handleConversation()
@@ -175,8 +175,10 @@ export const Slice = ({ contact, setSelectedIndex }) => {
               </g>
             </svg>
           </button>
+          </div>
+          <div className="flex justify-end col-span-1 gap-x-1 w-full">
           <button
-            className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 ml-11"
+            className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 mr-0"
             // TODO: add confirmation modal.
             onClick={() => {
               setOpenConfirm(true)

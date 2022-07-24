@@ -3,7 +3,7 @@ import { ColorModeToggle } from './colorModeToggle'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset as resetEvm, setConnection, setPoaps } from '../../app/evmSlice'
@@ -14,6 +14,9 @@ import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
 import { useLazyGetPoapsQuery } from '../../app/poapApi'
+
+import useWallet from '../../xmtp/hooks/useWallet.ts'
+import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
@@ -53,6 +56,45 @@ export default function Header() {
       }
     }
   }, [poapResult, store.poaps, dispatch])
+  const [signer, setSigner] = useState(null)
+
+    //XTPM
+    const {
+      connect: connectXmtp,
+      disconnect: disconnectXmtp,
+    } = useXmtp()
+    // const {
+    //   signer,
+    //   connect: connectWallet,
+    //   disconnect: disconnectWallet,
+    // } = useWallet()
+  
+    // const handleConnect = useCallback(async () => {
+    //   await connectWallet()
+    // }, [connectWallet])
+  
+    const usePrevious = (value) => {
+      const ref = useRef()
+      useEffect(() => {
+        ref.current = value
+      })
+      return ref.current
+    }
+    const prevSigner = usePrevious(signer)
+    
+    useEffect(() => {
+      if (!signer && prevSigner) {
+        disconnectXmtp()
+      }
+      if (!signer || signer === prevSigner) return
+      const connect = async () => {
+        const prevAddress = await prevSigner?.getAddress()
+        const address = await signer.getAddress()
+        if (address === prevAddress) return
+        connectXmtp(signer)
+      }
+      connect()
+    }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
@@ -87,6 +129,8 @@ export default function Header() {
           chainId: chainId.toString(),
         })
       )
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      setSigner(provider.getSigner())
       router.push('/rotarydial')
     }).catch((error) => {
       console.log(error)
@@ -104,6 +148,7 @@ export default function Header() {
       disconnect()
       setIsAbleToRefresh(false)
     } else {
+      // await handleConnect()
       connectCeramic()
     }
     // Set event listener for disconnecting a wallet

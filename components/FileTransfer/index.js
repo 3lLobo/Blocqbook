@@ -8,7 +8,10 @@ import { Avatar } from '../Profile/Avatar'
 import { Tag } from '../Profile/Tag'
 import { AddressTag } from '../AddressTag'
 import TimeAgo from 'timeago-react'
-
+import useXmtp from '../../xmtp/hooks/useXmtp.ts'
+import { useAddressAvatar } from '../../hooks/useAddressAvatar'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -19,6 +22,19 @@ const FileTransfer = () => {
   const [isUploading, setIsUploading] = useState(false)
   const [receivedMedia, setReceivedMedia] = useState([])
   const [isFetchingMedia, setIsFetchingMedia] = useState(false)
+
+  const store = useSelector((state) => state.contact)
+  const router = useRouter()
+  const sendFileTo = router.query.sendFileTo
+
+  const {
+    connect: connectXmtp,
+    disconnect: disconnectXmtp,
+    walletAddress,
+    client,
+    conversations,
+    loadingConversations,
+  } = useXmtp()
 
   async function handleUpload() {
     setIsUploading(true)
@@ -40,18 +56,8 @@ const FileTransfer = () => {
           ),
       })
       console.log(`> ✅ web3.storage now hosting ${cid}`)
-      // console.log(`https://dweb.link/ipfs/${cid}`)
-      setFilesCID(cid)
 
-      // console.log(
-      //   '> 📡 fetching the list of all unique uploads on this account'
-      // )
-      // let totalBytes = 0
-      // for await (const upload of client.list()) {
-      //   console.log(`> 📄 ${upload.cid}  ${upload.name}`)
-      //   totalBytes += upload.dagSize || 0
-      // }
-      // console.log(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
+      setFilesCID(cid)
     } catch (error) {
       console.log(error)
     }
@@ -61,11 +67,7 @@ const FileTransfer = () => {
   const sendFile = async () => {
     setIsUploading(true)
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      await provider.send('eth_requestAccounts', [])
-      const wallet = provider.getSigner()
-      const xmtp = await Client.create(wallet)
-      const conversation = await xmtp.conversations.newConversation(address)
+      const conversation = await client.conversations.newConversation(address)
       console.log('Sending file...')
       const messageToSend = JSON.stringify({
         type: 'file',
@@ -85,24 +87,14 @@ const FileTransfer = () => {
   }
 
   const getFiles = async () => {
-    console.log('Fetching files...')
-    console.log('TOAST: Please verify your identity with xmtp')
-    setIsFetchingMedia(true)
-    setReceivedMedia([])
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    await provider.send('eth_requestAccounts', [])
-    const wallet = provider.getSigner()
-    const xmtp = await Client.create(wallet)
-    const allInteractions = await xmtp.conversations.list()
-    for await (const interaction of allInteractions) {
+    for await (const interaction of conversations) {
       try {
-        const conversation = await xmtp.conversations.newConversation(
+        const conversation = await client.conversations.newConversation(
           interaction.peerAddress
         )
         const messages = await conversation.messages()
         for await (const message of messages) {
-          const recipientAddress = await wallet.getAddress()
-          addToMediaIfFile(message, recipientAddress)
+          addToMediaIfFile(message, walletAddress)
         }
       } catch (error) {
         console.log('TOAST: ', error)
@@ -112,22 +104,21 @@ const FileTransfer = () => {
       return Date.parse(b.block_signed_at) - Date.parse(a.block_signed_at)
     })
     setIsFetchingMedia(false)
-    await backgroundStreaming(xmtp, wallet)
+    await backgroundStreaming(client, walletAddress)
   }
 
-  const backgroundStreaming = async (xmtp, wallet) => {
-    const stream = await xmtp.conversations.stream()
+  const backgroundStreaming = async (client, walletAddress) => {
+    const stream = await client.conversations.stream()
     console.log('Background stream...')
     for await (const conversation of stream) {
-      console.log(`New conversation started with ${conversation.peerAddress}`)
+      console.log(`New message received from ${conversation.peerAddress}`)
       const messages = await conversation.messages()
-      const lastMessage = messages[messages.length-1]
-      const recipientAddress = await wallet.getAddress()
-      addToMediaIfFile(lastMessage, recipientAddress)
+      const lastMessage = messages[messages.length - 1]
+      addToMediaIfFile(lastMessage, walletAddress)
       break
     }
     console.log('Background stream ended.')
-    backgroundStreaming(xmtp, wallet)
+    backgroundStreaming(client, walletAddress)
   }
 
   const addToMediaIfFile = (message, recipientAddress) => {
@@ -144,21 +135,24 @@ const FileTransfer = () => {
   }
 
   useEffect(() => {
+    if(sendFileTo) setAddress(sendFileTo)
+  }, [sendFileTo])
+
+  useEffect(() => {
     if (files.length > 0) handleUpload()
   }, [files])
 
   useEffect(() => {
     if (!isFetchingMedia) getFiles()
   }, [])
-  
 
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex flex-col items-center mt-4 w-11/12">
-        <div className="text-2xl text-left w-full">
+        <div className="text-2xl text-slate-800 dark:text-white text-left w-full">
           Send files to your friends
         </div>
-        <div className="bg-white dark:bg-slate-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
+        <div className="bg-white dark:bg-indigo-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
           <label
             htmlFor="filePicker"
             className={`rounded-lg bg-slate-900 p-2  hover:bg-opacity-20 cursor-pointer ${
@@ -206,7 +200,7 @@ const FileTransfer = () => {
           <button
             disabled={isUploading || filesCID.length === 0}
             onClick={sendFile}
-            className="bg-slate-900 text-slate-300 hover:bg-indigo-900 disabled:bg-gray-400 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2"
+            className="bg-indigo-900 text-slate-300 hover:bg-indigo-900 disabled:bg-gray-400 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2"
           >
             {isUploading ? (
               <BezierSpinner />
@@ -227,72 +221,81 @@ const FileTransfer = () => {
       </div>
       <div className="flex flex-col items-center gap-4 mt-8 w-11/12">
         <div className="w-full">
-          <div className="text-2xl text-left">Files received</div>
+          <div className="text-2xl text-left text-slate-800 dark:text-snow">Files received</div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
-        {((!isFetchingMedia) && (receivedMedia.length===0)) && <div>No files were received.</div>}
+        {!isFetchingMedia && receivedMedia.length === 0 && (
+          <div>No files were received.</div>
+        )}
         {receivedMedia.length > 0 &&
-          receivedMedia.map((m, i) => (
-            <div
-              key={i}
-              className="bg-white dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
-            >
-              <div className="w-10 ml-0 ">
-                <Avatar scale={110} />
-              </div>
-              <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
-                {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
-                <AddressTag address={m.sender.toLowerCase()} isOneHop={true} />
-              </div>
-              <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
-                <a target="_blank">{m.description}</a>
-              </Link>
-              <div className="flex gap-4 absolute right-2 items-center">
-                <TimeAgo datetime={m.timestamp} />
-                <div className="mr-11 space-x-1 col-span-2 flex flex-row">
-                  <Tag tagText="dude.eth" color="indigo-300" />
-                  <Tag tagText="dude.eth" />
+          receivedMedia.map((m, i) => {
+            const contactAvatar = Object.keys(store.contacts).includes(m.sender)
+              ? store.contacts[address].bio?.avatar
+              : '/blocqBookLogo/icon/blocqbookTransparent2.png'
+            return (
+              <div
+                key={i}
+                className="bg-white dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
+              >
+                  {/**<Avatar src={contactAvatar} />**/}
+                  <img className="w-12 h-full rounded-full" src={contactAvatar} />
+                <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
+                  {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
+                  <AddressTag
+                    address={m.sender.toLowerCase()}
+                    isOneHop={true}
+                  />
                 </div>
-                <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
-                  {
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      {' '}
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      />
-                    </svg>
-                  }
-                </button>
-                <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
-                  {
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                      />
-                    </svg>
-                  }
-                </button>
+                <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
+                  <a target="_blank">{m.description}</a>
+                </Link>
+                <div className="flex gap-4 absolute right-2 items-center">
+                  <TimeAgo datetime={m.timestamp} />
+                  <div className="mr-11 space-x-1 col-span-2 flex flex-row">
+                    <Tag tagText="dude.eth" color="indigo-300" />
+                    <Tag tagText="dude.eth" />
+                  </div>
+                  <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
+                    {
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        {' '}
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                        />
+                      </svg>
+                    }
+                  </button>
+                  <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
+                    {
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                        />
+                      </svg>
+                    }
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
       </div>
     </div>
   )

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { emptyProfile } from '../../app/contactSlice'
 import { v4 } from 'uuid'
 
-export const ContactSlices = () => {
+export const ContactSlices = ({setSelectedIndex}) => {
   const store = useSelector((state) => state.contact)
 
   const contacts = store.contacts ? Object.values(store.contacts) : []

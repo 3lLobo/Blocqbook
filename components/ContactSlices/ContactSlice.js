@@ -6,15 +6,37 @@ import { useState } from 'react'
 import { ConfirmDelete } from './ConfirmDelete'
 import Image from 'next/image'
 import { CommonCheck } from '../Poap/CommonCheck'
+import { useRouter } from 'next/router'
 
-export const Slice = ({ contact }) => {
+export const Slice = ({ contact, setSelectedIndex }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const [openConfirm, setOpenConfirm] = useState(false)
 
   function onContactClick() {
     dispatch(openModal({ address: contact.bio.address }))
+  }
+
+  const handleIPFSTransfer = () => {
+    router.push({
+      pathname: '/rotarydial', 
+      query: {sendFileTo: contact.bio.address}
+    }, 
+      {shallow: true}
+    )
+    setSelectedIndex(4)
+  }
+
+  const handleConversation = () => {
+    router.push({
+      pathname: '/rotarydial', 
+      query: {to: contact.bio.address}
+    }, 
+      {shallow: true}
+    )
+    setSelectedIndex(3)
   }
 
   return (
@@ -26,7 +48,7 @@ export const Slice = ({ contact }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-10  justify-start items-center  text-slate-900  ">
+      <div className="bg-white dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
         <div
           onClick={onContactClick}
           className="w-full col-span-1 flex flex-row"
@@ -80,7 +102,12 @@ export const Slice = ({ contact }) => {
           ))}
         </div>
         <div className="flex justify-end col-span-2 gap-x-1">
-          <button className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20">
+          <button
+            onClick={() => {
+              handleConversation()
+            }}
+            className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-100"
@@ -97,7 +124,10 @@ export const Slice = ({ contact }) => {
               />
             </svg>
           </button>
-          <button className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20">
+          <button
+            onClick={() => handleIPFSTransfer()}
+            className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
+          >
             {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-100"

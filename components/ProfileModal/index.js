@@ -54,7 +54,7 @@ export default function ProfileModal({ children }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-indigo-50 dark:bg-zinc-900 p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-indigo-50 dark:bg-[#11002D] p-6 text-left align-middle shadow-xl transition-all">
                   <div className="mt-2">
                     {store.contactInEdit && (
                       <ProfileCard profile={store.contactInEdit} />
@@ -70,7 +70,7 @@ export default function ProfileModal({ children }) {
                         Close
                       </button>
                     </div> */}
-                    <div className="mt-4">
+                    <div>
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-aqua-muted  px-4 py-2 text-sm font-medium text-blue-900 hover:bg-aqua focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

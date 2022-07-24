@@ -5,9 +5,10 @@ import ProfileCard from '../../components/Profile/ProfileCard'
 import { useViewerRecord } from '@self.id/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
+// import { WalletProvider } from '../../xmtp/components/WalletProvider.tsx'
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -55,14 +56,16 @@ const Profile = () => {
   // }
 
   return (
-    <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
-      <Head />
-      {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
+    // <WalletProvider>
+      <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
+        <Head />
+        {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
         ClickMEEE
       </button> */}
-      <Sidebar />
-      <ProfileModal />
-    </div>
+        <Sidebar />
+        <ProfileModal />
+      </div>
+    // </WalletProvider>
   )
 }
 

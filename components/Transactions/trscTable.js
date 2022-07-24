@@ -44,14 +44,14 @@ export const PrettyTable = ({ transactions }) => {
                       <th
                         key={col}
                         scope="col"
-                        className="sm:pl-6 lg:pl-8  sticky top-11 z-10 border-b border-slate-300 dark:border-slate-800 bg-indigo-100 dark:bg-indigo-900 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-slate-900 backdrop-blur backdrop-filter dark:text-slate-400"
+                        className="sm:pl-6 lg:pl-8 sticky top-11 z-10 border-b border-slate-300 dark:border-slate-800 bg-indigo-100 dark:bg-indigo-800 px-3 py-3.5 text-left text-sm font-semibold text-slate-900 backdrop-blur backdrop-filter dark:text-slate-400"
                       >
                         {col.toUpperCase()}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="bg-snow dark:bg-slate-900">
+                <tbody className="bg-snow dark:bg-[#11002D]">
                   {transactions.map((transaction, transactionIdx) => (
                     <tr key={transaction.email}>
                       <td

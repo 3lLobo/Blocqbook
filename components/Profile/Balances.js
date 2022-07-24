@@ -8,7 +8,7 @@ export default function Balances({ balances }) {
 
   return (
     // <div className="w-40 px-4 pt-16">
-    <div className="flex flex-col mx-auto rounded-2xl bg-snow-muted dark:bg-indigo-300 p-2">
+    <div className="flex flex-col mx-auto rounded-2xl bg-snow-muted dark:bg-indigo-900 p-2 pr-4">
       {balances.map((chain) => (
         <div key={chain.chain}>
           {chain.items.length > 1 ? (
@@ -18,7 +18,7 @@ export default function Balances({ balances }) {
             >
               {({ open }) => (
                 <>
-                  <Disclosure.Button className="flex justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full">
+                  <Disclosure.Button className="flex justify-between m-1 rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full">
                     <ChainLogo chainId={chain.chain_id} />
                     <ChevronUpIcon
                       className={`${
@@ -42,7 +42,7 @@ export default function Balances({ balances }) {
               )}
             </Disclosure>
           ) : (
-            <div className="flex justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full opacity-50">
+            <div className="flex justify-between rounded-lg bg-indigo-100 px-4 py-2 m-1 text-left text-sm font-medium text-indigo-900 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full opacity-50">
               <ChainLogo chainId={chain.chain_id} />
             </div>
           )}

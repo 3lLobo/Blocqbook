@@ -149,10 +149,10 @@ const FileTransfer = () => {
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex flex-col items-center mt-4 w-11/12">
-        <div className="text-2xl text-left w-full">
+        <div className="text-2xl text-slate-800 dark:text-white text-left w-full">
           Send files to your friends
         </div>
-        <div className="bg-white dark:bg-slate-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
+        <div className="bg-white dark:bg-indigo-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
           <label
             htmlFor="filePicker"
             className={`rounded-lg bg-slate-900 p-2  hover:bg-opacity-20 cursor-pointer ${
@@ -200,7 +200,7 @@ const FileTransfer = () => {
           <button
             disabled={isUploading || filesCID.length === 0}
             onClick={sendFile}
-            className="bg-slate-900 text-slate-300 hover:bg-indigo-900 disabled:bg-gray-400 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2"
+            className="bg-indigo-900 text-slate-300 hover:bg-indigo-900 disabled:bg-gray-400 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2"
           >
             {isUploading ? (
               <BezierSpinner />
@@ -221,7 +221,7 @@ const FileTransfer = () => {
       </div>
       <div className="flex flex-col items-center gap-4 mt-8 w-11/12">
         <div className="w-full">
-          <div className="text-2xl text-left">Files received</div>
+          <div className="text-2xl text-left text-slate-800 dark:text-snow">Files received</div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
         {!isFetchingMedia && receivedMedia.length === 0 && (

@@ -61,15 +61,14 @@ export const Slice = ({ contact }) => {
           {contact.bio.name || contact.address}
         </button>
         <div
-          className="space-x-1 col-span-3 flex justify-start overflow-x-scroll scrollbar-hide"
+          className="space-x-1 col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide"
         >
           {contact.tags.privTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={tag.id} />
           ))}
         </div>
         <div
-          // TODO: align tags to the left
-          className="space-x-1 col-span-2 flex justify-start overflow-x-scroll scrollbar-hide"
+          className="space-x-1 col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide "
         >
           {contact.tags.pubTags.map((tag) => (
             <Tag

@@ -56,18 +56,15 @@ export default function Header() {
 
   const [connection, connect, disconnect] = useViewerConnection()
 
-  const [isConnected, setIsConnected] = useState(false)
+  // const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
     const checkIfRefresh = async () => {
-      if (isAbleToRefresh) {
+      // if (isAbleToRefresh) {
         connectCeramic()
-      }
+      // }
     }
     console.log('Ceramic client: ', connection)
-    if (connection.status === 'idle') {
-      if (store.isConnected && !isAbleToRefresh) {
-        setIsAbleToRefresh(true)
-      }
+    if (store.isConnected &&  connection.status === 'idle') {
       checkIfRefresh()
     }
   }, [connection.status, isAbleToRefresh])
@@ -77,7 +74,7 @@ export default function Header() {
     // trigger POAP fetching
     poapTrigger({ address: window.ethereum.selectedAddress }, true)
     await connect(authProvider).then(() => {
-      setIsConnected(true)
+      // setIsConnected(true)
       setIsAbleToRefresh(true)
       const chainId =
         ethers.utils.arrayify(window.ethereum.chainId, {
@@ -95,7 +92,7 @@ export default function Header() {
       console.log(error)
       dispatch(resetEvm())
       dispatch(resetContacts())
-      setIsConnected(false)
+      // setIsConnected(false)
     })
   }
 
@@ -130,11 +127,11 @@ export default function Header() {
         <div className=" mx-auto px-2 sm:px-6 ">
           <div className=" flex items-center justify-between h-16">
             <MyButton
-              text={isConnected ? 'Disconnect' : 'Connect'}
+              text={store.connected ? 'Disconnect' : 'Connect'}
               onClick={connectButtonHit}
               primary={false}
             >
-              {!isConnected && (
+              {!store.connected && (
                 <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1">
                   <Image alt="metamask" layout="fill" src="/metamask.png" />
                 </div>
@@ -142,7 +139,7 @@ export default function Header() {
             </MyButton>
             <motion.div
               initial={false}
-              animate={isConnected ? 'visible' : 'hidden'}
+              animate={store.connected ? 'visible' : 'hidden'}
               exit={{ opacity: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.5 }}
               variants={{

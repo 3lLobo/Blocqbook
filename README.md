@@ -1,5 +1,6 @@
 # Blocqbook
-
+<!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
+![blocqbookTextTransparentBannerLight](https://user-images.githubusercontent.com/70228821/180654920-7a1d72bc-da2a-410b-9130-33e764f89c3c.png)
 An awesome web-3 app which allows you to retrive your transactions, add contacts, send text messages to peers & transfer files as well. Built by a team of three developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
 
 ## Live Site

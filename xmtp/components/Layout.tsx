@@ -18,7 +18,7 @@ import messageComposerStyles from '../styles/MessageComposer.module.css'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
   <aside className="flex w-96 flex-col flex-grow fixed inset-y-0 right-0">
-    <div className="flex flex-col flex-grow border-r border-gray-200 bg-white overflow-y-auto">
+    <div className="flex flex-col flex-grow border-l border-gray-200 bg-white overflow-y-auto">
       {children}
     </div>
   </aside>
@@ -75,14 +75,11 @@ const Layout: React.FC = ({ children }) => {
     <div className='relative'>
         <NavigationView>
           <NavigationColumnLayout>
-            <div className='mt-20'>
-              <div>.</div>
-              <div>.</div>
-              <div>.</div>
+              <span className='text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl'>Messages powered by XMTP</span>
               {walletAddress && client && 
-              <div className='mt-20 flex items-center w-full'>
+              <div className='flex items-center gap-1 w-full mt-5 mx-1'>
                   <input 
-                    className='w-11/12' 
+                    className='rounded-2xl w-11/12' 
                     type='text' 
                     onChange={e => setAddressToSend(e.target.value)} 
                     value={addressToSend}
@@ -100,7 +97,6 @@ const Layout: React.FC = ({ children }) => {
                   </button>
               </div>
               }
-              </div>
             <NavigationPanel onConnect={handleConnect} />
           </NavigationColumnLayout>
         </NavigationView>

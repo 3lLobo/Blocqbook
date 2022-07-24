@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import classNames from '../../helpers/classNames.ts'
 import messageComposerStyles from '../../styles/MessageComposer.module.css'
-import upArrowGreen from '../../public/up-arrow-green.svg'
-import upArrowGrey from '../../public/up-arrow-grey.svg'
 import { useRouter } from 'next/router'
 
 type MessageComposerProps = {
@@ -37,6 +35,7 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
         'sticky',
         'bottom-0',
         'pl-4',
+        'mb-4',
         'pt-2',
         'flex-shrink-0',
         'flex',

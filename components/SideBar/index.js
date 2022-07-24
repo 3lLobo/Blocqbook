@@ -76,7 +76,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="md:pl-64 flex flex-col">
-          <div className=" mx-6 mt-4 rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30">
+          {selectedIndex !==3 && <div className=" mx-6 mt-4 rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30">
             <button
               type="button"
               className="px-4 border-r border-slate-900 text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -149,7 +149,7 @@ const Sidebar = () => {
               </div> */}
               </div>
             </div>
-          </div>
+          </div>}
           <Tab.Panels>
             {tabNames.map((tabName, index) => {
               return (

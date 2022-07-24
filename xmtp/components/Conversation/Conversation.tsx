@@ -16,7 +16,7 @@ const Conversation = ({
   const messagesEndRef = useRef(null)
   const scrollToMessagesEndRef = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' })
+    ;(messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' })
   }, [messagesEndRef])
 
   const { messages, sendMessage, loading } = useConversation(
@@ -47,7 +47,7 @@ const Conversation = ({
   }
 
   return (
-    <main className="flex flex-col bg-white h-screen w-[calc(100%-384px)]">
+    <main className="flex flex-col bg-white h-screen">
     {/* <main className="flex flex-col flex-1 bg-white h-screen"> */}
       <MessagesList
         messagesEndRef={messagesEndRef}

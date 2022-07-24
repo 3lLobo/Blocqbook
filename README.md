@@ -49,7 +49,7 @@ Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/co
 
 ## Poaps
 
-Did we say [POAPS](https://poap.xyz/)?  Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain.
+Did we say [POAPS](https://poap.xyz/)?  Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPS of other wallets and notify when we have POAPS in common.
 
 ## Tech Stack 
 

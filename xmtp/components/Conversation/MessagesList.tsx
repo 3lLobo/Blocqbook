@@ -1,11 +1,12 @@
 import { Message } from '@xmtp/xmtp-js'
 import React, { MutableRefObject } from 'react'
 import Emoji from 'react-emoji-render'
-import Avatar from '../Avatar'
 import { formatTime } from '../../helpers/string'
 import AddressPill from '../AddressPill'
 import { AddressTag } from '../../../components/AddressTag'
 import { useAddressAvatar } from '../../../hooks/useAddressAvatar.js'
+import { PoapAvatar } from '../../../components/Poap'
+import { Avatar } from '../../../components/Profile/Avatar'
 
 export type MessageListProps = {
   messages: Message[]
@@ -32,17 +33,16 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
   return (
     <div className="flex items-start mx-auto mb-4">
       {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
-      {savedAvatar !== null ? (
-        <div className="h-12 w-12 rounded-full overflow-hidden flex items-center justify-center">
-          <img src={savedAvatar} alt="avatar" />
-        </div>
-      ) : (
-        <Avatar peerAddress={message.senderAddress as string} />
-      )}
+      <div className="relative w-11 aspect-1">
+        <Avatar src={savedAvatar} />
+      </div>
       <div className="ml-2">
         <div className="flex items-center gap-2">
           {/**COVALENT IS BRINGING JUST LOWERCASE ADDRESSES */}
-          <AddressTag address={message.senderAddress.toLowerCase()} isOneHop={false} />
+          <AddressTag
+            address={message.senderAddress.toLowerCase()}
+            isOneHop={false}
+          />
           <span className="text-sm font-normal place-self-end text-n-300 text-md uppercase">
             {formatTime(message.sent)}
           </span>

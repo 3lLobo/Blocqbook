@@ -47,14 +47,16 @@ const Conversation = ({
   }
 
   return (
-    <main className="flex flex-col bg-white h-screen">
+    <main className="flex flex-col bg-transparent h-full ">
       {/* <main className="flex flex-col flex-1 bg-white h-screen"> */}
       <MessagesList
         messagesEndRef={messagesEndRef}
         messages={messages}
         walletAddress={walletAddress}
       />
-      {walletAddress && <MessageComposer onSend={sendMessage} />}
+      <div className="flex mt-11 w-full">
+        {walletAddress && <MessageComposer onSend={sendMessage} />}
+      </div>
     </main>
   )
 }

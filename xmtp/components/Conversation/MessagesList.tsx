@@ -32,9 +32,8 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
   })
   return (
     <div className="flex items-start mx-auto mb-4">
-      {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
-      <div className="relative w-11 aspect-1">
-        <Avatar src={savedAvatar} />
+      <div className="relative w-11 h-11 ">
+        <Avatar src={savedAvatar} scale={0} />
       </div>
       <div className="ml-2">
         <div className="flex items-center gap-2">
@@ -94,10 +93,10 @@ const MessagesList = ({
   let lastMessageDate: Date | undefined
 
   return (
-    <div className="flex-grow flex">
+    <div className="flex-grow flex ">
       <div className="pb-6 md:pb-0 w-full flex flex-col self-end">
-        <div className="w-full bg-white px-4 pt-6 overflow-y-auto flex">
-          <div className="w-full">
+        <div className="w-full bg-transparent px-4 pt-6 overflow-y-auto flex">
+          <div className="">
             {messages && messages.length ? (
               <ConversationBeginningNotice />
             ) : null}

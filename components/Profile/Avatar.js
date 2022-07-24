@@ -8,7 +8,7 @@ export function Avatar({ src, scale }) {
       : src
 
   return (
-    <div className={`aspect-1 w-full h-full`}>
+    <div className={`relative aspect-1 w-full h-full`}>
       <Image
         className="rounded-full bg-indigo-400 dark:bg-neonPurple"
         layout="fill"

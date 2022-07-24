@@ -8,8 +8,7 @@ import useConversation from '../hooks/useConversation'
 import { XmtpContext } from '../contexts/xmtp'
 import { Message } from '@xmtp/xmtp-js'
 import useEns from '../hooks/useEns'
-import Avatar from './Avatar'
-import { Avatar as Avatar2 } from '../../components/Profile/Avatar.js'
+import { Avatar } from '../../components/Profile/Avatar.js'
 import { useContext } from 'react'
 import { useAddressName } from '../../hooks/useAddressName.js'
 import { useAddressAvatar } from '../../hooks/useAddressAvatar.js'
@@ -69,7 +68,8 @@ const ConversationTile = ({
             'px-4',
             'md:max-w-sm',
             'mx-auto',
-            'bg-white',
+            'bg-snow',
+            'rounded-xl',
             'space-y-2',
             'py-2',
             'flex',
@@ -84,13 +84,9 @@ const ConversationTile = ({
           )}
         >
           {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
-          {savedAvatar !== null ? (
-            <div className="h-full w-12 rounded-full overflow-hidden flex items-center justify-center">
-              <img src={savedAvatar} alt="avatar" />
-            </div>
-          ) : (
-            <Avatar peerAddress={conversation.peerAddress} />
-          )}
+          <div className="relative w-11 h-11 ">
+            <Avatar src={savedAvatar} scale={0} />
+          </div>
           <div className="py-4 sm:text-left ml-3 text w-full">
             <div className="grid-cols-2 grid">
               {nickname.length < 41 ? (

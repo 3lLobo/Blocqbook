@@ -16,15 +16,15 @@ import BackArrow from './BackArrow'
 import messageComposerStyles from '../styles/MessageComposer.module.css'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-96 flex-col flex-grow fixed inset-y-0 right-0">
-    <div className="flex flex-col flex-grow border-l border-gray-200 bg-white overflow-y-auto">
+  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0">
+    <div className="flex flex-col flex-grow border-l border-gray-200  overflow-y-auto ">
       {children}
     </div>
   </aside>
 )
 
 const TopBarLayout: React.FC = ({ children }) => (
-  <div className="sticky top-0 z-10 flex-shrink-0 flex bg-zinc-50 border-b border-gray-200 bg-white border-0">
+  <div className="sticky top-0 z-10 flex-shrink-0 flex border-b border-gray-200 border-0">
     {children}
   </div>
 )
@@ -72,14 +72,14 @@ const Layout: React.FC = ({ children }) => {
   const prevSigner = usePrevious(signer)
 
   return (
-    <div className="relative">
+    <div className="relative flex h-full w-1/4">
       <NavigationView>
         <NavigationColumnLayout>
           <span className="text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
-            Messages powered by XMTP
+            Converations - powered by XMTP
           </span>
           {walletAddress && client && (
-            <div className="flex items-center gap-1 w-full mt-5 mx-1">
+            <div className="flex items-center gap-1 w-full mt-5 px-3 mb-3">
               <input
                 className="rounded-2xl w-11/12"
                 type="text"
@@ -124,10 +124,11 @@ const Layout: React.FC = ({ children }) => {
           <NavigationPanel onConnect={handleConnect} />
         </NavigationColumnLayout>
       </NavigationView>
-      {/* <ConversationView> */}
-      {walletAddress && client && recipientWalletAddr !== undefined && (
-        <Conversation recipientWalletAddr={recipientWalletAddr} />
-      )}
+      <div className="relative w-3/4 overflow-x-auto">
+        {walletAddress && client && recipientWalletAddr !== undefined && (
+          <Conversation recipientWalletAddr={recipientWalletAddr} />
+        )}
+      </div>
     </div>
   )
 }

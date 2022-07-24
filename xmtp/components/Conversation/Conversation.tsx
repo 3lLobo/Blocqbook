@@ -54,7 +54,7 @@ const Conversation = ({
         messages={messages}
         walletAddress={walletAddress}
       />
-      <div className="flex mt-11 w-full">
+      <div className="flex mb-0 w-full">
         {walletAddress && <MessageComposer onSend={sendMessage} />}
       </div>
     </main>

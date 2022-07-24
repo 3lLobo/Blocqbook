@@ -20,22 +20,13 @@ import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
-  const provider = await window.ethereum
-    .request({ method: 'eth_requestAccounts' })
-    .then(() => {
-      const address = window.ethereum.selectedAddress
-      provider = new EthereumAuthProvider(window.ethereum, address)
-      return provider
-    })
-    .catch((error) => {
-      if (error.code === 4001) {
-        // EIP-1193 userRejectedRequest error
-        console.log('Please connect to MetaMask.')
-      } else {
-        console.error(error)
-      }
-    })
+
+  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+  const address = accounts[0];
+  console.log("🚀 ~ file: index.js ~ line 27 ~ .then ~ address", address)
+  const provider = new EthereumAuthProvider(window.ethereum, address)
   return provider
+
 }
 
 export default function Header() {
@@ -58,43 +49,43 @@ export default function Header() {
   }, [poapResult, store.poaps, dispatch])
   const [signer, setSigner] = useState(null)
 
-    //XTPM
-    const {
-      connect: connectXmtp,
-      disconnect: disconnectXmtp,
-    } = useXmtp()
-    // const {
-    //   signer,
-    //   connect: connectWallet,
-    //   disconnect: disconnectWallet,
-    // } = useWallet()
-  
-    // const handleConnect = useCallback(async () => {
-    //   await connectWallet()
-    // }, [connectWallet])
-  
-    const usePrevious = (value) => {
-      const ref = useRef()
-      useEffect(() => {
-        ref.current = value
-      })
-      return ref.current
-    }
-    const prevSigner = usePrevious(signer)
-    
+  //XTPM
+  const {
+    connect: connectXmtp,
+    disconnect: disconnectXmtp,
+  } = useXmtp()
+  // const {
+  //   signer,
+  //   connect: connectWallet,
+  //   disconnect: disconnectWallet,
+  // } = useWallet()
+
+  // const handleConnect = useCallback(async () => {
+  //   await connectWallet()
+  // }, [connectWallet])
+
+  const usePrevious = (value) => {
+    const ref = useRef()
     useEffect(() => {
-      if (!signer && prevSigner) {
-        disconnectXmtp()
-      }
-      if (!signer || signer === prevSigner) return
-      const connect = async () => {
-        const prevAddress = await prevSigner?.getAddress()
-        const address = await signer.getAddress()
-        if (address === prevAddress) return
-        connectXmtp(signer)
-      }
-      connect()
-    }, [signer, prevSigner, connectXmtp, disconnectXmtp])
+      ref.current = value
+    })
+    return ref.current
+  }
+  const prevSigner = usePrevious(signer)
+
+  useEffect(() => {
+    if (!signer && prevSigner) {
+      disconnectXmtp()
+    }
+    if (!signer || signer === prevSigner) return
+    const connect = async () => {
+      const prevAddress = await prevSigner?.getAddress()
+      const address = await signer.getAddress()
+      if (address === prevAddress) return
+      connectXmtp(signer)
+    }
+    connect()
+  }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
@@ -102,20 +93,20 @@ export default function Header() {
   useEffect(() => {
     const checkIfRefresh = async () => {
       // if (isAbleToRefresh) {
-        connectCeramic()
+      connectCeramic()
       // }
     }
     console.log('Ceramic client: ', connection)
-    if (store.isConnected &&  connection.status === 'idle') {
+    if (store.isConnected && connection.status === 'idle') {
       checkIfRefresh()
     }
   }, [connection.status, isAbleToRefresh])
 
   async function connectCeramic() {
-    const authProvider = await createAuthProvider()
+    const authProvider = (await createAuthProvider())
     // trigger POAP fetching
     poapTrigger({ address: window.ethereum.selectedAddress }, true)
-    await connect(authProvider).then(() => {
+    connect(authProvider).then(() => {
       // setIsConnected(true)
       setIsAbleToRefresh(true)
       const chainId =

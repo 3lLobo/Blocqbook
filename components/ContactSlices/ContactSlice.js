@@ -7,6 +7,7 @@ import { ConfirmDelete } from './ConfirmDelete'
 import Image from 'next/image'
 import { CommonCheck } from '../Poap/CommonCheck'
 import { useRouter } from 'next/router'
+import { v4 } from 'uuid'
 
 export const Slice = ({ contact, setSelectedIndex }) => {
   const store = useSelector((state) => state.contact)
@@ -96,7 +97,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
             <Tag
               tagText={tag.name}
               color={tag.color}
-              key={tag.id}
+              key={v4()}
               isPub={true}
             />
           ))}

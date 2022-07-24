@@ -14,7 +14,7 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
     <>
       <Transition.Root show={show} as={Fragment}>
         {/* <div className="inset-0 flex flex-col h-screen bg-white "> */}
-        <div className="flex flex-col h-screen bg-white ">
+        <div className="flex flex-col h-screen ">
           <Transition.Child
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
@@ -33,7 +33,7 @@ const ConversationView = ({ children }: ConversationViewProps): JSX.Element => {
       </Transition.Root>
 
       {/* Always show in desktop layout */}
-      <div className="bg-white pl-84 flex flex-col flex-1 h-screen overflow-y-auto">
+      <div className=" pl-84 flex flex-col flex-1 h-screen overflow-y-auto">
         {children}
       </div>
     </>

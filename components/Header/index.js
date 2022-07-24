@@ -42,25 +42,22 @@ export default function Header() {
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(false)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
+  const [signer, setSigner] = useState(null)
 
     //XTPM
     const {
       connect: connectXmtp,
       disconnect: disconnectXmtp,
-      walletAddress,
-      client,
-      conversations,
-      loadingConversations,
     } = useXmtp()
-    const {
-      signer,
-      connect: connectWallet,
-      disconnect: disconnectWallet,
-    } = useWallet()
+    // const {
+    //   signer,
+    //   connect: connectWallet,
+    //   disconnect: disconnectWallet,
+    // } = useWallet()
   
-    const handleConnect = useCallback(async () => {
-      await connectWallet()
-    }, [connectWallet])
+    // const handleConnect = useCallback(async () => {
+    //   await connectWallet()
+    // }, [connectWallet])
   
     const usePrevious = (value) => {
       const ref = useRef()
@@ -92,7 +89,7 @@ export default function Header() {
     const checkIfRefresh = async () => {
       if (isAbleToRefresh) {
         connectCeramic()
-        handleConnect()
+        // handleConnect()
       }
     }
     console.log('Ceramic client: ', connection)
@@ -120,6 +117,8 @@ export default function Header() {
           chainId: chainId.toString(),
         })
       )
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      setSigner(provider.getSigner())
       router.push('/rotarydial')
     }).catch((error) => {
       console.log(error)
@@ -137,7 +136,7 @@ export default function Header() {
       disconnect()
       setIsAbleToRefresh(false)
     } else {
-      await handleConnect()
+      // await handleConnect()
       connectCeramic()
     }
     // Set event listener for disconnecting a wallet

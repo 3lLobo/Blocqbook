@@ -15,10 +15,18 @@ import FileTransfer from '../FileTransfer'
 import Image from 'next/image'
 import Messenger from '../Messenger'
 import { CurrencyDollarIcon } from '@heroicons/react/outline'
+import { useDispatch, useSelector } from 'react-redux'
+import { setOpenTab } from '../../app/navSlice'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
+  const navStore = useSelector((state) => state.nav)
+  const dispatch = useDispatch()
   const [selectedIndex, setSelectedIndex] = useState(1)
+
+  function onTabChange(index) {
+    dispatch(setOpenTab({ tab: index }))
+  }
 
   const tabNames = [
     {
@@ -51,8 +59,8 @@ const Sidebar = () => {
     <div className="h-full">
       <Tab.Group
         vertical
-        selectedIndex={selectedIndex}
-        onChange={setSelectedIndex}
+        selectedIndex={navStore.openTab}
+        onChange={onTabChange}
       >
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed h-full backdrop-blur-xl backdrop-brightness-50">
           <div className="flex-1 flex flex-col min-h-0 bg-indigo-100 shadow-lg dark:bg-[#0E0026] ">
@@ -85,7 +93,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="md:pl-64 mt-3 flex flex-col">
-          {[0, 1].includes(selectedIndex) &&
+          {[0, 1].includes(navStore.openTab) &&
             <div
               className=" mx-6  rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30"
             >
@@ -135,7 +143,7 @@ const Sidebar = () => {
                       {tabName.name === 'Transactions' ? (
                         <Transactions />
                       ) : tabName.name === 'Contacts' ? (
-                        <ContactSlices setSelectedIndex={setSelectedIndex} />
+                        <ContactSlices />
                       ) : tabName.name === 'Messenger' ? (
                         <Messenger />
                       ) : tabName.name === 'FileTransfer' ? (

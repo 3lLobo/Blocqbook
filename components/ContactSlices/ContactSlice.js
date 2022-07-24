@@ -8,10 +8,17 @@ import Image from 'next/image'
 import { CommonCheck } from '../Poap/CommonCheck'
 import { useRouter } from 'next/router'
 import { v4 } from 'uuid'
+import { setOpenTab } from '../../app/navSlice'
 
-export const Slice = ({ contact, setSelectedIndex }) => {
+export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
+  const navStore = useSelector((state) => state.nav)
   const dispatch = useDispatch()
+
+  function onTabChange(index) {
+    dispatch(setOpenTab({ tab: index }))
+  }
+
   const router = useRouter()
 
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -20,25 +27,16 @@ export const Slice = ({ contact, setSelectedIndex }) => {
     dispatch(openModal({ address: contact.bio.address }))
   }
 
-  const handleIPFSTransfer = () => {
+  const handleTabSwitch = (tab) => {
     router.push({
       pathname: '/rotarydial',
       query: { sendFileTo: contact.bio.address }
     },
       { shallow: true }
     )
-    setSelectedIndex(4)
+    dispatch(setOpenTab({ tab: tab, query: contact.bio.address }))
   }
 
-  const handleConversation = () => {
-    router.push({
-      pathname: '/rotarydial',
-      query: { to: contact.bio.address }
-    },
-      { shallow: true }
-    )
-    setSelectedIndex(3)
-  }
 
   return (
     <>
@@ -105,7 +103,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
         <div className="flex justify-center col-span-2 gap-x-1 ">
           <button
             onClick={() => {
-              handleConversation()
+              handleTabSwitch(2)
             }}
             className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
           >
@@ -126,7 +124,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
             </svg>
           </button>
           <button
-            onClick={() => handleIPFSTransfer()}
+            onClick={() => handleTabSwitch(3)}
             className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
           >
             {/* <svg

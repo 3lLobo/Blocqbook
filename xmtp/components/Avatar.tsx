@@ -1,5 +1,5 @@
 import Blockies from 'react-blockies'
-import useEns from '../hooks/useEns.ts'
+import useEns from '../hooks/useEns'
 
 type AvatarProps = {
   peerAddress: string

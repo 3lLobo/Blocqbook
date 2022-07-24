@@ -1,25 +1,131 @@
-import {
-  SupportedChainId,
-  SupportedL1ChainId,
-  SupportedL2ChainId,
-} from './chains.ts'
+// import {
+//   SupportedChainId,
+//   SupportedL1ChainId,
+//   SupportedL2ChainId,
+// } from './chains.ts'
 
 export enum NetworkType {
   L1,
   L2,
 }
 
+/**
+ * List of all the networks supported by the Uniswap Interface
+ */
+export enum SupportedChainId {
+  MAINNET = 1,
+  // ROPSTEN = 3,
+  // RINKEBY = 4,
+  // GOERLI = 5,
+  KOVAN = 42,
+
+  POLYGON = 137,
+  POLYGON_MUMBAI = 80001,
+
+  BSC = 56,
+
+  FANTOM = 250,
+  FANTOM_TESTNET = 4002,
+
+  ARBITRUM_ONE = 42161,
+  ARBITRUM_RINKEBY = 421611,
+
+  // OPTIMISM = 10,
+  // OPTIMISTIC_KOVAN = 69,
+
+  AVALANCHE = 43114,
+  AVALANCHE_FUJI = 43113,
+
+  HARMONY = 1666600000,
+
+  AURORA = 1313161554,
+
+  // CRONOS = 25,
+}
+
+export const CHAIN_IDS_TO_NAMES = {
+  [SupportedChainId.MAINNET]: 'mainnet',
+  // [SupportedChainId.ROPSTEN]: 'ropsten',
+  // [SupportedChainId.RINKEBY]: 'rinkeby',
+  // [SupportedChainId.GOERLI]: 'goerli',
+  [SupportedChainId.KOVAN]: 'kovan',
+  [SupportedChainId.POLYGON]: 'polygon',
+  [SupportedChainId.POLYGON_MUMBAI]: 'polygon_mumbai',
+  [SupportedChainId.ARBITRUM_ONE]: 'arbitrum',
+  [SupportedChainId.ARBITRUM_RINKEBY]: 'arbitrum_rinkeby',
+  // [SupportedChainId.OPTIMISM]: 'optimism',
+  // [SupportedChainId.OPTIMISTIC_KOVAN]: 'optimistic_kovan',
+  [SupportedChainId.AVALANCHE]: 'avalanche',
+  [SupportedChainId.AVALANCHE_FUJI]: 'avalanche_fuji',
+  [SupportedChainId.BSC]: 'bsc',
+}
+
+/**
+ * Array of all the supported chain IDs
+ */
+export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(
+  SupportedChainId
+).filter((id) => typeof id === 'number') as SupportedChainId[]
+
+// export const SUPPORTED_GAS_ESTIMATE_CHAIN_IDS = [
+//   SupportedChainId.MAINNET,
+//   SupportedChainId.POLYGON,
+//   SupportedChainId.OPTIMISM,
+//   SupportedChainId.ARBITRUM_ONE,
+// ]
+
+/**
+ * Unsupported networks for V2 pool behavior.
+ */
+// export const UNSUPPORTED_V2POOL_CHAIN_IDS = [
+//   SupportedChainId.POLYGON,
+//   SupportedChainId.OPTIMISM,
+//   SupportedChainId.ARBITRUM_ONE,
+// ]
+
+/**
+ * All the chain IDs that are running the Ethereum protocol.
+ */
+export const L1_CHAIN_IDS = [
+  SupportedChainId.MAINNET,
+  // SupportedChainId.ROPSTEN,
+  // SupportedChainId.RINKEBY,
+  // SupportedChainId.GOERLI,
+  SupportedChainId.KOVAN,
+  SupportedChainId.POLYGON,
+  SupportedChainId.POLYGON_MUMBAI,
+  SupportedChainId.AVALANCHE,
+  SupportedChainId.AVALANCHE_FUJI,
+  SupportedChainId.FANTOM,
+  SupportedChainId.FANTOM_TESTNET,
+] as const
+
+export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
+
+/**
+ * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.
+ * The expectation is that all of these networks have immediate transaction confirmation.
+ */
+export const L2_CHAIN_IDS = [
+  SupportedChainId.ARBITRUM_ONE,
+  SupportedChainId.ARBITRUM_RINKEBY,
+  // SupportedChainId.OPTIMISM,
+  // SupportedChainId.OPTIMISTIC_KOVAN,
+] as const
+
+export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]
+
 interface BaseChainInfo {
-  readonly networkType: NetworkType
-  readonly blockWaitMsBeforeWarning?: number
-  readonly docs: string
+  readonly networkType?: NetworkType
+  // readonly // blockWaitMsBeforeWarning?: number
+  readonly docs?: string
   readonly bridge?: string
-  readonly explorer: string
-  readonly infoLink: string
+  readonly explorer?: string
+  readonly infoLink?: string
   readonly logoUrl: string
   readonly label: string
   readonly helpCenterUrl?: string
-  readonly nativeCurrency: {
+  readonly nativeCurrency?: {
     name: string // e.g. 'Goerli ETH',
     symbol: string // e.g. 'gorETH',
     decimals: number // e.g. 18,
@@ -27,14 +133,14 @@ interface BaseChainInfo {
 }
 
 export interface L1ChainInfo extends BaseChainInfo {
-  readonly networkType: NetworkType.L1
+  readonly networkType?: NetworkType.L1
 }
 
 export interface L2ChainInfo extends BaseChainInfo {
-  readonly networkType: NetworkType.L2
-  readonly bridge: string
+  readonly networkType?: NetworkType.L2
+  readonly bridge?: string
   readonly statusPage?: string
-  readonly defaultListUrl: string
+  readonly defaultListUrl?: string
 }
 
 export type ChainInfoMap = {
@@ -91,7 +197,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   // },
   // [SupportedChainId.OPTIMISM]: {
   //   networkType: NetworkType.L2,
-  //   blockWaitMsBeforeWarning: `25m`,
+  //   // blockWaitMsBeforeWarning: `25m`,
   //   bridge: 'https://app.optimism.io/bridge',
   //   defaultListUrl: '',
   //   docs: 'https://optimism.io/',
@@ -106,7 +212,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   // },
   // [SupportedChainId.OPTIMISTIC_KOVAN]: {
   //   networkType: NetworkType.L2,
-  //   blockWaitMsBeforeWarning: `25m`,
+  //   // blockWaitMsBeforeWarning: `25m`,
   //   bridge: 'https://app.optimism.io/bridge',
   //   defaultListUrl: '',
   //   docs: 'https://optimism.io/',
@@ -125,7 +231,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   // },
   [SupportedChainId.ARBITRUM_ONE]: {
     networkType: NetworkType.L2,
-    blockWaitMsBeforeWarning: `10m`,
+    // blockWaitMsBeforeWarning: `10m`,
     bridge: 'https://bridge.arbitrum.io/',
     docs: 'https://offchainlabs.com/',
     explorer: 'https://arbiscan.io/',
@@ -139,7 +245,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.ARBITRUM_RINKEBY]: {
     networkType: NetworkType.L2,
-    blockWaitMsBeforeWarning: `10m`,
+    // blockWaitMsBeforeWarning: `10m`,
     bridge: 'https://bridge.arbitrum.io/',
     docs: 'https://offchainlabs.com/',
     explorer: 'https://rinkeby-explorer.arbitrum.io/',
@@ -157,7 +263,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.POLYGON]: {
     networkType: NetworkType.L1,
-    blockWaitMsBeforeWarning: `10m`,
+    // blockWaitMsBeforeWarning: `10m`,
     bridge: 'https://wallet.polygon.technology/bridge',
     docs: 'https://polygon.io/',
     explorer: 'https://polygonscan.com/',
@@ -168,7 +274,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.POLYGON_MUMBAI]: {
     networkType: NetworkType.L1,
-    blockWaitMsBeforeWarning: `10m`,
+    // blockWaitMsBeforeWarning: `10m`,
     bridge: 'https://wallet.polygon.technology/bridge',
     docs: 'https://polygon.io/',
     explorer: 'https://mumbai.polygonscan.com/',
@@ -183,7 +289,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.AVALANCHE]: {
     networkType: NetworkType.L1,
-    blockWaitMsBeforeWarning: `3000m`,
+    // blockWaitMsBeforeWarning: `3000m`,
     bridge: 'https://wallet.avalanche.technology/bridge',
     docs: 'https://avalanche.io/',
     explorer: 'https://cchain.explorer.avax.network/',
@@ -194,7 +300,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.AVALANCHE_FUJI]: {
     networkType: NetworkType.L1,
-    blockWaitMsBeforeWarning: `3000m`,
+    // blockWaitMsBeforeWarning: `3000m`,
     bridge: 'https://wallet.avalanche.technology/bridge',
     docs: 'https://avalanche.io/',
     explorer: 'https://cchain.explorer.avax.network/',
@@ -205,7 +311,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   [SupportedChainId.BSC]: {
     networkType: NetworkType.L1,
-    blockWaitMsBeforeWarning: `3000m`,
+    // blockWaitMsBeforeWarning: `3000m`,
     // bridge: 'https://wallet.bsc.network/bridge',
     // docs: 'https://bsc.network/',
     explorer: 'https://bscscan.com/',

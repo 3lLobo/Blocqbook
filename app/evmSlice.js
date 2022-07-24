@@ -7,6 +7,7 @@ const initialState = {
   account: null,
   chainId: '1',
   connected: false,
+  poaps: [],
 }
 
 export const evmSlice = createSlice({
@@ -31,11 +32,14 @@ export const evmSlice = createSlice({
         state.chainId = '1'
       }
     },
+    setPoaps: (state, action) => {
+      state.poaps = action.payload.poaps
+    },
     reset: () => initialState,
   },
 })
 
-export const { setGasPrice, setEthPrice, setConnection, reset } =
+export const { setGasPrice, setEthPrice, setConnection, setPoaps, reset } =
   evmSlice.actions
 
 export default evmSlice.reducer

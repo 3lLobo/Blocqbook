@@ -1,9 +1,9 @@
 import { LinkIcon } from '@heroicons/react/outline'
 import { ChatIcon } from '@heroicons/react/outline'
 import { ArrowSmRightIcon } from '@heroicons/react/solid'
-import useXmtp from '../hooks/useXmtp.ts'
-import ConversationsList from './ConversationsList.tsx'
-import Loader from './Loader.tsx'
+import useXmtp from '../hooks/useXmtp'
+import ConversationsList from './ConversationsList'
+import Loader from './Loader'
 
 type NavigationPanelProps = {
   onConnect: () => Promise<void>

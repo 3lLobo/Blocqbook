@@ -1,16 +1,16 @@
-import XmtpProvider from './XmtpProvider.tsx'
-import Layout from '../components/Layout.tsx'
-import { WalletProvider } from './WalletProvider.tsx'
+import XmtpProvider from './XmtpProvider'
+import Layout from '../components/Layout'
+import { WalletProvider } from './WalletProvider'
 
 type AppProps = {
-  children?: React.ReactNode
+  children?: any
 }
 
-function App({ children }: AppProps) {
+function App() {
   return (
     // <WalletProvider>
     //   <XmtpProvider>
-        <Layout>{children}</Layout>
+    <Layout></Layout>
     //   </XmtpProvider>
     // </WalletProvider>
   )

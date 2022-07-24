@@ -1,5 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
+import { v4 } from 'uuid'
 import { ChainLogo } from '../ChainLogo'
 import { CoinBalance } from './CoinBalance'
 
@@ -33,6 +34,7 @@ export default function Balances({ balances }) {
                           <CoinBalance
                             item={item}
                             quote_currency={chain.quote_currency}
+                            key={v4()}
                           />
                         )
                       }

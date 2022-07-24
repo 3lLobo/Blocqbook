@@ -135,7 +135,7 @@ const FileTransfer = () => {
   }
 
   useEffect(() => {
-    if(sendFileTo) setAddress(sendFileTo)
+    if (sendFileTo) setAddress(sendFileTo)
   }, [sendFileTo])
 
   useEffect(() => {
@@ -219,9 +219,11 @@ const FileTransfer = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4 mt-8 w-11/12">
+      <div className="flex flex-col items-center mt-8 w-11/12">
         <div className="w-full">
-          <div className="text-2xl text-left text-slate-800 dark:text-snow">Files received</div>
+          <div className="text-2xl text-left text-slate-800 dark:text-snow mb-3">
+            Files received
+          </div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
         {!isFetchingMedia && receivedMedia.length === 0 && (
@@ -235,10 +237,13 @@ const FileTransfer = () => {
             return (
               <div
                 key={i}
-                className="bg-white dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
+                className=" even:shadow-lg rounded-bl-xl rounded-tr-xl even:border-t-2 border-zinc-300 dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
               >
-                  {/**<Avatar src={contactAvatar} />**/}
-                  <img className="w-12 h-full rounded-full" src={contactAvatar} />
+                {/**<Avatar src={contactAvatar} />**/}
+                {/* <img className="w-12 h-full rounded-full" src={contactAvatar} /> */}
+                <div className="relative w-11 h-11 ">
+                  <Avatar src={contactAvatar} scale={0} />
+                </div>
                 <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
                   {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
                   <AddressTag
@@ -246,16 +251,18 @@ const FileTransfer = () => {
                     isOneHop={true}
                   />
                 </div>
-                <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
-                  <a target="_blank">{m.description}</a>
-                </Link>
-                <div className="flex gap-4 absolute right-2 items-center">
+                <button className="bg-zinc-300 text-zinc-900 hover:text-zinc-600 hover:bg-zinc-400 group px-2 py-1 text-sm font-mono rounded-md">
+                  <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
+                    <a target="_blank">{m.description}</a>
+                  </Link>
+                </button>
+                <div className="flex gap-4 absolute right-2 items-center text-sm pr-3">
                   <TimeAgo datetime={m.timestamp} />
-                  <div className="mr-11 space-x-1 col-span-2 flex flex-row">
+                  {/* <div className="mr-11 space-x-1 col-span-2 flex flex-row">
                     <Tag tagText="dude.eth" color="indigo-300" />
                     <Tag tagText="dude.eth" />
-                  </div>
-                  <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
+                  </div> */}
+                  {/* <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
                     {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -291,7 +298,7 @@ const FileTransfer = () => {
                         />
                       </svg>
                     }
-                  </button>
+                  </button> */}
                 </div>
               </div>
             )

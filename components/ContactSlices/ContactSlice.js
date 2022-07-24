@@ -4,11 +4,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, deleteContact, openModal } from '../../app/contactSlice'
 import { useState } from 'react'
 import { ConfirmDelete } from './ConfirmDelete'
+import Image from 'next/image'
+import { CommonCheck } from '../Poap/CommonCheck'
 import { useRouter } from 'next/router'
+import { v4 } from 'uuid'
+import { setOpenTab } from '../../app/navSlice'
 
-export const Slice = ({ contact, setSelectedIndex }) => {
+export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
+  const navStore = useSelector((state) => state.nav)
   const dispatch = useDispatch()
+
+  function onTabChange(index) {
+    dispatch(setOpenTab({ tab: index }))
+  }
+
   const router = useRouter()
 
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -17,24 +27,15 @@ export const Slice = ({ contact, setSelectedIndex }) => {
     dispatch(openModal({ address: contact.bio.address }))
   }
 
-  const handleIPFSTransfer = () => {
-    router.push({
-      pathname: '/rotarydial', 
-      query: {sendFileTo: contact.bio.address}
-    }, 
-      {shallow: true}
+  const handleTabSwitch = (tab) => {
+    router.push(
+      {
+        pathname: '/rotarydial',
+        query: { sendFileTo: contact.bio.address },
+      },
+      { shallow: true }
     )
-    setSelectedIndex(4)
-  }
-
-  const handleConversation = () => {
-    router.push({
-      pathname: '/rotarydial', 
-      query: {to: contact.bio.address}
-    }, 
-      {shallow: true}
-    )
-    setSelectedIndex(3)
+    dispatch(setOpenTab({ tab: tab, query: contact.bio.address }))
   }
 
   return (
@@ -46,46 +47,55 @@ export const Slice = ({ contact, setSelectedIndex }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-white dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
+      <div className="bg-indigo-50 dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
         <div
           onClick={onContactClick}
-          className="w-10 ml-0 hover:cursor-pointer"
+          className="w-full col-span-1 flex flex-row"
         >
-          <div className="hover:scale-105 transition-all duration-300 transform-gpu">
+          <div className="relative w-10 aspect-1 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer ">
             <Avatar src={contact.bio.avatar} />
+          </div>
+          <div className="relative w-10 aspect-1 dark:hue-rotate-180 dark:invert">
+            {contact.poap.poaps.length > 0 && (
+              <div
+              // className='relative'
+              >
+                <Image
+                  className=""
+                  layout="fill"
+                  src="/poap-badge.png"
+                  alt="poapbadge"
+                  title="This contact has POAPs."
+                />
+                {contact.poap.hasCommonPoap && (
+                  <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple">
+                    <CommonCheck />
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <button
           onClick={onContactClick}
-          className="mr-11 col-span-2 self-center hover:font-semibold transition-all duration-300 transform-gpu"
+          className="mr-11 col-span-2 self-center hover:font-semibold transition-all duration-300 transform-gpu text-left"
         >
           {contact.bio.name || contact.address}
         </button>
-        <div
-          // TODO: align tags to the left
-          className="space-x-1 col-span-3 flex justify-start overflow-x-scroll scrollbar-hide"
-        >
+        <div className="space-x-1 col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide">
           {contact.tags.privTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={tag.id} />
           ))}
         </div>
-        <div
-          // TODO: align tags to the left
-          className="space-x-1 col-span-3 flex justify-start overflow-x-scroll scrollbar-hide"
-        >
+        <div className="space-x-1 col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide ">
           {contact.tags.pubTags.map((tag) => (
-            <Tag
-              tagText={tag.name}
-              color={tag.color}
-              key={tag.id}
-              isPub={true}
-            />
+            <Tag tagText={tag.name} color={tag.color} key={v4()} isPub={true} />
           ))}
         </div>
-        <div className="flex justify-end col-span-2 gap-x-1">
+        <div className="flex justify-center col-span-2 gap-x-1 ">
           <button
             onClick={() => {
-              handleConversation()
+              handleTabSwitch(2)
             }}
             className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
           >
@@ -106,7 +116,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
             </svg>
           </button>
           <button
-            onClick={() => handleIPFSTransfer()}
+            onClick={() => handleTabSwitch(3)}
             className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
           >
             {/* <svg
@@ -156,8 +166,10 @@ export const Slice = ({ contact, setSelectedIndex }) => {
               </g>
             </svg>
           </button>
+        </div>
+        <div className="flex justify-end col-span-1 gap-x-1 w-full">
           <button
-            className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 ml-11"
+            className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 mr-0"
             // TODO: add confirmation modal.
             onClick={() => {
               setOpenConfirm(true)

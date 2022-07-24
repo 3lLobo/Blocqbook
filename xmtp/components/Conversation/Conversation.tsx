@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import useXmtp from '../../hooks/useXmtp.ts'
-import useConversation from '../../hooks/useConversation.ts'
-import MessagesList  from './MessagesList.tsx'
-import MessageComposer from './MessageComposer.tsx'
-import Loader from '../../components/Loader.tsx'
+import useXmtp from '../../hooks/useXmtp'
+import useConversation from '../../hooks/useConversation'
+import MessagesList from './MessagesList'
+import MessageComposer from './MessageComposer'
+import Loader from '../../components/Loader'
 
 type ConversationProps = {
   recipientWalletAddr: string
@@ -47,14 +47,16 @@ const Conversation = ({
   }
 
   return (
-    <main className="flex flex-col bg-white h-screen">
-    {/* <main className="flex flex-col flex-1 bg-white h-screen"> */}
+    <main className="flex flex-col bg-transparent h-full ">
+      {/* <main className="flex flex-col flex-1 bg-white h-screen"> */}
       <MessagesList
         messagesEndRef={messagesEndRef}
         messages={messages}
         walletAddress={walletAddress}
       />
-      {walletAddress && <MessageComposer onSend={sendMessage} />}
+      <div className="flex mb-0 w-full">
+        {walletAddress && <MessageComposer onSend={sendMessage} />}
+      </div>
     </main>
   )
 }

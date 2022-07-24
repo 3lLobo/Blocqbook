@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { XmtpContextType, XmtpContext } from '../contexts/xmtp.ts'
+import { XmtpContextType, XmtpContext } from '../contexts/xmtp'
 
 const useXmtp = (): XmtpContextType => {
   const context = useContext(XmtpContext)

@@ -1,5 +1,5 @@
-import classNames from '../helpers/classNames.ts'
-import useEns from '../hooks/useEns.ts'
+import classNames from '../helpers/classNames'
+import useEns from '../hooks/useEns'
 
 type AddressProps = {
   address: string
@@ -13,7 +13,7 @@ const shortAddress = (addr: string): string =>
 
 const Address = ({ address, className }: AddressProps): JSX.Element => {
   const { name, loading } = useEns(address)
-  console.log('address:', address);
+  console.log('address:', address)
 
   return (
     <span

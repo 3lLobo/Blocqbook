@@ -20,4 +20,4 @@ export const poapApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPoapsQuery } = poapApi
+export const { useGetPoapsQuery, useLazyGetPoapsQuery } = poapApi

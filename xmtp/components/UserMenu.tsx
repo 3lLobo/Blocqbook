@@ -1,11 +1,11 @@
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 import { Fragment, useCallback } from 'react'
-import  classNames from '../helpers/classNames.ts'
+import classNames from '../helpers/classNames'
 import Blockies from 'react-blockies'
-import Address from './Address.tsx'
-import useXmtp from '../hooks/useXmtp.ts'
-import useEns from '../hooks/useEns.ts'
+import Address from './Address'
+import useXmtp from '../hooks/useXmtp'
+import useEns from '../hooks/useEns'
 
 type UserMenuProps = {
   onConnect?: () => Promise<void>

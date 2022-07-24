@@ -6,34 +6,25 @@ import { MyButton } from '../Buttons/MyButton'
 import { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset as resetEvm, setConnection } from '../../app/evmSlice'
+import { reset as resetEvm, setConnection, setPoaps } from '../../app/evmSlice'
 import { reset as resetContacts } from '../../app/contactSlice'
 import { ethers } from 'ethers'
 
 import { useViewerConnection } from '@self.id/react'
 import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
+import { useLazyGetPoapsQuery } from '../../app/poapApi'
 
 import useWallet from '../../xmtp/hooks/useWallet.ts'
 import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
-  const provider = await window.ethereum
-    .request({ method: 'eth_requestAccounts' })
-    .then(() => {
-      const address = window.ethereum.selectedAddress
-      provider = new EthereumAuthProvider(window.ethereum, address)
-      return provider
-    })
-    .catch((error) => {
-      if (error.code === 4001) {
-        // EIP-1193 userRejectedRequest error
-        console.log('Please connect to MetaMask.')
-      } else {
-        console.error(error)
-      }
-    })
+
+  const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+  const address = accounts[0]
+  console.log('🚀 ~ file: index.js ~ line 27 ~ .then ~ address', address)
+  const provider = new EthereumAuthProvider(window.ethereum, address)
   return provider
 }
 
@@ -42,90 +33,100 @@ export default function Header() {
   const [isAbleToRefresh, setIsAbleToRefresh] = useState(false)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
+  const [poapTrigger, poapResult, poapLastPromiseInfo] = useLazyGetPoapsQuery()
+
+  // Wait for poap result and store it.
+  useEffect(() => {
+    if (poapResult.isSuccess) {
+      if (poapResult.data.length !== store.poaps.length) {
+        const poaps = poapResult.data.map((poap) => {
+          return poap.event.id
+        })
+        dispatch(setPoaps({ poaps }))
+      }
+    }
+  }, [poapResult, store.poaps, dispatch])
   const [signer, setSigner] = useState(null)
 
-    //XTPM
-    const {
-      connect: connectXmtp,
-      disconnect: disconnectXmtp,
-    } = useXmtp()
-    // const {
-    //   signer,
-    //   connect: connectWallet,
-    //   disconnect: disconnectWallet,
-    // } = useWallet()
-  
-    // const handleConnect = useCallback(async () => {
-    //   await connectWallet()
-    // }, [connectWallet])
-  
-    const usePrevious = (value) => {
-      const ref = useRef()
-      useEffect(() => {
-        ref.current = value
-      })
-      return ref.current
-    }
-    const prevSigner = usePrevious(signer)
-    
+  //XTPM
+  const { connect: connectXmtp, disconnect: disconnectXmtp } = useXmtp()
+  // const {
+  //   signer,
+  //   connect: connectWallet,
+  //   disconnect: disconnectWallet,
+  // } = useWallet()
+
+  // const handleConnect = useCallback(async () => {
+  //   await connectWallet()
+  // }, [connectWallet])
+
+  const usePrevious = (value) => {
+    const ref = useRef()
     useEffect(() => {
-      if (!signer && prevSigner) {
-        disconnectXmtp()
-      }
-      if (!signer || signer === prevSigner) return
-      const connect = async () => {
-        const prevAddress = await prevSigner?.getAddress()
-        const address = await signer.getAddress()
-        if (address === prevAddress) return
-        connectXmtp(signer)
-      }
-      connect()
-    }, [signer, prevSigner, connectXmtp, disconnectXmtp])
+      ref.current = value
+    })
+    return ref.current
+  }
+  const prevSigner = usePrevious(signer)
+
+  useEffect(() => {
+    if (!signer && prevSigner) {
+      disconnectXmtp()
+    }
+    if (!signer || signer === prevSigner) return
+    const connect = async () => {
+      const prevAddress = await prevSigner?.getAddress()
+      const address = await signer.getAddress()
+      if (address === prevAddress) return
+      connectXmtp(signer)
+    }
+    connect()
+  }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
   const [connection, connect, disconnect] = useViewerConnection()
 
-  const [isConnected, setIsConnected] = useState(false)
+  // const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
     const checkIfRefresh = async () => {
-      if (isAbleToRefresh) {
-        connectCeramic()
-        // handleConnect()
-      }
+      // if (isAbleToRefresh) {
+      connectCeramic()
+      // }
     }
     console.log('Ceramic client: ', connection)
-    if (connection.status === 'idle') {
-      if (store.isConnected && !isAbleToRefresh) {
-        setIsAbleToRefresh(true)
-      }
+    if (store.isConnected && connection.status === 'idle') {
       checkIfRefresh()
-    } 
+    }
   }, [connection.status, isAbleToRefresh])
 
   async function connectCeramic() {
     const authProvider = await createAuthProvider()
-    await connect(authProvider).then(() => {
-      setIsConnected(true)
-      setIsAbleToRefresh(true)
-      const chainId =
-        ethers.utils.arrayify(window.ethereum.chainId, {
-          hexPad: 'left',
-        })[0] || 1
-      dispatch(
-        setConnection({
-          connected: true,
-          account: window.ethereum.selectedAddress,
-          chainId: chainId.toString(),
-        })
-      )
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      setSigner(provider.getSigner())
-      router.push('/rotarydial')
-    }).catch((error) => {
-      console.log(error)
-      dispatch(resetEvm())
-      dispatch(resetContacts())
-      setIsConnected(false)
-    })
+    // trigger POAP fetching
+    poapTrigger({ address: window.ethereum.selectedAddress }, true)
+    connect(authProvider)
+      .then(() => {
+        // setIsConnected(true)
+        setIsAbleToRefresh(true)
+        const chainId =
+          ethers.utils.arrayify(window.ethereum.chainId, {
+            hexPad: 'left',
+          })[0] || 1
+        dispatch(
+          setConnection({
+            connected: true,
+            account: window.ethereum.selectedAddress,
+            chainId: chainId.toString(),
+          })
+        )
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        setSigner(provider.getSigner())
+        router.push('/rotarydial')
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch(resetEvm())
+        dispatch(resetContacts())
+        // setIsConnected(false)
+      })
   }
 
   async function connectButtonHit() {
@@ -150,7 +151,6 @@ export default function Header() {
     })
   }
 
-
   return (
     <>
       <div
@@ -160,11 +160,11 @@ export default function Header() {
         <div className=" mx-auto px-2 sm:px-6 ">
           <div className=" flex items-center justify-between h-16">
             <MyButton
-              text={isConnected ? 'Disconnect' : 'Connect'}
+              text={store.connected ? 'Disconnect' : 'Connect'}
               onClick={connectButtonHit}
               primary={false}
             >
-              {!isConnected && (
+              {!store.connected && (
                 <div className="relative flex col-span-1 h-6 w-6 rounded-full ml-1">
                   <Image alt="metamask" layout="fill" src="/metamask.png" />
                 </div>
@@ -172,7 +172,7 @@ export default function Header() {
             </MyButton>
             <motion.div
               initial={false}
-              animate={isConnected ? 'visible' : 'hidden'}
+              animate={store.connected ? 'visible' : 'hidden'}
               exit={{ opacity: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.5 }}
               variants={{
@@ -184,21 +184,6 @@ export default function Header() {
             >
               {store.account}
             </motion.div>
-            {/* <div className="items-center justify-center sm:items-stretch sm:justify-start ml-auto">
-              <motion.div
-                animate={{
-                  rotate: [0, 0, 16, -11, 0, 0],
-                }}
-                transition={{ duration: 2 }}
-              >
-                <Image
-                  height={55}
-                  width={111}
-                  src="/ethereum-eth-logo-full-horizontal.svg"
-                  alt="ETHsvg"
-                />
-              </motion.div>
-            </div> */}
             <div className="sm:inset-auto sm:ml-6 flex gap-2">
               <ColorModeToggle />
             </div>

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, deleteContact, openModal } from '../../app/contactSlice'
 import { useState } from 'react'
 import { ConfirmDelete } from './ConfirmDelete'
+import Image from 'next/image'
+import { CommonCheck } from '../Poap/CommonCheck'
 
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
@@ -24,23 +26,41 @@ export const Slice = ({ contact }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
+      <div className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-10  justify-start items-center  text-slate-900  ">
         <div
           onClick={onContactClick}
-          className="w-10 ml-0 hover:cursor-pointer"
+          className="w-full col-span-1 flex flex-row"
         >
-          <div className="hover:scale-105 transition-all duration-300 transform-gpu">
+          <div className="relative w-10 aspect-1 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer ">
             <Avatar src={contact.bio.avatar} />
+          </div>
+          <div className="relative w-10 aspect-1 dark:hue-rotate-180 dark:invert">
+            {contact.poap.poaps.length > 0 &&
+            <div
+            // className='relative'
+            >
+              <Image
+                className=""
+                layout="fill"
+                src="/poap-badge.png"
+                alt="poapbadge"
+                title='This contact has POAPs.'
+              />
+              {contact.poap.hasCommonPoap &&
+          <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple" >
+            <CommonCheck />
+          </span>}
+              </div>
+              }
           </div>
         </div>
         <button
           onClick={onContactClick}
-          className="mr-11 col-span-2 self-center hover:font-semibold transition-all duration-300 transform-gpu"
+          className="mr-11 col-span-2 self-center hover:font-semibold transition-all duration-300 transform-gpu text-left"
         >
           {contact.bio.name || contact.address}
         </button>
         <div
-          // TODO: align tags to the left
           className="space-x-1 col-span-3 flex justify-start overflow-x-scroll scrollbar-hide"
         >
           {contact.tags.privTags.map((tag) => (
@@ -49,7 +69,7 @@ export const Slice = ({ contact }) => {
         </div>
         <div
           // TODO: align tags to the left
-          className="space-x-1 col-span-3 flex justify-start overflow-x-scroll scrollbar-hide"
+          className="space-x-1 col-span-2 flex justify-start overflow-x-scroll scrollbar-hide"
         >
           {contact.tags.pubTags.map((tag) => (
             <Tag

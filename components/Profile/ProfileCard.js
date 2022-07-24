@@ -8,72 +8,32 @@ import { PrivTags } from './PrivTags'
 import { PubTags } from './PubTags'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
-import { useGetPoapsQuery } from '../../app/poapApi'
 import { PoapAvatar } from '../Poap'
 import Image from 'next/image'
+import { useCommonPoap } from '../../hooks/useCommonPoap'
 
-export const dummyProfile = (name, address) => ({
-  bio: {
-    name: name || 'CryptoPanda',
-    address: address || '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
-    avatar:
-      'https://pbs.twimg.com/profile_images/12098984010/CryptoPanda_400x400.jpg',
-    notes: 'My First Note!!!',
-  },
-  isSelf: false,
-  isOneHop: true,
-  tags: {
-    privTags: [],
-    pubTags: [],
-  },
-  poap: {
-    hasCommonPoap: false,
-    poaps: [],
-  },
-  xmltChat: {
-    isChat: false,
-    chatId: '',
-    chatData: [],
-  },
-  fileTransfer: {
-    isTransfer: false,
-    transferData: [],
-  },
-})
 
 const ProfileCard = ({ profile }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
   const { data, loading, error } = useGetAllTokenBalancesQuery(
-    profile?.bio?.address
+    profile.bio.address
       ? {
-          address: profile.bio.address,
-        }
+        address: profile.bio.address,
+      }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
     }
   )
 
-  console.log('Tokenbalance: ', data)
+  // console.log('Tokenbalance: ', data)
   // fetch poaps
-  const {
-    data: poapData,
-    loading: poapLoading,
-    error: poapError,
-  } = useGetPoapsQuery(
-    profile?.bio?.address
-      ? {
-          address: profile.bio.address,
-        }
-      : skipToken,
-    {
-      pollingInterval: 300_000, // 5 minutes is the covalent update time
-    }
-  )
+  const { commonPoaps, poapData, poapLoading, poapError } = useCommonPoap({ address: profile.bio.address, doUpdate: true })
 
   console.log('POAP data', poapData)
+
   function handleChange(e) {
     e.preventDefault()
     switch (e.target.id) {
@@ -99,9 +59,11 @@ const ProfileCard = ({ profile }) => {
 
   return (
     <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
-      {(poapLoading || poapData) && (
-        <div className="fixed ml-32 justify-start items-center h-14 w-full mb-3 flex flex-row gap-x-1 ">
-          <div className="relative h-full scale-300 aspect-1 mr-8 dark:hue-rotate-180 dark:invert">
+      {(poapLoading || poapData?.length > 0) && (
+        <div 
+        // TODO: align down
+        className="fixed ml-32 justify-start items-start h-fit z-0 w-full mb-3 gap-y-3 flex flex-col ">
+          <div className="relative ml-2 h-16 scale-300 mb-11 aspect-1 dark:hue-rotate-180 dark:invert">
             <Image
               className=""
               layout="fill"
@@ -110,15 +72,15 @@ const ProfileCard = ({ profile }) => {
             />
           </div>
           {!poapLoading ? (
-            poapData?.map((poap) => {
-              console.log('POAP: ', poap)
+            poapData.map((poap) => {
+              const isCommon = commonPoaps.includes(poap.event.id)
               return (
-                <div className=" h-full  aspect-1" key={poap.address}>
-                  <PoapAvatar poapData={poap} />
+                <div className=" h-20  aspect-1" key={poap.address}>
+                  <PoapAvatar poapData={poap} isCommon={isCommon} />
                 </div>
               )
             })
-          ) : (
+            ) : (
             <BezierSpinner />
           )}
         </div>

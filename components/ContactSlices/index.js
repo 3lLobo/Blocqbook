@@ -1,6 +1,7 @@
 import { Slice } from './ContactSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { emptyProfile } from '../../app/contactSlice'
+import { v4 } from 'uuid'
 
 export const ContactSlices = () => {
   const store = useSelector((state) => state.contact)
@@ -14,7 +15,7 @@ export const ContactSlices = () => {
         .map((contact) => {
           return (
             <div
-              key={contact.address}
+              key={v4()}
             >
               <Slice contact={contact} />
             </div>

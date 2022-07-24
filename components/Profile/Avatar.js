@@ -8,9 +8,9 @@ export function Avatar({ src, scale }) {
       : src
 
   return (
-    <div className={`flex flex-grow aspect-1`}>
+    <div className={`aspect-1 w-full h-full`}>
       <Image
-        className="rounded-full bg-indigo-400 dark:bg-neonPurple "
+        className="rounded-full bg-indigo-400 dark:bg-neonPurple"
         layout="fill"
         src={saveSrc || '/blocqBookLogo/icon/blocqbookTransparent2.png'}
         alt="avatar"

@@ -37,8 +37,8 @@ const useConversation = (
       console.log('Listing messages for peer address', conversation.peerAddress)
       setLoading(true)
       const msgs = await conversation.messages({ pageSize: 100 })
-      console.log('msgs:', msgs);
-      const msgsUpdated = msgs.map(m => {
+      console.log('msgs:', msgs)
+      const msgsUpdated = msgs.map((m) => {
         if (m.content.slice(0, 21) === '{"type":"file","cid":') {
           const { type, description, cid } = JSON.parse(m.content)
           // if (type=='file') {
@@ -50,11 +50,11 @@ const useConversation = (
           return m
         }
         //   (
-        //   m.content.slice(0,21) === '{"type":"file","cid":' 
-        //     ? ({...m, content: 'This is a File. You can check it on FileTransfer tab.'}) 
+        //   m.content.slice(0,21) === '{"type":"file","cid":'
+        //     ? ({...m, content: 'This is a File. You can check it on FileTransfer tab.'})
         //     : (m)
         // )
-      });
+      })
       if (dispatchMessages) {
         dispatchMessages({
           peerAddress: conversation.peerAddress,

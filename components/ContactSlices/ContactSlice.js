@@ -28,15 +28,15 @@ export const Slice = ({ contact }) => {
   }
 
   const handleTabSwitch = (tab) => {
-    router.push({
-      pathname: '/rotarydial',
-      query: { sendFileTo: contact.bio.address }
-    },
+    router.push(
+      {
+        pathname: '/rotarydial',
+        query: { sendFileTo: contact.bio.address },
+      },
       { shallow: true }
     )
     dispatch(setOpenTab({ tab: tab, query: contact.bio.address }))
   }
-
 
   return (
     <>
@@ -56,7 +56,7 @@ export const Slice = ({ contact }) => {
             <Avatar src={contact.bio.avatar} />
           </div>
           <div className="relative w-10 aspect-1 dark:hue-rotate-180 dark:invert">
-            {contact.poap.poaps.length > 0 &&
+            {contact.poap.poaps.length > 0 && (
               <div
               // className='relative'
               >
@@ -65,14 +65,15 @@ export const Slice = ({ contact }) => {
                   layout="fill"
                   src="/poap-badge.png"
                   alt="poapbadge"
-                  title='This contact has POAPs.'
+                  title="This contact has POAPs."
                 />
-                {contact.poap.hasCommonPoap &&
-                  <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple" >
+                {contact.poap.hasCommonPoap && (
+                  <span className="absolute top-0 right-0 block h-1/3 w-1/3 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple">
                     <CommonCheck />
-                  </span>}
+                  </span>
+                )}
               </div>
-            }
+            )}
           </div>
         </div>
         <button
@@ -81,23 +82,14 @@ export const Slice = ({ contact }) => {
         >
           {contact.bio.name || contact.address}
         </button>
-        <div
-          className="space-x-1 col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide"
-        >
+        <div className="space-x-1 col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide">
           {contact.tags.privTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={tag.id} />
           ))}
         </div>
-        <div
-          className="space-x-1 col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide "
-        >
+        <div className="space-x-1 col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide ">
           {contact.tags.pubTags.map((tag) => (
-            <Tag
-              tagText={tag.name}
-              color={tag.color}
-              key={v4()}
-              isPub={true}
-            />
+            <Tag tagText={tag.name} color={tag.color} key={v4()} isPub={true} />
           ))}
         </div>
         <div className="flex justify-center col-span-2 gap-x-1 ">
@@ -174,8 +166,8 @@ export const Slice = ({ contact }) => {
               </g>
             </svg>
           </button>
-          </div>
-          <div className="flex justify-end col-span-1 gap-x-1 w-full">
+        </div>
+        <div className="flex justify-end col-span-1 gap-x-1 w-full">
           <button
             className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 mr-0"
             // TODO: add confirmation modal.

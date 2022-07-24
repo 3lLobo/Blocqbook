@@ -21,10 +21,11 @@ export const PoapAvatar = ({ poapData, isCommon }) => {
             />
           </Link>
         </div>
-        {isCommon &&
-          <span className="absolute top-0 right-0 block h-1/4 w-1/4 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple" >
+        {isCommon && (
+          <span className="absolute top-0 right-0 block h-1/4 w-1/4 rounded-full ring-2 ring-snow dark:ring-zinc-800 bg-neonPurple">
             <CommonCheck />
-          </span>}
+          </span>
+        )}
       </button>
     </>
   )

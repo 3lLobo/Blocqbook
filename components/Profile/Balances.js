@@ -22,8 +22,9 @@ export default function Balances({ balances }) {
                   <Disclosure.Button className="flex justify-between m-1 rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full">
                     <ChainLogo chainId={chain.chain_id} />
                     <ChevronUpIcon
-                      className={`${open ? 'rotate-180 transform' : ''
-                        } h-5 w-5 text-indigo-500`}
+                      className={`${
+                        open ? 'rotate-180 transform' : ''
+                      } h-5 w-5 text-indigo-500`}
                     />
                   </Disclosure.Button>
                   <Disclosure.Panel className="grid grid-flow-row auto-rows-min px-1 py-2 text-sm ">

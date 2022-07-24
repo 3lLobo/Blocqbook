@@ -7,7 +7,7 @@ const initialState = {
   account: null,
   chainId: '1',
   connected: false,
-  poaps: []
+  poaps: [],
 }
 
 export const evmSlice = createSlice({

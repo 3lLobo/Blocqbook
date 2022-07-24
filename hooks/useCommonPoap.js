@@ -3,8 +3,6 @@ import { useGetPoapsQuery } from '../app/poapApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../app/contactSlice'
 
-
-
 export const useCommonPoap = ({ address, doUpdate }) => {
   const dispatch = useDispatch()
   const store = useSelector((state) => state.evm)
@@ -18,8 +16,8 @@ export const useCommonPoap = ({ address, doUpdate }) => {
   } = useGetPoapsQuery(
     address
       ? {
-        address: address,
-      }
+          address: address,
+        }
       : skipToken,
     {
       pollingInterval: 300_000,
@@ -39,12 +37,19 @@ export const useCommonPoap = ({ address, doUpdate }) => {
       setCommonPoaps(() => iou)
       if (doUpdate) {
         const hasCommon = iou.length > 0 ? true : false
-        dispatch(updateContact({ field1: 'poap', field2: 'poaps', value: poapData }))
-        dispatch(updateContact({ field1: 'poap', field2: 'hasCommonPoap', value: hasCommon }))
+        dispatch(
+          updateContact({ field1: 'poap', field2: 'poaps', value: poapData })
+        )
+        dispatch(
+          updateContact({
+            field1: 'poap',
+            field2: 'hasCommonPoap',
+            value: hasCommon,
+          })
+        )
       }
     }
   }, [poapData, store.poaps])
 
   return { commonPoaps, poapData, poapLoading, poapError }
 }
-

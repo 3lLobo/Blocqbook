@@ -10,7 +10,7 @@ export const navSlice = createSlice({
     setOpenTab: (state, action) => {
       state.openTab = action.payload.tab
       state.query = action.payload.query || ''
-    }
+    },
   },
 })
 

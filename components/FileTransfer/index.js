@@ -155,8 +155,9 @@ const FileTransfer = () => {
         <div className="bg-white dark:bg-indigo-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
           <label
             htmlFor="filePicker"
-            className={`rounded-lg bg-slate-900 p-2  hover:bg-opacity-20 cursor-pointer ${files.length > 0 ? 'bg-opacity-20' : 'bg-opacity-10'
-              }`}
+            className={`rounded-lg bg-slate-900 p-2  hover:bg-opacity-20 cursor-pointer ${
+              files.length > 0 ? 'bg-opacity-20' : 'bg-opacity-10'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +221,9 @@ const FileTransfer = () => {
       </div>
       <div className="flex flex-col items-center mt-8 w-11/12">
         <div className="w-full">
-          <div className="text-2xl text-left text-slate-800 dark:text-snow mb-3">Files received</div>
+          <div className="text-2xl text-left text-slate-800 dark:text-snow mb-3">
+            Files received
+          </div>
         </div>
         {isFetchingMedia && <BezierSpinner />}
         {!isFetchingMedia && receivedMedia.length === 0 && (
@@ -248,9 +251,7 @@ const FileTransfer = () => {
                     isOneHop={true}
                   />
                 </div>
-                <button
-                  className='bg-zinc-300 text-zinc-900 hover:text-zinc-600 hover:bg-zinc-400 group px-2 py-1 text-sm font-mono rounded-md'
-                >
+                <button className="bg-zinc-300 text-zinc-900 hover:text-zinc-600 hover:bg-zinc-400 group px-2 py-1 text-sm font-mono rounded-md">
                   <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                     <a target="_blank">{m.description}</a>
                   </Link>

@@ -21,12 +21,11 @@ import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
 
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  const address = accounts[0];
-  console.log("🚀 ~ file: index.js ~ line 27 ~ .then ~ address", address)
+  const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+  const address = accounts[0]
+  console.log('🚀 ~ file: index.js ~ line 27 ~ .then ~ address', address)
   const provider = new EthereumAuthProvider(window.ethereum, address)
   return provider
-
 }
 
 export default function Header() {
@@ -50,10 +49,7 @@ export default function Header() {
   const [signer, setSigner] = useState(null)
 
   //XTPM
-  const {
-    connect: connectXmtp,
-    disconnect: disconnectXmtp,
-  } = useXmtp()
+  const { connect: connectXmtp, disconnect: disconnectXmtp } = useXmtp()
   // const {
   //   signer,
   //   connect: connectWallet,
@@ -103,32 +99,34 @@ export default function Header() {
   }, [connection.status, isAbleToRefresh])
 
   async function connectCeramic() {
-    const authProvider = (await createAuthProvider())
+    const authProvider = await createAuthProvider()
     // trigger POAP fetching
     poapTrigger({ address: window.ethereum.selectedAddress }, true)
-    connect(authProvider).then(() => {
-      // setIsConnected(true)
-      setIsAbleToRefresh(true)
-      const chainId =
-        ethers.utils.arrayify(window.ethereum.chainId, {
-          hexPad: 'left',
-        })[0] || 1
-      dispatch(
-        setConnection({
-          connected: true,
-          account: window.ethereum.selectedAddress,
-          chainId: chainId.toString(),
-        })
-      )
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      setSigner(provider.getSigner())
-      router.push('/rotarydial')
-    }).catch((error) => {
-      console.log(error)
-      dispatch(resetEvm())
-      dispatch(resetContacts())
-      // setIsConnected(false)
-    })
+    connect(authProvider)
+      .then(() => {
+        // setIsConnected(true)
+        setIsAbleToRefresh(true)
+        const chainId =
+          ethers.utils.arrayify(window.ethereum.chainId, {
+            hexPad: 'left',
+          })[0] || 1
+        dispatch(
+          setConnection({
+            connected: true,
+            account: window.ethereum.selectedAddress,
+            chainId: chainId.toString(),
+          })
+        )
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        setSigner(provider.getSigner())
+        router.push('/rotarydial')
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch(resetEvm())
+        dispatch(resetContacts())
+        // setIsConnected(false)
+      })
   }
 
   async function connectButtonHit() {
@@ -152,7 +150,6 @@ export default function Header() {
       }
     })
   }
-
 
   return (
     <>

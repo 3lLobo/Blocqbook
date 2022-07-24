@@ -12,7 +12,6 @@ import { PoapAvatar } from '../Poap'
 import Image from 'next/image'
 import { useCommonPoap } from '../../hooks/useCommonPoap'
 
-
 const ProfileCard = ({ profile }) => {
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
@@ -20,8 +19,8 @@ const ProfileCard = ({ profile }) => {
   const { data, loading, error } = useGetAllTokenBalancesQuery(
     profile.bio.address
       ? {
-        address: profile.bio.address,
-      }
+          address: profile.bio.address,
+        }
       : skipToken,
     {
       pollingInterval: 300_000, // 5 minutes is the covalent update time
@@ -30,7 +29,10 @@ const ProfileCard = ({ profile }) => {
 
   // console.log('Tokenbalance: ', data)
   // fetch poaps
-  const { commonPoaps, poapData, poapLoading, poapError } = useCommonPoap({ address: profile.bio.address, doUpdate: true })
+  const { commonPoaps, poapData, poapLoading, poapError } = useCommonPoap({
+    address: profile.bio.address,
+    doUpdate: true,
+  })
 
   console.log('POAP data', poapData)
 
@@ -60,9 +62,10 @@ const ProfileCard = ({ profile }) => {
   return (
     <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
       {(poapLoading || poapData?.length > 0) && (
-        <div 
-        // TODO: align down
-        className="fixed ml-32 justify-start items-start h-fit z-0 w-full mb-3 gap-y-3 flex flex-col ">
+        <div
+          // TODO: align down
+          className="fixed ml-32 justify-start items-start h-fit z-0 w-full mb-3 gap-y-3 flex flex-col "
+        >
           <div className="relative ml-2 h-16 scale-300 mb-11 aspect-1 dark:hue-rotate-180 dark:invert">
             <Image
               className=""
@@ -80,7 +83,7 @@ const ProfileCard = ({ profile }) => {
                 </div>
               )
             })
-            ) : (
+          ) : (
             <BezierSpinner />
           )}
         </div>

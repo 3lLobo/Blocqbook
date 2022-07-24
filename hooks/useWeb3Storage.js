@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-
+import { useEffect } from 'react'
 
 export const useWeb3Storage = ({ files }) => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -40,5 +39,4 @@ export const useWeb3Storage = ({ files }) => {
   }, [files])
 
   return { web3storageCid, isUploading }
-
 }

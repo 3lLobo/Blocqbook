@@ -12,7 +12,7 @@ export enum NetworkType {
 /**
  * List of all the networks supported by the Uniswap Interface
  */
- export enum SupportedChainId {
+export enum SupportedChainId {
   MAINNET = 1,
   // ROPSTEN = 3,
   // RINKEBY = 4,
@@ -114,7 +114,6 @@ export const L2_CHAIN_IDS = [
 ] as const
 
 export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]
-
 
 interface BaseChainInfo {
   readonly networkType?: NetworkType

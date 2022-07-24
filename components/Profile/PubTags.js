@@ -9,16 +9,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 import axios from 'axios'
 
-
 // Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGrpah.
 async function addTag2theGraph(targetAddress, tag) {
-  const res = (await axios.post('/api/tags', {
-    targetAddress,
-    tag
-  }, {
-    timeout: 15000
-  }))
-  console.log("Tag-api response: ", res)
+  const res = await axios.post(
+    '/api/tags',
+    {
+      targetAddress,
+      tag,
+    },
+    {
+      timeout: 15000,
+    }
+  )
+  console.log('Tag-api response: ', res)
 }
 
 // TODO: add these to global/user database
@@ -54,7 +57,7 @@ export function PubTags() {
     )
     // add the selected tag to theGraph
     // TODO: check if this user already submitted this tag+target combo.
-    const targetAddress = store.contactInEdit.bio.address;
+    const targetAddress = store.contactInEdit.bio.address
     const nTags = selectedTags.length
     if (nTags > 0) {
       const tag = selectedTags[nTags - 1]
@@ -97,7 +100,8 @@ export function PubTags() {
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4  ${active ? ' text-bold' : 'text-indigo-900 dark:text-snow'
+                      `relative cursor-default select-none py-2 pl-10 pr-4  ${
+                        active ? ' text-bold' : 'text-indigo-900 dark:text-snow'
                       }`
                     }
                     value={person}
@@ -105,8 +109,9 @@ export function PubTags() {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={`block truncate  ${selected ? 'font-medium' : 'font-normal'
-                            }`}
+                          className={`block truncate  ${
+                            selected ? 'font-medium' : 'font-normal'
+                          }`}
                         >
                           {person.name}
                         </span>

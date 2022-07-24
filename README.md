@@ -33,11 +33,11 @@ Ceramic was our go to option for database as we wanted the app to be Web 3.0 and
 
 ## XMTP 
 
-We've used [XMTP](https://xmtp.com/) to enable decentralized messaging across wallets. To chat with an address, navigate to the 'Messenger' tab on the sidebar and sign a message using your Wallet. Initiate a conversation by pasting your peer's address in the input area & hit the arrow button. Another way to initiate a conversation is to save a contact & then click on the chat icon in the contact card.
+We've used [XMTP](https://xmtp.com/) to enable decentralized messaging across wallets. To chat with an address, navigate to the 'Messenger' tab on the sidebar and Initiate a conversation by pasting your peer's address in the input area & hit the arrow button. Another way to initiate a conversation is to save a contact & then click on the chat icon in the contact card.
 
 ## IPFS 
 
-We've used [IPFS](https://ipfs.io/) to allow decentralized file sharing without the hassle of juggling with the CIDs. The file is uploaded to IPFS and the CID is sent to the receiver via messenger powered by XMTP.
+We've used [IPFS](https://ipfs.io/) to allow decentralized file sharing without the hassle of juggling with the CIDs. Navigate to the File Transfer tab & drop your files with the receiver's address or you can click on the IPFS icon on the receiver's contact card. The file is uploaded to IPFS and the CID is sent to the receiver via messenger powered by XMTP. 
 
 ## Polygon & The Graph
 

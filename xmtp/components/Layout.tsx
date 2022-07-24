@@ -77,7 +77,7 @@ const Layout: React.FC = ({ children }) => {
           <NavigationColumnLayout>
               <span className='text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl'>Messages powered by XMTP</span>
               {walletAddress && client && 
-              <div className='flex items-center gap-1 w-full mt-5 mx-1'>
+              <div className='flex items-center gap-1 w-full mt-5'>
                   <input 
                     className='rounded-2xl w-11/12' 
                     type='text' 

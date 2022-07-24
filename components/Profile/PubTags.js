@@ -7,6 +7,7 @@ import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
+import addTag from '../../pages/api/tags'
 
 // TODO: add these to global/user database
 const publicTags = [
@@ -38,6 +39,10 @@ export function PubTags() {
         field2: 'pubTags',
         value: selectedTags,
       })
+    )
+    const address_tagg = store.contactInEdit.bio.address;
+    selectedTags?.map((tag) => 
+      addTag(address_tagg, tag.name)
     )
   }
 

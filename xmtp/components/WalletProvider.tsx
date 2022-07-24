@@ -3,7 +3,7 @@ import { ethers, Signer } from 'ethers'
 import Web3Modal, { IProviderOptions, providers } from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
-import { WalletContext } from '../contexts/wallet.ts'
+import { WalletContext } from '../contexts/wallet'
 
 const ETH_CHAIN_ID = 1 // Ethereum mainnet
 

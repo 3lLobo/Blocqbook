@@ -1,6 +1,6 @@
 import { Message } from '@xmtp/xmtp-js'
 import { useCallback, useReducer } from 'react'
-import { MessageStoreEvent } from '../contexts/xmtp.ts'
+import { MessageStoreEvent } from '../contexts/xmtp'
 
 type MessageDeduper = (message: Message) => boolean
 type MessageStore = { [address: string]: Message[] }

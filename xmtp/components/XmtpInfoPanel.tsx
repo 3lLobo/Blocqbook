@@ -1,6 +1,6 @@
 import packageJson from '../../package.json'
-import useXmtp from '../hooks/useXmtp.ts'
-import classNames from '../helpers/classNames.ts'
+import useXmtp from '../hooks/useXmtp'
+import classNames from '../helpers/classNames'
 import {
   LinkIcon,
   BookOpenIcon,

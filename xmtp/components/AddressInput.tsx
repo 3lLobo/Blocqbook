@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import useXmtp from '../hooks/useXmtp.ts'
-import classNames from '../helpers/classNames.ts'
+import useXmtp from '../hooks/useXmtp'
+import classNames from '../helpers/classNames'
 
 type AddressInputProps = {
   recipientWalletAddress?: string

@@ -1,18 +1,18 @@
-import classNames from '../helpers/classNames.ts'
-import { truncate, formatDate } from '../helpers/string.ts'
+import classNames from '../helpers/classNames'
+import { truncate, formatDate } from '../helpers/string'
 import Link from 'next/link'
-import Address from './Address.tsx'
+import Address from './Address'
 import { useRouter } from 'next/router'
 import { Conversation } from '@xmtp/xmtp-js/dist/types/src/conversations'
-import useConversation from '../hooks/useConversation.ts'
-import { XmtpContext } from '../contexts/xmtp.ts'
+import useConversation from '../hooks/useConversation'
+import { XmtpContext } from '../contexts/xmtp'
 import { Message } from '@xmtp/xmtp-js'
-import useEns from '../hooks/useEns.ts'
-import Avatar from './Avatar.tsx'
-import {Avatar as Avatar2} from '../../components/Profile/Avatar.js'
+import useEns from '../hooks/useEns'
+import Avatar from './Avatar'
+import { Avatar as Avatar2 } from '../../components/Profile/Avatar.js'
 import { useContext } from 'react'
-import {useAddressName} from '../../hooks/useAddressName.js'
-import {useAddressAvatar} from '../../hooks/useAddressAvatar.js'
+import { useAddressName } from '../../hooks/useAddressName.js'
+import { useAddressAvatar } from '../../hooks/useAddressAvatar.js'
 
 type ConversationsListProps = {
   conversations: Conversation[]
@@ -39,21 +39,28 @@ const ConversationTile = ({
   const loading = isLoadingEns || isLoadingConversation
   const router = useRouter()
   const latestMessage = getLatestMessage(messages)
-  const nickname = useAddressName({address: conversation.peerAddress.toLowerCase()})
-  const savedAvatar = useAddressAvatar({address: conversation.peerAddress.toLowerCase()})
+  const nickname = useAddressName({
+    address: conversation.peerAddress.toLowerCase(),
+  })
+  const savedAvatar = useAddressAvatar({
+    address: conversation.peerAddress.toLowerCase(),
+  })
 
-  const handleClick = () => {router.push({
-    pathname: '/rotarydial', 
-    query: {to: conversation.peerAddress}
-  }, 
-    {shallow: true}
-  )}
+  const handleClick = () => {
+    router.push(
+      {
+        pathname: '/rotarydial',
+        query: { to: conversation.peerAddress },
+      },
+      { shallow: true }
+    )
+  }
   if (!latestMessage) {
     return null
   }
   return (
     // <Link href={path} key={conversation.peerAddress}>
-    <div onClick={handleClick} className='cursor-pointer'>
+    <div onClick={handleClick} className="cursor-pointer">
       <a onClick={onClick}>
         <div
           className={classNames(
@@ -76,25 +83,26 @@ const ConversationTile = ({
             isSelected ? 'bg-bt-200' : null
           )}
         >
-            {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
-          {
-            savedAvatar!==null? 
-              (<div className='h-full w-12 rounded-full overflow-hidden flex items-center justify-center'><img src={savedAvatar} alt="avatar"/></div>) 
-            : 
-              (<Avatar peerAddress={conversation.peerAddress} />)
-          }
+          {/**IMPORTING OUR AVATAR IS NOT REALLY WORKING */}
+          {savedAvatar !== null ? (
+            <div className="h-full w-12 rounded-full overflow-hidden flex items-center justify-center">
+              <img src={savedAvatar} alt="avatar" />
+            </div>
+          ) : (
+            <Avatar peerAddress={conversation.peerAddress} />
+          )}
           <div className="py-4 sm:text-left ml-3 text w-full">
             <div className="grid-cols-2 grid">
-              {nickname.length < 41 ? 
-                (<div 
-                  className="text-black text-lg md:text-md font-bold place-self-start"
-                >
+              {nickname.length < 41 ? (
+                <div className="text-black text-lg md:text-md font-bold place-self-start">
                   {nickname}
-                </div>) :
-                (<Address
+                </div>
+              ) : (
+                <Address
                   address={conversation.peerAddress}
                   className="text-black text-lg md:text-md font-bold place-self-start"
-                />)}
+                />
+              )}
               <span
                 className={classNames(
                   'text-lg md:text-sm font-normal place-self-end',
@@ -117,7 +125,7 @@ const ConversationTile = ({
           </div>
         </div>
       </a>
-      </div>
+    </div>
     // </Link>
   )
 }

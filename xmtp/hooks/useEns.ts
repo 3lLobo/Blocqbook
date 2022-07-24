@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import useWallet from './useWallet.ts'
+import useWallet from './useWallet'
 
 const useEns = (addressOrName: string | undefined) => {
   const { resolveName, lookupAddress, getAvatarUrl } = useWallet()

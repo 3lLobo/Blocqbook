@@ -1,8 +1,8 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import AddressInput from '../AddressInput.tsx'
-import useWallet from '../../hooks/useWallet.ts'
-import useXmtp from '../../hooks/useXmtp.ts'
+import AddressInput from '../AddressInput'
+import useWallet from '../../hooks/useWallet'
+import useXmtp from '../../hooks/useXmtp'
 type RecipientInputProps = {
   recipientWalletAddress: string | undefined
   onSubmit: (address: string) => Promise<void>

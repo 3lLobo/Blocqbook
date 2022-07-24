@@ -1,6 +1,6 @@
 import React from 'react'
-import classNames from '../helpers/classNames.ts'
-import Address from './Address.tsx'
+import classNames from '../helpers/classNames'
+import Address from './Address'
 
 type addressPillProps = {
   address: string

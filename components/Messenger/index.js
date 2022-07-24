@@ -1,11 +1,11 @@
-import AppWrapper from '../../xmtp/pages/_app.tsx'
+import App from '../../xmtp/components/App.tsx'
 
 const Messenger = () => {
   return (
     <div
-    // className='fixed top-20'
+    // className='w-full'
     >
-    <AppWrapper />
+      <App />
     </div>
   )
 }

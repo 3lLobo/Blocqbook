@@ -2,7 +2,7 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
-import { ALL_SUPPORTED_CHAIN_IDS } from '../constants/uniswap/chains.ts'
+import { ALL_SUPPORTED_CHAIN_IDS } from '../constants/uniswap/chainInfo.ts'
 
 const chainIds = ALL_SUPPORTED_CHAIN_IDS
 console.log('chainIds', chainIds)

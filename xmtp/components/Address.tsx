@@ -1,5 +1,5 @@
-import classNames from '../helpers/classNames.ts'
-import useEns from '../hooks/useEns.ts'
+import classNames from '../helpers/classNames'
+import useEns from '../hooks/useEns'
 
 type AddressProps = {
   address: string

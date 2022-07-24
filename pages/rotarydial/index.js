@@ -8,7 +8,6 @@ import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
 import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
-// import { WalletProvider } from '../../xmtp/components/WalletProvider.tsx'
 
 const Profile = () => {
   // This is the entrypoint to the users database.

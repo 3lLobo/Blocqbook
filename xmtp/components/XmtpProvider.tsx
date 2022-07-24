@@ -2,9 +2,9 @@ import { useCallback, useEffect, useReducer, useState } from 'react'
 import { Conversation } from '@xmtp/xmtp-js'
 import { Client } from '@xmtp/xmtp-js'
 import { Signer } from 'ethers'
-import { getEnv } from '../helpers/env.ts'
-import { XmtpContext, XmtpContextType } from '../contexts/xmtp.ts'
-import useMessageStore from '../hooks/useMessageStore.ts'
+import { getEnv } from '../helpers/env'
+import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
+import useMessageStore from '../hooks/useMessageStore'
 
 export const XmtpProvider: React.FC = ({ children }) => {
   const [wallet, setWallet] = useState<Signer>()
@@ -49,7 +49,7 @@ export const XmtpProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const initClient = async () => {
       if (!wallet) return
-      console.log('initClient:', initClient);
+      console.log('initClient:', initClient)
       setClient(await Client.create(wallet, { env: getEnv() }))
     }
     initClient()

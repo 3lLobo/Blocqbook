@@ -46,7 +46,7 @@ export const Slice = ({ contact, setSelectedIndex }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-indigo-200 dark:bg-slate-800 dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
+      <div className="bg-white dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
         <div
           onClick={onContactClick}
           className="w-10 ml-0 hover:cursor-pointer"

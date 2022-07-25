@@ -6,8 +6,8 @@
 
 Picture a phonebook for the blockchain.
 
-Or, if you never browsed the white-pages for your crush's number, ios-contact app for all of the W3b.
-An awesome web-3 app which allows you to retrieve your transactions, add contacts, send text messages to peers & transfer files as well. Built by a team of three developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
+Or, if you never browsed the white-pages for your crush's number, an ios-contact app for all of the W3b.
+We ship a fully-awesome web-3 app for retrieving transactions, contact management, instant messaging and peers2peer file transfer. Built by a team of 🌳 developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
 
 ## Live Site
 
@@ -58,7 +58,7 @@ Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/co
 ## Poaps
 
 Did we say [POAPS](https://poap.xyz/)? 🎉🎉🎉
-Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPS of other wallets and notify when we have POAPs in common.
+Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPs of other wallets and notify when we have POAPs in common.
 
 ![blocqbookTextTransparentBannerLight](public/blocqBookLogo/icon/blocqbookTextTransparentBannerLight.png)
 
@@ -67,7 +67,7 @@ Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do g
 ```
 Next.js
 React.js
-Redux Tookit
+Redux Toolkit
 Tailwind CSS 💫
 Ethers.js
 ```

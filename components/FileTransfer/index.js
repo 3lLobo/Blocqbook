@@ -25,7 +25,7 @@ const FileTransfer = () => {
 
   const store = useSelector((state) => state.contact)
   const router = useRouter()
-  const sendFileTo = router.query.sendFileTo
+  const sendFileTo = router.query.to
 
   const {
     connect: connectXmtp,

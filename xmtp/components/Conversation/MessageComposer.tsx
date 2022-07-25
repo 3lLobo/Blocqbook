@@ -30,19 +30,7 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
     [onSend, message]
   )
   return (
-    <div
-      className={classNames(
-        'sticky',
-        'bottom-0',
-        'pl-4',
-        'mb-4',
-        'pt-2',
-        'flex-shrink-0',
-        'flex',
-        'h-[68px]',
-        'bg-transparent'
-      )}
-    >
+    <div className="sticky bottom-0 pl-4 mb-4 pt-2 flex-shrink-0 flex h-[68px] bg-transparent w-full">
       <form
         className={classNames(
           'flex',

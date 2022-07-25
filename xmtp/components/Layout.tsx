@@ -1,43 +1,40 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useXmtp from '../hooks/useXmtp'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
-import Link from 'next/link'
 import useWallet from '../hooks/useWallet'
 import NavigationView from './Views/NavigationView'
 import ConversationView from './Views/ConversationView'
-import RecipientControl from './Conversation/RecipientControl'
 import Conversation from './Conversation/Conversation'
-import NewMessageButton from './NewMessageButton'
 import NavigationPanel from './NavigationPanel'
-import XmtpInfoPanel from './XmtpInfoPanel'
-import UserMenu from './UserMenu'
-import BackArrow from './BackArrow'
 import messageComposerStyles from '../styles/MessageComposer.module.css'
+import web3 from 'web3'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0">
-    <div className="flex flex-col flex-grow border-l border-gray-200  overflow-y-auto ">
+  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0 border-l border-gray-200 px-2">
+    <div className="flex flex-col flex-grow overflow-y-auto ">
       {children}
     </div>
   </aside>
 )
 
 const TopBarLayout: React.FC = ({ children }) => (
-  <div className="sticky top-0 z-10 flex-shrink-0 flex border-b border-gray-200 border-0">
+  <>
+    <span className="text-center text-xl font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
+        Conversations - Powered by XMTP
+    </span>
     {children}
-  </div>
+  </>
 )
 
 const Layout: React.FC = ({ children }) => {
   const [addressToSend, setAddressToSend] = useState('')
   const {
-    connect: connectXmtp,
-    disconnect: disconnectXmtp,
+    // connect: connectXmtp,
+    // disconnect: disconnectXmtp,
     walletAddress,
     client,
-    conversations,
-    loadingConversations,
+    // conversations,
+    // loadingConversations,
   } = useXmtp()
   const router = useRouter()
   const {
@@ -56,7 +53,7 @@ const Layout: React.FC = ({ children }) => {
     router.push(
       {
         pathname: '/rotarydial',
-        query: { to: addressToSend },
+        query: { to: web3.utils.toChecksumAddress(addressToSend) },
       },
       { shallow: true }
     )
@@ -71,15 +68,19 @@ const Layout: React.FC = ({ children }) => {
   }
   const prevSigner = usePrevious(signer)
 
+  useEffect(() => setAddressToSend(''), [router.query.to])
+
   return (
-    <div className="relative flex h-full w-1/4">
-      <NavigationView>
-        <NavigationColumnLayout>
-          <span className="text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
-            Converations - powered by XMTP
-          </span>
+    <div className="relative flex h-screen w-full">
+      <div className="relative flex-1 overflow-x-auto w-full">
+        {walletAddress && client && recipientWalletAddr !== undefined && (
+          <Conversation recipientWalletAddr={recipientWalletAddr} />
+        )}
+      </div>
+      <NavigationColumnLayout>
+        <TopBarLayout>
           {walletAddress && client && (
-            <div className="flex items-center gap-1 w-full mt-5 px-3 mb-3">
+            <form onSubmit={handleNewConversation} className="flex items-center gap-1 w-full mt-5 px-3 mb-4">
               <input
                 className="rounded-2xl w-11/12"
                 type="text"
@@ -88,7 +89,6 @@ const Layout: React.FC = ({ children }) => {
                 placeholder="New conversation"
               />
               <button
-                onClick={handleNewConversation}
                 className={messageComposerStyles.arrow}
               >
                 {addressToSend.length === 42 ? (
@@ -119,16 +119,14 @@ const Layout: React.FC = ({ children }) => {
                   </svg>
                 )}
               </button>
-            </div>
+            </form>
           )}
           <NavigationPanel onConnect={handleConnect} />
-        </NavigationColumnLayout>
-      </NavigationView>
-      <div className="relative w-3/4 overflow-x-auto">
-        {walletAddress && client && recipientWalletAddr !== undefined && (
-          <Conversation recipientWalletAddr={recipientWalletAddr} />
-        )}
-      </div>
+        </TopBarLayout>
+      </NavigationColumnLayout>
+      {/**This is done to prevent overlapping NavigationColumnLayout and coversation */}
+      <div className='w-80'></div>
+      <div className='w-80'></div>
     </div>
   )
 }

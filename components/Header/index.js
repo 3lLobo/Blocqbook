@@ -15,7 +15,6 @@ import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
 import { useLazyGetPoapsQuery } from '../../app/poapApi'
 
-import useWallet from '../../xmtp/hooks/useWallet.ts'
 import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 
 async function createAuthProvider() {

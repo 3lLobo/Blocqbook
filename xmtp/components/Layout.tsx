@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useXmtp from '../hooks/useXmtp'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
-import Link from 'next/link'
-import useWallet from '../hooks/useWallet'
+// import Head from 'next/head'
+// import Link from 'next/link'
+// import useWallet from '../hooks/useWallet'
 import NavigationView from './Views/NavigationView'
-import ConversationView from './Views/ConversationView'
-import RecipientControl from './Conversation/RecipientControl'
+// import ConversationView from './Views/ConversationView'
+// import RecipientControl from './Conversation/RecipientControl'
 import Conversation from './Conversation/Conversation'
-import NewMessageButton from './NewMessageButton'
-import NavigationPanel from './NavigationPanel'
-import XmtpInfoPanel from './XmtpInfoPanel'
-import UserMenu from './UserMenu'
-import BackArrow from './BackArrow'
+// import NewMessageButton from './NewMessageButton'
+// import NavigationPanel from './NavigationPanel'
+// import XmtpInfoPanel from './XmtpInfoPanel'
+// import UserMenu from './UserMenu'
+// import BackArrow from './BackArrow'
 import messageComposerStyles from '../styles/MessageComposer.module.css'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
@@ -40,16 +40,15 @@ const Layout: React.FC = ({ children }) => {
     loadingConversations,
   } = useXmtp()
   const router = useRouter()
-  const {
-    signer,
-    connect: connectWallet,
-    disconnect: disconnectWallet,
-  } = useWallet()
+  // const {
+    // signer,
+    // connect: connectWallet,
+  // } = useWallet()
   const recipientWalletAddr = router.query.to as string
 
-  const handleConnect = useCallback(async () => {
-    await connectWallet()
-  }, [connectWallet])
+  // const handleConnect = useCallback(async () => {
+    // await connectWallet()
+  // }, [connectWallet])
 
   const handleNewConversation = (e) => {
     e.preventDefault()
@@ -69,7 +68,7 @@ const Layout: React.FC = ({ children }) => {
     })
     return ref.current
   }
-  const prevSigner = usePrevious(signer)
+  // const prevSigner = usePrevious(signer)
 
   return (
     <div className="relative flex h-full w-1/4">
@@ -121,7 +120,7 @@ const Layout: React.FC = ({ children }) => {
               </button>
             </div>
           )}
-          <NavigationPanel onConnect={handleConnect} />
+          {/* <NavigationPanel onConnect={handleConnect} /> */}
         </NavigationColumnLayout>
       </NavigationView>
       <div className="relative w-3/4 overflow-x-auto">

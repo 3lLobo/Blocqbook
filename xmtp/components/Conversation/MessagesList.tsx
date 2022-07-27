@@ -49,10 +49,12 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
         <span className="block text-md px-2 mt-2 text-black font-normal">
           {message.error ? (
             `Error: ${message.error?.message}`
+          ) : (message.content.slice(0,4)==="hola" ? (
+            <img className='h-64' src='https://ipfs.io/ipfs/bafybeihjesi6ustbin3to5cqxkpzd3opqihwyq74ef2fc37fm4rtnkgsnu/bart.jpg' />
           ) : (
             <Emoji text={message.content || ''} />
             // <div>{message.content}</div>
-          )}
+          ))}
         </span>
       </div>
     </div>

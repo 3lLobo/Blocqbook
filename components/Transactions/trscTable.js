@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AddressTag } from '../AddressTag'
 import { CHAIN_INFO } from '../../constants/uniswap/chainInfo.ts'
 import { ChainLogo } from '../ChainLogo'
+import { v4 } from 'uuid'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -42,7 +43,7 @@ export const PrettyTable = ({ transactions }) => {
                   <tr>
                     {tableCols.map((col) => (
                       <th
-                        key={col}
+                        key={v4()}
                         scope="col"
                         className="sm:pl-6 lg:pl-8 sticky top-11 z-10 border-b border-slate-300 dark:border-slate-800 bg-indigo-100 dark:bg-indigo-800 px-3 py-3.5 text-left text-sm font-semibold text-slate-900 backdrop-blur backdrop-filter dark:text-slate-400"
                       >

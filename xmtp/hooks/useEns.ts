@@ -14,7 +14,7 @@ const useEns = (addressOrName: string | undefined) => {
 
   return {
     address: probableAddress || (address as string | undefined),
-    name: probableName || (name as string | undefined),
+    name: probableAddress || (name as string | undefined),
     avatarUrl: avatarUrl as string | undefined,
     loading,
   }

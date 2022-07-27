@@ -24,7 +24,7 @@ const Profile = () => {
       dispatch(
         setContacts({
           // contacts: myContacts,
-          contacts: record.content?.contacts || [],
+          contacts: record.content?.contacts || {},
           isInitialRecord: true,
         })
       )

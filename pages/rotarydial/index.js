@@ -1,13 +1,11 @@
 import { Head } from '../../components/Head/index'
-import Header from '../../components/Header/index'
 import Sidebar from '../../components/SideBar'
-import ProfileCard from '../../components/Profile/ProfileCard'
 import { useViewerRecord } from '@self.id/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
-import { dummyProfile } from '../../components/Profile/ProfileCard'
 import ProfileModal from '../../components/ProfileModal'
+
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -18,12 +16,14 @@ const Profile = () => {
   const evmStore = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
+
   useEffect(() => {
     console.log('Ceramic record: ', record)
-    if (!store.hasInitialRecord && evmStore.connected) {
-      console.log('Ceramic record loaded: ', record)
+    if (!store.hasInitialRecord && evmStore.connected && !record.isLoading) {
+      console.log('Ceramic record loaded!')
       dispatch(
         setContacts({
+          // contacts: myContacts,
           contacts: record.content?.contacts || [],
           isInitialRecord: true,
         })

@@ -107,8 +107,8 @@ export const contactSlice = createSlice({
       if (Object.keys(action.payload.contacts).length === 0) {
         state.contacts = Object.assign(state.contacts, devContacts())
       } else {
-        state.contacts = action.payload.contacts
-        
+        state.contacts = Object.assign(action.payload.contacts, state.contacts)
+
       }
       // check if we already loaded data from the record
       if (action.payload.isInitialRecord) {

@@ -9,7 +9,8 @@ import { CommonCheck } from '../Poap/CommonCheck'
 import { useRouter } from 'next/router'
 import { v4 } from 'uuid'
 import { setOpenTab } from '../../app/navSlice'
-import web3 from 'web3'
+import { ethers } from 'ethers'
+
 
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
@@ -32,7 +33,7 @@ export const Slice = ({ contact }) => {
     router.push(
       {
         pathname: '/rotarydial',
-        query: { to: web3.utils.toChecksumAddress(contact.bio.address) },
+        query: { to: ethers.utils.getAddress(contact.bio.address) },
       },
       { shallow: true }
     )

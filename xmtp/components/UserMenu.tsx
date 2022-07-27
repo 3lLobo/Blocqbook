@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 import { Fragment, useCallback } from 'react'
 import classNames from '../helpers/classNames'
-import Blockies from 'react-blockies'
+// import Blockies from 'react-blockies'
 import Address from './Address'
 import useXmtp from '../hooks/useXmtp'
 import useEns from '../hooks/useEns'
@@ -36,7 +36,8 @@ const AvatarBlock = ({ walletAddress }: AvatarBlockProps) => {
       />
     </div>
   ) : (
-    <Blockies seed={walletAddress} size={8} className="rounded-full mr-2" />
+    <div />
+    // <Blockies seed={walletAddress} size={8} className="rounded-full mr-2" />
   )
 }
 

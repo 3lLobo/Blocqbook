@@ -103,17 +103,17 @@ export const contactSlice = createSlice({
       state.isUpdated = false
     },
     setContacts: (state, action) => {
+      // if the contacts are empty, populate with the profiles of the devs
+      if (Object.keys(action.payload.contacts).length === 0) {
+        state.contacts = Object.assign(state.contacts, devContacts())
+      } else {
+        state.contacts = Object.assign(action.payload.contacts, state.contacts)
+
+      }
       // check if we already loaded data from the record
       if (action.payload.isInitialRecord) {
         state.hasInitialRecord = true
         state.isSyncedCeramic = true
-        // if the contacts are empty, populate with the profiles of the devs
-        if (Object.keys(action.payload.contacts).length === 0) {
-          state.contacts = Object.assign(state.contacts, devContacts())
-        } else {
-          state.contacts = action.payload.contacts
-          
-        }
       }
     },
     updateContact: (state, action) => {

@@ -23,7 +23,6 @@ async function createAuthProvider() {
 
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
   const address = accounts[0]
-  console.log('🚀 ~ file: index.js ~ line 27 ~ .then ~ address', address)
   const provider = new EthereumAuthProvider(window.ethereum, address)
   return provider
 }
@@ -83,14 +82,12 @@ export default function Header() {
     connect()
   }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
+  // Ceramic
   const [connection, connect, disconnect] = useViewerConnection()
 
-  // const [isConnected, setIsConnected] = useState(false)
   useEffect(() => {
     const checkIfRefresh = async () => {
-      // if (isAbleToRefresh) {
       connectCeramic()
-      // }
     }
     console.log('Ceramic client: ', connection)
     if (store.isConnected && connection.status === 'idle') {
@@ -125,7 +122,6 @@ export default function Header() {
         console.log(error)
         dispatch(resetEvm())
         dispatch(resetContacts())
-        // setIsConnected(false)
       })
   }
 

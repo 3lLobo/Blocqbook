@@ -18,7 +18,7 @@ const provider = new ethers.providers.JsonRpcProvider(
 )
 
 // TODO: get the real keyyy
-const privateKey1 = '0x'
+const privateKey1 = process.env.NEXT_TAG_CONTRACT_KEY
 const address = '0xDe4d7F0A42aa7DF311b3cC18eF5231f501168695'
 const abi = [
   'function addTag(address _person, string memory _tag) public onlyOwner',

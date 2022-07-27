@@ -2,14 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react'
 import classNames from '../../helpers/classNames'
 import messageComposerStyles from '../../styles/MessageComposer.module.css'
 import { useRouter } from 'next/router'
+import { BezierSpinner } from '../../../components/Spinner/BezierSpinner'
+import { Web3Storage } from 'web3.storage'
 
 type MessageComposerProps = {
   onSend: (msg: string) => Promise<void>
 }
 
 const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
+  const token = process.env.NEXT_PUBLIC_WEB3STORAGE
   const [message, setMessage] = useState('')
   const [hasMediaAttached, setHasMediaAttached] = useState(false)
+  const [files, setFiles] = useState<File | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const [filesCID, setFilesCID] = useState(null)
   const router = useRouter()
 
   useEffect(() => setMessage(''), [router.query.recipientWalletAddr])
@@ -51,6 +57,43 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
     return JSON.stringify({type:'media', cid: "CID", description: message})
   }
 
+  async function handleUpload() {
+    setIsUploading(true)
+    try {
+      console.log('> 📦 creating web3.storage client')
+      const client = new Web3Storage({ token })
+
+      console.log(
+        '> 🤖 chunking and hashing the files to calculate the Content ID'
+      )
+      const cid = await client.put(files, {
+        onRootCidReady: (localCid) => {
+          console.log(`> 🔑 locally calculated Content ID: ${localCid} `)
+          console.log('> 📡 sending files to web3.storage ')
+        },
+        onStoredChunk: (bytes) =>
+          console.log(
+            `> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`
+          ),
+      })
+      console.log(`> ✅ web3.storage now hosting ${cid}`)
+
+      setFilesCID(cid)
+    } catch (error) {
+      console.log(error)
+    }
+    setIsUploading(false)
+  }
+
+  useEffect(() => {
+    console.log('file:', files[0]);
+    const upload = async () => {
+      handleUpload()
+    }
+    // if (files?.length>0) upload()
+  }, [files])
+  
+
   return (
     <div className="sticky bottom-0 pl-4 mb-4 pt-2 flex-shrink-0 flex h-[68px] bg-transparent w-full">
       <form
@@ -82,20 +125,26 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
           required
         />
         <div className='flex gap-1'>
-          <button onClick={onMedia} type="button"className={messageComposerStyles.arrow}>
-              <svg
+          <label htmlFor="filePicker" className={`cursor-pointer ${messageComposerStyles.arrow}`}>
+            <svg
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  fill={hasMediaAttached? "#2EC053" : "#989CA7"}
-                d="M18.555,15.354V4.592c0-0.248-0.202-0.451-0.45-0.451H1.888c-0.248,0-0.451,0.203-0.451,0.451v10.808c0,0.559,0.751,0.451,0.451,0.451h16.217h0.005C18.793,15.851,18.478,14.814,18.555,15.354 M2.8,14.949l4.944-6.464l4.144,5.419c0.003,0.003,0.003,0.003,0.003,0.005l0.797,1.04H2.8z M13.822,14.949l-1.006-1.317l1.689-2.218l2.688,3.535H13.822z M17.654,14.064l-2.791-3.666c-0.181-0.237-0.535-0.237-0.716,0l-1.899,2.493l-4.146-5.42c-0.18-0.237-0.536-0.237-0.716,0l-5.047,6.598V5.042h15.316V14.064z M12.474,6.393c-0.869,0-1.577,0.707-1.577,1.576s0.708,1.576,1.577,1.576s1.577-0.707,1.577-1.576S13.343,6.393,12.474,6.393 M12.474,8.645c-0.371,0-0.676-0.304-0.676-0.676s0.305-0.676,0.676-0.676c0.372,0,0.676,0.304,0.676,0.676S12.846,8.645,12.474,8.645"
-                />
-              </svg>
-          </button>
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                fill={hasMediaAttached? "#2EC053" : "#989CA7"}
+              d="M18.555,15.354V4.592c0-0.248-0.202-0.451-0.45-0.451H1.888c-0.248,0-0.451,0.203-0.451,0.451v10.808c0,0.559,0.751,0.451,0.451,0.451h16.217h0.005C18.793,15.851,18.478,14.814,18.555,15.354 M2.8,14.949l4.944-6.464l4.144,5.419c0.003,0.003,0.003,0.003,0.003,0.005l0.797,1.04H2.8z M13.822,14.949l-1.006-1.317l1.689-2.218l2.688,3.535H13.822z M17.654,14.064l-2.791-3.666c-0.181-0.237-0.535-0.237-0.716,0l-1.899,2.493l-4.146-5.42c-0.18-0.237-0.536-0.237-0.716,0l-5.047,6.598V5.042h15.316V14.064z M12.474,6.393c-0.869,0-1.577,0.707-1.577,1.576s0.708,1.576,1.577,1.576s1.577-0.707,1.577-1.576S13.343,6.393,12.474,6.393 M12.474,8.645c-0.371,0-0.676-0.304-0.676-0.676s0.305-0.676,0.676-0.676c0.372,0,0.676,0.304,0.676,0.676S12.846,8.645,12.474,8.645"
+              />
+            </svg>
+            <input
+              type="file"
+              id="filePicker"
+              onChange={(e) => setFiles(e.target.files)}
+              className="hidden w-full h-full"
+            />
+          </label>
           <button type="submit" className={messageComposerStyles.arrow}>
               <svg
                 viewBox="0 0 26 26"

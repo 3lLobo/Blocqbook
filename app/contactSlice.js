@@ -15,8 +15,8 @@ export const emptyProfile = (address, isOneHop, avatar, name, notes, dev) => ({
   isSelf: false,
   isOneHop: isOneHop || false,
   tags: {
-    privTags: dev ? [{ id: 1, name: 'myContact', color: 'cyan-300' }, { id: 11, name: 'blocqDev', color: 'violet-300' },] : [{ id: 1, name: 'myContact', color: 'cyan-300' },],
-    pubTags: [],
+    privTags: dev ? [{ id: 11, name: 'blocqDev', color: 'violet-300' },] : [{ id: 1, name: 'myContact', color: 'cyan-300' },],
+    pubTags: dev ? [{ id: 1, name: 'human', color: 'cyan-300' }, { id: 2, name: 'trust', color: 'green-300' },] : [],
   },
   poap: {
     hasCommonPoap: false,

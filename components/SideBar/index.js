@@ -17,6 +17,7 @@ import Messenger from '../Messenger'
 import { CurrencyDollarIcon } from '@heroicons/react/outline'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpenTab } from '../../app/navSlice'
+import { v4 } from 'uuid'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -122,7 +123,7 @@ const Sidebar = () => {
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="flex-1 px-2 py-4 space-y-1 flex flex-col ">
                 {tabNames.map((tabName) => (
-                  <Tab as={Fragment} key={tabName}>
+                  <Tab as={Fragment} key={v4()}>
                     {({ selected }) => (
                       <a
                         key={tabName}

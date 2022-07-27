@@ -1,13 +1,13 @@
-
 <!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
 
 ![bbBanner](public/blocqBookLogo/logoText/blocqbookTextSolidBanner.png)
+
 # The Blocqbook
 
 Picture a phonebook for the blockchain.
 
 Or, if you never browsed the white-pages for your crush's number, an ios-contact app for all of the W3b.
-We ship a fully-awesome web-3 app for retrieving transactions, contact management, instant messaging and peers2peer file transfer. Built by a team of 🌳 developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Just connect your [Metamask](https://metamask.io/) wallet, and voila! All your transactions have been fetched and you are now ready to chit chat with your peers the decentralized way !
+We ship a fully-awesome web-3 app for retrieving transactions, contact management, instant messaging and peers2peer file transfer. Built by a team of 🌳 developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Your contact-data is 💯 owned by you and upwards compatible, for when you want to import your contacts to any interaction-based w3b-app (Metamask, XMTP, etc.). To launch this rocket of an app, connect your [Metamask](https://metamask.io/) wallet, and voila, your are ready for your interplanetary adventure! All your transactions have been fetched and you can now to chit-chat with your peers the decentralized way !
 
 ## Live Site
 

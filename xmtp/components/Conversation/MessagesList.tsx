@@ -26,6 +26,39 @@ const isOnSameDay = (d1?: Date, d2?: Date): boolean => {
 const formatDate = (d?: Date) =>
   d?.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
+const MessageFiltered = ({message}) => {
+  const messageObject = checkMessageType(message)
+  console.log('messageObject:', messageObject);
+  switch (messageObject.type) {
+    case "text":
+      return <div>{message.content}</div>
+    case "media":
+      return (
+      <div>
+        <img 
+          src={`https://ipfs.io/ipfs/${messageObject.cid}/media.${messageObject.extension}`} 
+          className='h-96'
+        />
+        <div>{messageObject.message}</div>
+      </div>
+      )
+    default:
+      return <div>Error</div>
+  }
+}
+
+const checkMessageType = (message) => {
+  console.log('messageCHECKING:', message);
+  const sliced = message.content.slice(0,23)
+  switch (sliced) {
+    case '{"type":"media","cid":"':
+      return (JSON.parse(message.content))
+      break;
+    default:
+      return ({type: 'text'})
+      break;
+  }
+}
 const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
   const savedAvatar = useAddressAvatar({
     address: message.senderAddress.toLowerCase(),
@@ -49,12 +82,12 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
         <span className="block text-md px-2 mt-2 text-black font-normal">
           {message.error ? (
             `Error: ${message.error?.message}`
-          ) : (message.content.slice(0,4)==="hola" ? (
-            <img className='h-64' src='https://ipfs.io/ipfs/bafybeihjesi6ustbin3to5cqxkpzd3opqihwyq74ef2fc37fm4rtnkgsnu/bart.jpg' />
+          // ) : (message.content.slice(0,23)==='{"type":"media","cid":"' ? (
+          //   <img className='h-64' src='https://ipfs.io/ipfs/bafybeihjesi6ustbin3to5cqxkpzd3opqihwyq74ef2fc37fm4rtnkgsnu/bart.jpg' />
           ) : (
-            <Emoji text={message.content || ''} />
+            <MessageFiltered message={message}/>
             // <div>{message.content}</div>
-          ))}
+          )}
         </span>
       </div>
     </div>

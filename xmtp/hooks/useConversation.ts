@@ -37,7 +37,6 @@ const useConversation = (
       console.log('Listing messages for peer address', conversation.peerAddress)
       setLoading(true)
       const msgs = await conversation.messages({ pageSize: 100 })
-      console.log('msgs:', msgs)
       const msgsUpdated = msgs.map((m) => {
         if (m.content.slice(0, 21) === '{"type":"file","cid":') {
           const { type, description, cid } = JSON.parse(m.content)

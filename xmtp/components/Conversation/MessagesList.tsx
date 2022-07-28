@@ -28,10 +28,23 @@ const formatDate = (d?: Date) =>
 
 const MessageFiltered = ({message}) => {
   const messageObject = checkMessageType(message)
-  console.log('messageObject:', messageObject);
   switch (messageObject.type) {
     case "text":
       return <div>{message.content}</div>
+    case "file":
+      return (
+        <div>
+          This is a File with subject {messageObject.description.toUpperCase()}. 
+          You can check it on FileTransfer tab or 
+          <a 
+            target="_blank"
+            rel="noreferrer"
+            href={`https://ipfs.io/ipfs/${messageObject.cid}`}
+          >
+            HERE
+          </a>.
+        </div>
+      )
     case "media":
       return (
       <div>
@@ -49,11 +62,14 @@ const MessageFiltered = ({message}) => {
 
 const checkMessageType = (message) => {
   console.log('messageCHECKING:', message);
-  const sliced = message.content.slice(0,23)
+  //Instead of slicing we can directly parse and check but
+  //I think this is faster
+  const sliced = message.content.slice(0,22)
   switch (sliced) {
-    case '{"type":"media","cid":"':
+    case '{"type":"media","cid":':
       return (JSON.parse(message.content))
-      break;
+    case '{"type":"file","cid":"':
+      return (JSON.parse(message.content))
     default:
       return ({type: 'text'})
       break;

@@ -25,6 +25,22 @@ type ConversationTileProps = {
 const getLatestMessage = (messages: Message[]): Message | null =>
   messages.length ? messages[messages.length - 1] : null
 
+  const checkMessageType = (message) => {
+    console.log('messageCHECKING:', message);
+    //Instead of slicing we can directly parse and check but
+    //I think this is faster
+    const sliced = message.content.slice(0,22)
+    switch (sliced) {
+      case '{"type":"media","cid":':
+        return (JSON.parse(message.content))
+      case '{"type":"file","cid":"':
+        return (JSON.parse(message.content))
+      default:
+        return ({type: 'text'})
+        break;
+    }
+  }
+
 const ConversationTile = ({
   conversation,
   isSelected,
@@ -114,7 +130,14 @@ const ConversationTile = ({
                 loading ? 'animate-pulse' : ''
               )}
             >
-              {latestMessage && truncate(latestMessage.content, 75)}
+              {
+                checkMessageType(latestMessage).type === "text" ? 
+                  (
+                    truncate(latestMessage.content, 75)
+                  ) : (
+                    "This message has an attached content."
+                  )
+              }
             </p>
           </div>
         </div>

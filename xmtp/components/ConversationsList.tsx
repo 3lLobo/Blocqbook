@@ -26,7 +26,6 @@ const getLatestMessage = (messages: Message[]): Message | null =>
   messages.length ? messages[messages.length - 1] : null
 
   const checkMessageType = (message) => {
-    console.log('messageCHECKING:', message);
     //Instead of slicing we can directly parse and check but
     //I think this is faster
     const sliced = message.content.slice(0,22)

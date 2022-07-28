@@ -79,7 +79,7 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
     address: message.senderAddress.toLowerCase(),
   })
   return (
-    <div className="flex items-start mx-auto mb-4">
+    <div className="flex items-start mx-auto mb-4 w-full">
       <div className="relative w-11 h-11 ">
         <Avatar src={savedAvatar} scale={0} />
       </div>
@@ -90,9 +90,9 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
             address={message.senderAddress.toLowerCase()}
             isOneHop={false}
           />
-          <span className="text-sm font-normal place-self-end text-n-300 text-md uppercase">
+          {/* <span className="flex overflowtext-sm font-normal place-self-end text-n-300 text-md uppercase">
             {formatTime(message.sent)}
-          </span>
+          </span> */}
         </div>
         <span className="block text-md px-2 mt-2 text-black font-normal">
           {message.error ? (

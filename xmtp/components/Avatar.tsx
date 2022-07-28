@@ -1,4 +1,4 @@
-import Blockies from 'react-blockies'
+// import Blockies from 'react-blockies'
 import useEns from '../hooks/useEns'
 
 type AvatarProps = {
@@ -26,7 +26,8 @@ const Avatar = ({ peerAddress }: AvatarProps) => {
       </div>
     )
   }
-  return <Blockies seed={peerAddress} size={10} className="rounded-full" />
+  return <div />
+  // return <Blockies seed={peerAddress} size={10} className="rounded-full" />
 }
 
 export default Avatar

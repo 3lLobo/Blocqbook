@@ -27,11 +27,6 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
     []
   )
 
-  const onMedia = () => {
-    setHasMediaAttached(true)
-
-  }
-
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()

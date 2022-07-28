@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import AddressInput from '../AddressInput'
-import useWallet from '../../hooks/useWallet'
+// import useWallet from '../../hooks/useWallet'
 import useXmtp from '../../hooks/useXmtp'
 type RecipientInputProps = {
   recipientWalletAddress: string | undefined
@@ -20,7 +20,7 @@ const RecipientControl = ({
   recipientWalletAddress,
   onSubmit,
 }: RecipientInputProps): JSX.Element => {
-  const { resolveName, lookupAddress } = useWallet()
+  // const { resolveName, lookupAddress } = useWallet()
   const { client } = useXmtp()
   const router = useRouter()
   const [recipientInputMode, setRecipientInputMode] = useState(
@@ -50,8 +50,9 @@ const RecipientControl = ({
 
   useEffect(() => {
     const handleAddressLookup = async (address: string) => {
-      const name = await lookupAddress(address)
-      setHasName(!!name)
+      // const name = await lookupAddress(address)
+      // setHasName(!!name)
+      setHasName(false)
     }
     if (recipientWalletAddress) {
       setRecipientInputMode(RecipientInputMode.Submitted)
@@ -59,7 +60,7 @@ const RecipientControl = ({
     } else {
       setRecipientInputMode(RecipientInputMode.InvalidEntry)
     }
-  }, [recipientWalletAddress, setRecipientInputMode, lookupAddress, setHasName])
+  }, [recipientWalletAddress, setRecipientInputMode, setHasName])
 
   const handleSubmit = useCallback(
     async (e: React.SyntheticEvent, value?: string) => {
@@ -70,13 +71,14 @@ const RecipientControl = ({
       const input = e.target as HTMLInputElement
       const recipientValue = value || data.recipient.value
       if (recipientValue.endsWith('eth')) {
-        setRecipientInputMode(RecipientInputMode.FindingEntry)
-        const address = await resolveName(recipientValue)
-        if (address) {
-          await completeSubmit(address, input)
-        } else {
-          setRecipientInputMode(RecipientInputMode.InvalidEntry)
-        }
+        console.error("Input a real address!")
+        // setRecipientInputMode(RecipientInputMode.FindingEntry)
+        // const address = await resolveName(recipientValue)
+        // if (address) {
+        //   await completeSubmit(address, input)
+        // } else {
+        //   setRecipientInputMode(RecipientInputMode.InvalidEntry)
+        // }
       } else if (
         recipientValue.startsWith('0x') &&
         recipientValue.length === 42
@@ -84,7 +86,7 @@ const RecipientControl = ({
         await completeSubmit(recipientValue, input)
       }
     },
-    [setRecipientInputMode, resolveName, completeSubmit]
+    [setRecipientInputMode, completeSubmit]
   )
 
   const handleInputChange = async (e: React.SyntheticEvent) => {
@@ -124,7 +126,7 @@ const RecipientControl = ({
             id="recipient-field"
             className="block w-[95%] pl-7 pr-3 pt-[3px] md:pt-[2px] md:pt-[1px] bg-transparent caret-n-600 text-n-600 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent text-lg font-mono"
             name="recipient"
-            lookupAddress={lookupAddress}
+            // lookupAddress={lookupAddress}
             onInputChange={handleInputChange}
           />
           <button type="submit" className="" />

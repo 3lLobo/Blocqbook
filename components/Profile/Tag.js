@@ -13,11 +13,11 @@ export function Tag({ tagText, color, isPub }) {
     <div
       className={
         bg +
-        ' w-fit h-fit rounded-bl-xl rounded-tr-xl px-2 py-1 shadow-lg ' +
+        ' w-fit h-fit rounded-bl-xl rounded-tr-xl px-2 py-1 shadow-lg dark:brightness-75 ' +
         opa
       }
     >
-      <div className="text-snow-muted font-semibold text-center text-sm">
+      <div className="text-snow-muted font-semibold text-center text-sm dark:text-zinc-900">
         {tagText}
       </div>
     </div>

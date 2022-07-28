@@ -15,15 +15,14 @@ import { EthereumAuthProvider } from '@self.id/web'
 import { useRouter } from 'next/router'
 import { useLazyGetPoapsQuery } from '../../app/poapApi'
 
-import useWallet from '../../xmtp/hooks/useWallet.ts'
 import useXmtp from '../../xmtp/hooks/useXmtp.ts'
+import { getWeb3Signer } from '../../lib/xmtpSigner'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
 
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
   const address = accounts[0]
-  console.log('🚀 ~ file: index.js ~ line 27 ~ .then ~ address', address)
   const provider = new EthereumAuthProvider(window.ethereum, address)
   return provider
 }
@@ -46,7 +45,7 @@ export default function Header() {
       }
     }
   }, [poapResult, store.poaps, dispatch])
-  const [signer, setSigner] = useState(null)
+  // const [signer, setSigner] = useState(null)
 
   //XTPM
   const { connect: connectXmtp, disconnect: disconnectXmtp } = useXmtp()
@@ -60,74 +59,72 @@ export default function Header() {
   //   await connectWallet()
   // }, [connectWallet])
 
-  const usePrevious = (value) => {
-    const ref = useRef()
-    useEffect(() => {
-      ref.current = value
-    })
-    return ref.current
-  }
-  const prevSigner = usePrevious(signer)
+  // const usePrevious = (value) => {
+  //   const ref = useRef()
+  //   useEffect(() => {
+  //     ref.current = value
+  //   })
+  //   return ref.current
+  // }
+  // const prevSigner = usePrevious(signer)
 
-  useEffect(() => {
-    if (!signer && prevSigner) {
-      disconnectXmtp()
-    }
-    if (!signer || signer === prevSigner) return
-    const connect = async () => {
-      const prevAddress = await prevSigner?.getAddress()
-      const address = await signer.getAddress()
-      if (address === prevAddress) return
-      connectXmtp(signer)
-    }
-    connect()
-  }, [signer, prevSigner, connectXmtp, disconnectXmtp])
+  // useEffect(() => {
+  //   if (!store.isConnected) {
+  //     disconnectXmtp()
+  //   } else {
+  //     const connect = async () => {
+  //       connectXmtp(signer)
+  //     }
+  //     connect()
+  //   }
+  // }, [store.isConnected, connectXmtp, disconnectXmtp])
 
+  // Ceramic
   const [connection, connect, disconnect] = useViewerConnection()
 
-  // const [isConnected, setIsConnected] = useState(false)
-  useEffect(() => {
-    const checkIfRefresh = async () => {
-      // if (isAbleToRefresh) {
-      connectCeramic()
-      // }
-    }
-    console.log('Ceramic client: ', connection)
-    if (store.isConnected && connection.status === 'idle') {
-      checkIfRefresh()
-    }
-  }, [connection.status, isAbleToRefresh])
+  // useEffect(() => {
+  //   const checkIfRefresh = async () => {
+  //     connectCeramic()
+  //   }
+  //   console.log('Ceramic client: ', connection)
+  //   if (store.isConnected && connection.status === 'idle') {
+  //     checkIfRefresh()
+  //   }
+  // }, [connection.status, isAbleToRefresh, connectCeramic, connection, store.isConnected])
 
+  // const connectCeramic = useCallback(
+  //   async () => {
   async function connectCeramic() {
     const authProvider = await createAuthProvider()
     // trigger POAP fetching
     poapTrigger({ address: window.ethereum.selectedAddress }, true)
-    connect(authProvider)
-      .then(() => {
-        // setIsConnected(true)
-        setIsAbleToRefresh(true)
-        const chainId =
-          ethers.utils.arrayify(window.ethereum.chainId, {
-            hexPad: 'left',
-          })[0] || 1
-        dispatch(
-          setConnection({
-            connected: true,
-            account: window.ethereum.selectedAddress,
-            chainId: chainId.toString(),
-          })
-        )
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        setSigner(provider.getSigner())
-        router.push('/rotarydial')
-      })
-      .catch((error) => {
-        console.log(error)
-        dispatch(resetEvm())
-        dispatch(resetContacts())
-        // setIsConnected(false)
-      })
+    try {
+      await connect(authProvider)
+      const signer = getWeb3Signer()
+      await connectXmtp(signer)
+      // setIsConnected(true)
+      // setIsAbleToRefresh(true)
+      const chainId =
+        ethers.utils.arrayify(window.ethereum.chainId, {
+          hexPad: 'left',
+        })[0] || 1
+      dispatch(
+        setConnection({
+          connected: true,
+          account: window.ethereum.selectedAddress,
+          chainId: chainId.toString(),
+        })
+      )
+      // setSigner(authProvider.getSigner())
+      router.push('/rotarydial')
+    }
+    catch (error) {
+      console.log(error)
+      dispatch(resetEvm())
+      dispatch(resetContacts())
+    }
   }
+  // }, [connect, dispatch, router, poapTrigger])
 
   async function connectButtonHit() {
     if (connection.status === 'connected') {

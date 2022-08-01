@@ -76,9 +76,6 @@ const Layout: React.FC = ({ children }) => {
     return ref.current
   }
   // const prevSigner = usePrevious(signer)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ recipientWalletAddr", recipientWalletAddr)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ client", client)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ walletAddress", walletAddress)
 
   useEffect(() => setAddressToSend(''), [router.query.to])
 

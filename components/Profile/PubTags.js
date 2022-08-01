@@ -79,8 +79,13 @@ export function PubTags() {
         )}
       </div>
       {store.contactInEdit.isOneHop && (
-        <div className={"w-full z-30 "}>
-          <Listbox value={selected} onChange={onChange} name="assignee" multiple>
+        <div className={'w-full z-30 '}>
+          <Listbox
+            value={selected}
+            onChange={onChange}
+            name="assignee"
+            multiple
+          >
             <div className="relative mt-1 flex flex-col">
               <div className="relative w-fit cursor-default rounded-lg py-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                 <Listbox.Button className=" inset-y-0 right-0 flex items-center px-1 ">
@@ -101,7 +106,10 @@ export function PubTags() {
                     <Listbox.Option
                       key={person.id}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4  ${active ? ' text-bold' : 'text-indigo-900 dark:text-snow'
+                        `relative cursor-default select-none py-2 pl-10 pr-4  ${
+                          active
+                            ? ' text-bold'
+                            : 'text-indigo-900 dark:text-snow'
                         }`
                       }
                       value={person}
@@ -109,14 +117,18 @@ export function PubTags() {
                       {({ selected, active }) => (
                         <>
                           <span
-                            className={`block truncate  ${selected ? 'font-medium' : 'font-normal'
-                              }`}
+                            className={`block truncate  ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
                           >
                             {person.name}
                           </span>
                           {selected ? (
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600 ">
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                              <CheckIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
                             </span>
                           ) : null}
                         </>

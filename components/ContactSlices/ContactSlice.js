@@ -11,7 +11,6 @@ import { v4 } from 'uuid'
 import { setOpenTab } from '../../app/navSlice'
 import { ethers } from 'ethers'
 
-
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
   const navStore = useSelector((state) => state.nav)

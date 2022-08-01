@@ -26,7 +26,7 @@ export const Transactions = () => {
       </div>
     )
   if (error) {
-    console.log('🚀 ~ file: index.js ~ line 23 ~ Transactions ~ error', error)
+    console.log(error)
     // TODO: throw toast with error
     return <p>Error: {error.message}</p>
   }

@@ -117,8 +117,7 @@ export default function Header() {
       )
       // setSigner(authProvider.getSigner())
       router.push('/rotarydial')
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error)
       dispatch(resetEvm())
       dispatch(resetContacts())

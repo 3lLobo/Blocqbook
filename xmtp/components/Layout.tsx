@@ -18,39 +18,39 @@ import { ethers } from 'ethers'
 import { getWeb3Signer } from '../../lib/xmtpSigner'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0">
-    <div className="flex flex-col flex-grow border-l border-gray-200  overflow-y-auto ">
-      {children}
-    </div>
+  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0 border-l border-gray-200 px-2">
+    <div className="flex flex-col flex-grow overflow-y-auto ">{children}</div>
   </aside>
 )
 
 const TopBarLayout: React.FC = ({ children }) => (
-  <div className="sticky top-0 z-10 flex-shrink-0 flex border-b border-gray-200 border-0">
+  <>
+    <span className="text-center text-xl font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
+      Conversations - Powered by XMTP
+    </span>
     {children}
-  </div>
+  </>
 )
 
 const Layout: React.FC = ({ children }) => {
   const [addressToSend, setAddressToSend] = useState('')
   const {
     connect: connectXmtp,
-    disconnect: disconnectXmtp,
+    // disconnect: disconnectXmtp,
     walletAddress,
     client,
-    conversations,
-    loadingConversations,
+    // conversations,
+    // loadingConversations,
   } = useXmtp()
   const router = useRouter()
 
   const recipientWalletAddr = router.query.to as string
 
   // const handleConnect = useCallback(async () => {
-    // await connectWallet()
+  // await connectWallet()
   // }, [connectWallet])
 
   async function onConnect() {
-
     await connectXmtp(getWeb3Signer())
   }
 
@@ -59,12 +59,12 @@ const Layout: React.FC = ({ children }) => {
     router.push(
       {
         pathname: '/rotarydial',
-        query: { to: addressToSend },
+        query: { to: ethers.utils.getAddress(addressToSend) },
       },
       { shallow: true }
     )
   }
-  
+
   const usePrevious = <T,>(value: T): T | undefined => {
     const ref = useRef<T>()
     useEffect(() => {
@@ -73,9 +73,8 @@ const Layout: React.FC = ({ children }) => {
     return ref.current
   }
   // const prevSigner = usePrevious(signer)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ recipientWalletAddr", recipientWalletAddr)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ client", client)
-  console.log("🚀 ~ file: Layout.tsx ~ line 130 ~ walletAddress", walletAddress)
+
+  useEffect(() => setAddressToSend(''), [router.query.to])
 
   return (
     <div className="">
@@ -85,7 +84,10 @@ const Layout: React.FC = ({ children }) => {
             Converations - powered by XMTP
           </span>
           {walletAddress && client && (
-            <div className="flex items-center gap-1 w-full mt-5 px-3 mb-3">
+            <form
+              onSubmit={handleNewConversation}
+              className="flex items-center gap-1 w-full mt-5 px-3 mb-4"
+            >
               <input
                 className="rounded-2xl w-11/12"
                 type="text"
@@ -93,10 +95,7 @@ const Layout: React.FC = ({ children }) => {
                 value={addressToSend}
                 placeholder="New conversation"
               />
-              <button
-                onClick={handleNewConversation}
-                className={messageComposerStyles.arrow}
-              >
+              <button className={messageComposerStyles.arrow}>
                 {addressToSend.length === 42 ? (
                   <svg
                     viewBox="0 0 26 26"
@@ -125,15 +124,15 @@ const Layout: React.FC = ({ children }) => {
                   </svg>
                 )}
               </button>
-            </div>
+            </form>
           )}
           <NavigationPanel onConnect={() => onConnect()} />
         </NavigationColumnLayout>
       </NavigationView>
       {/* <div className="w-3/4 flex"> */}
-        {walletAddress && client && recipientWalletAddr !== undefined && (
-          <Conversation recipientWalletAddr={recipientWalletAddr} />
-        )}
+      {walletAddress && client && recipientWalletAddr !== undefined && (
+        <Conversation recipientWalletAddr={recipientWalletAddr} />
+      )}
       {/* </div> */}
     </div>
   )

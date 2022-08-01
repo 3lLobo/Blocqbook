@@ -6,7 +6,6 @@ import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
 import ProfileModal from '../../components/ProfileModal'
 
-
 const Profile = () => {
   // This is the entrypoint to the users database.
   const record = useViewerRecord(
@@ -15,7 +14,6 @@ const Profile = () => {
   const store = useSelector((state) => state.contact)
   const evmStore = useSelector((state) => state.evm)
   const dispatch = useDispatch()
-
 
   useEffect(() => {
     console.log('Ceramic record: ', record)

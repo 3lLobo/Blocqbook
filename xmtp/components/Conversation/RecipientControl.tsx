@@ -71,7 +71,7 @@ const RecipientControl = ({
       const input = e.target as HTMLInputElement
       const recipientValue = value || data.recipient.value
       if (recipientValue.endsWith('eth')) {
-        console.error("Input a real address!")
+        console.error('Input a real address!')
         // setRecipientInputMode(RecipientInputMode.FindingEntry)
         // const address = await resolveName(recipientValue)
         // if (address) {

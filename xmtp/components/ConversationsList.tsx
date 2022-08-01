@@ -25,20 +25,20 @@ type ConversationTileProps = {
 const getLatestMessage = (messages: Message[]): Message | null =>
   messages.length ? messages[messages.length - 1] : null
 
-  const checkMessageType = (message) => {
-    //Instead of slicing we can directly parse and check but
-    //I think this is faster
-    const sliced = message.content.slice(0,22)
-    switch (sliced) {
-      case '{"type":"media","cid":':
-        return (JSON.parse(message.content))
-      case '{"type":"file","cid":"':
-        return (JSON.parse(message.content))
-      default:
-        return ({type: 'text'})
-        break;
-    }
+const checkMessageType = (message) => {
+  //Instead of slicing we can directly parse and check but
+  //I think this is faster
+  const sliced = message.content.slice(0, 22)
+  switch (sliced) {
+    case '{"type":"media","cid":':
+      return JSON.parse(message.content)
+    case '{"type":"file","cid":"':
+      return JSON.parse(message.content)
+    default:
+      return { type: 'text' }
+      break
   }
+}
 
 const ConversationTile = ({
   conversation,
@@ -129,14 +129,9 @@ const ConversationTile = ({
                 loading ? 'animate-pulse' : ''
               )}
             >
-              {
-                checkMessageType(latestMessage).type === "text" ? 
-                  (
-                    truncate(latestMessage.content, 75)
-                  ) : (
-                    "This message has an attached content."
-                  )
-              }
+              {checkMessageType(latestMessage).type === 'text'
+                ? truncate(latestMessage.content, 75)
+                : 'This message has an attached content.'}
             </p>
           </div>
         </div>
@@ -166,8 +161,7 @@ const ConversationsList = ({
     <div>
       {conversations &&
         conversations.sort(orderByLatestMessage).map((convo) => {
-          const isSelected =
-            router.query.to == convo.peerAddress
+          const isSelected = router.query.to == convo.peerAddress
           return (
             <ConversationTile
               key={convo.peerAddress}

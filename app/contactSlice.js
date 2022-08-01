@@ -15,8 +15,15 @@ export const emptyProfile = (address, isOneHop, avatar, name, notes, dev) => ({
   isSelf: false,
   isOneHop: isOneHop || false,
   tags: {
-    privTags: dev ? [{ id: 11, name: 'blocqDev', color: 'violet-300' },] : [{ id: 1, name: 'myContact', color: 'cyan-300' },],
-    pubTags: dev ? [{ id: 1, name: 'human', color: 'cyan-300' }, { id: 2, name: 'trust', color: 'green-300' },] : [],
+    privTags: dev
+      ? [{ id: 11, name: 'blocqDev', color: 'violet-300' }]
+      : [{ id: 1, name: 'myContact', color: 'cyan-300' }],
+    pubTags: dev
+      ? [
+          { id: 1, name: 'human', color: 'cyan-300' },
+          { id: 2, name: 'trust', color: 'green-300' },
+        ]
+      : [],
   },
   poap: {
     hasCommonPoap: false,
@@ -36,9 +43,30 @@ export const emptyProfile = (address, isOneHop, avatar, name, notes, dev) => ({
 const devNote = `Hi 🤗 I am one of the 🌳 Developers who made the BlocqBook. Hope you njoyyy and would love to hear your feedBacq! Shoot me a text in the messenger 📩`
 
 function devContacts() {
-  const wolf = emptyProfile('0x3ECC53F7Ba45508483379bd76989A3003E6cbf09', false, 'https://avatars.githubusercontent.com/u/25290565?v=4', 'Wolf', devNote, true)
-  const julian = emptyProfile('0x95aB35f379E84C44FE8668Eb158F2C90F6F150b9', false, 'https://avatars.githubusercontent.com/u/83669055?v=4', 'Julian', devNote, true)
-  const reshma = emptyProfile('0xd9a51042eBE9A428e362B36F12Bd332bB565deEa', false, 'https://avatars.githubusercontent.com/u/70228821?v=4', 'Reshma', devNote, true)
+  const wolf = emptyProfile(
+    '0x3ECC53F7Ba45508483379bd76989A3003E6cbf09',
+    false,
+    'https://avatars.githubusercontent.com/u/25290565?v=4',
+    'Wolf',
+    devNote,
+    true
+  )
+  const julian = emptyProfile(
+    '0x95aB35f379E84C44FE8668Eb158F2C90F6F150b9',
+    false,
+    'https://avatars.githubusercontent.com/u/83669055?v=4',
+    'Julian',
+    devNote,
+    true
+  )
+  const reshma = emptyProfile(
+    '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa',
+    false,
+    'https://avatars.githubusercontent.com/u/70228821?v=4',
+    'Reshma',
+    devNote,
+    true
+  )
 
   return {
     '0x3ECC53F7Ba45508483379bd76989A3003E6cbf09': wolf,
@@ -108,7 +136,6 @@ export const contactSlice = createSlice({
         state.contacts = Object.assign(state.contacts, devContacts())
       } else {
         state.contacts = Object.assign(action.payload.contacts, state.contacts)
-
       }
       // check if we already loaded data from the record
       if (action.payload.isInitialRecord) {

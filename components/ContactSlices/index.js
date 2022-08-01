@@ -11,7 +11,7 @@ export const ContactSlices = ({ setSelectedIndex }) => {
   return (
     <div className=" w-full place-items-center">
       {contacts
-      // sort alphabetically
+        // sort alphabetically
         ?.sort((a, b) => a.bio.name.localeCompare(b.bio.name))
         .map((contact) => {
           return (

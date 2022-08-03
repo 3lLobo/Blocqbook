@@ -10,12 +10,13 @@ import { updateContact } from '../../app/contactSlice'
 import axios from 'axios'
 
 // Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGrpah.
-async function addTag2theGraph(targetAddress, tag) {
+async function tag2theGraph(targetAddress, tag, mode) {
   const res = await axios.post(
     '/api/tags',
     {
       targetAddress,
       tag,
+      mode
     },
     {
       timeout: 15000,
@@ -47,6 +48,7 @@ export function PubTags() {
   )
 
   function onChange(selectedTags) {
+    nPrevTags = selected.length
     setSelected(selectedTags)
     dispatch(
       updateContact({
@@ -60,8 +62,18 @@ export function PubTags() {
     const targetAddress = store.contactInEdit.bio.address
     const nTags = selectedTags.length
     if (nTags > 0) {
-      const tag = selectedTags[nTags - 1]
-      addTag2theGraph(targetAddress, tag.name)
+      // set mode to 'add' if tag has been added
+      if (nPrevTags < nTags) {
+        tag2theGraph(targetAddress, selectedTags[nTags - 1].name, 'add')
+      } else if (nPrevTags > nTags) {
+        // filter aut the missing tag from the previus selectedTags
+        const deletedTag = selected.filter((tag) => {
+          if (!selectedTags.map((t) => t.id).includes(tag.id)) {
+            return tag
+          }
+        })
+        tag2theGraph(targetAddress, deletedTag[0].name, 'delete')
+      }
     }
   }
 
@@ -106,10 +118,9 @@ export function PubTags() {
                     <Listbox.Option
                       key={person.id}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4  ${
-                          active
-                            ? ' text-bold'
-                            : 'text-indigo-900 dark:text-snow'
+                        `relative cursor-default select-none py-2 pl-10 pr-4  ${active
+                          ? ' text-bold'
+                          : 'text-indigo-900 dark:text-snow'
                         }`
                       }
                       value={person}
@@ -117,9 +128,8 @@ export function PubTags() {
                       {({ selected, active }) => (
                         <>
                           <span
-                            className={`block truncate  ${
-                              selected ? 'font-medium' : 'font-normal'
-                            }`}
+                            className={`block truncate  ${selected ? 'font-medium' : 'font-normal'
+                              }`}
                           >
                             {person.name}
                           </span>

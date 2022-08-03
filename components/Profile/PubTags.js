@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 import axios from 'axios'
 
-// Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGrpah.
+// Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGraph.
 async function tag2theGraph(targetAddress, tag, mode) {
   const res = await axios.post(
     '/api/tags',
@@ -27,11 +27,11 @@ async function tag2theGraph(targetAddress, tag, mode) {
 
 // TODO: add these to global/user database
 const publicTags = [
-  { id: 1, name: 'human', color: 'cyan-300' },
-  { id: 2, name: 'trust', color: 'green-300' },
-  { id: 3, name: 'smrtCntrct', color: 'violet-300' },
-  { id: 4, name: 'fraud', color: 'red-600' },
-  { id: 5, name: 'spam', color: 'rose-400' },
+  { id: 1, name: 'human', color: 'cyan-300', count: 1, selected: true },
+  { id: 2, name: 'trust', color: 'green-300', count: 1, selected: true },
+  { id: 3, name: 'smrtCntrct', color: 'violet-300', count: 1, selected: true },
+  { id: 4, name: 'fraud', color: 'red-600', count: 1, selected: true },
+  { id: 5, name: 'spam', color: 'rose-400', count: 1, selected: true },
 ]
 
 export function PubTags() {
@@ -58,7 +58,6 @@ export function PubTags() {
       })
     )
     // add the selected tag to theGraph
-    // TODO: check if this user already submitted this tag+target combo.
     const targetAddress = store.contactInEdit.bio.address
     const nTags = selectedTags.length
     if (nTags > 0) {
@@ -66,7 +65,7 @@ export function PubTags() {
       if (nPrevTags < nTags) {
         tag2theGraph(targetAddress, selectedTags[nTags - 1].name, 'add')
       } else if (nPrevTags > nTags) {
-        // filter aut the missing tag from the previus selectedTags
+        // filter aut the missing tag from the previous selectedTags
         const deletedTag = selected.filter((tag) => {
           if (!selectedTags.map((t) => t.id).includes(tag.id)) {
             return tag
@@ -77,14 +76,20 @@ export function PubTags() {
     }
   }
 
+  // TODO: All contacts get the full initial set of tags with count zero.
+  //  If the user adds a tag, it gets count+1 and selected=true.
+  // One every profile card open we pull info from the graph and update the count, yet leave selected=false.
+  // Only tags with count>0 are displayed. The count appears as small number on top op the tag.
+  // Self selected tags get a the full opacity while the ones fetched are opaque.
+
   return (
     <div className="z-30 w-full flex flex-row-reverse items-center">
       <div className="flex flex-grow justify-between items-center mr-auto ml-1">
         {selected.length > 0 && (
           <ul className=" py-2 flex flex-row space-x-1 px-3 rounded-md overflow-x-scroll scrollbar-hide mx-auto">
-            {selected.map((person) => (
-              <li key={person.id}>
-                <Tag tagText={person.name} color={person.color} />
+            {selected.map((tag) => (
+              <li key={tag.id}>
+                <Tag tagText={tag.name} color={tag.color} />
               </li>
             ))}
           </ul>
@@ -114,16 +119,16 @@ export function PubTags() {
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute w-40 top-10 max-h-60 scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 dark:bg-zinc-800 dark:bg-opacity-80 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
-                  {tags.map((person) => (
+                  {tags.map((tag) => (
                     <Listbox.Option
-                      key={person.id}
+                      key={tag.id}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4  ${active
                           ? ' text-bold'
                           : 'text-indigo-900 dark:text-snow'
                         }`
                       }
-                      value={person}
+                      value={tag}
                     >
                       {({ selected, active }) => (
                         <>
@@ -131,7 +136,7 @@ export function PubTags() {
                             className={`block truncate  ${selected ? 'font-medium' : 'font-normal'
                               }`}
                           >
-                            {person.name}
+                            {tag.name}
                           </span>
                           {selected ? (
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600 ">

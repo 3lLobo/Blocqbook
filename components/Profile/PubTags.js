@@ -48,7 +48,7 @@ export function PubTags() {
   )
 
   function onChange(selectedTags) {
-    nPrevTags = selected.length
+    const nPrevTags = selected.length
     setSelected(selectedTags)
     dispatch(
       updateContact({
@@ -88,7 +88,7 @@ export function PubTags() {
         {selected.length > 0 && (
           <ul className=" py-2 flex flex-row space-x-1 px-3 rounded-md overflow-x-scroll scrollbar-hide mx-auto">
             {selected.map((tag) => (
-              <li key={tag.id}>
+              <li key={"showPubTag".concat(tag.id)}>
                 <Tag tagText={tag.name} color={tag.color} />
               </li>
             ))}
@@ -121,7 +121,7 @@ export function PubTags() {
                 <Listbox.Options className="absolute w-40 top-10 max-h-60 scrollbar-hide rounded-md backdrop-blur-md backdrop-brightness-125 dark:bg-zinc-800 dark:bg-opacity-80 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
                   {tags.map((tag) => (
                     <Listbox.Option
-                      key={tag.id}
+                      key={"listPrivTag".concat(tag.id)}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4  ${active
                           ? ' text-bold'

@@ -81,7 +81,7 @@ export function PrivTags() {
         {selected.length > 0 && (
           <ul className=" py-2 flex flex-row space-x-1 px-3 rounded-md overflow-x-scroll scrollbar-hide">
             {selected.map((person) => (
-              <li key={person.id}>
+              <li key={"privKey".concat(person.id)}>
                 <Tag tagText={person.name} color={person.color} />
               </li>
             ))}

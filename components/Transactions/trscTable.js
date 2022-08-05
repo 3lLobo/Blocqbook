@@ -54,7 +54,7 @@ export const PrettyTable = ({ transactions }) => {
                 </thead>
                 <tbody className="bg-snow dark:bg-[#11002D]">
                   {transactions.map((transaction, transactionIdx) => (
-                    <tr key={transaction.email}>
+                    <tr key={v4()}>
                       <td
                         className={classNames(
                           transactionIdx !== transactions.length - 1

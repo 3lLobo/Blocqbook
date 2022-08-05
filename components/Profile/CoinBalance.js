@@ -29,7 +29,7 @@ export function CoinBalance({ item, quote_currency }) {
   ).toPrecision(3)
   const quoteInUsd = parseFloat(quote_rate * balanceInEth).toPrecision(3)
 
-  console.log(contract_ticker_symbol, logo_url)
+  // console.log(contract_ticker_symbol, logo_url)
 
   return (
     <div

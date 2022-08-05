@@ -12,6 +12,7 @@ import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 import { useAddressAvatar } from '../../hooks/useAddressAvatar'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { v4 } from 'uuid'
 
 const FileTransfer = () => {
   const token = process.env.NEXT_PUBLIC_WEB3STORAGE
@@ -236,7 +237,7 @@ const FileTransfer = () => {
               : '/blocqBookLogo/icon/blocqbookTransparent2.png'
             return (
               <div
-                key={i}
+                key={v4()}
                 className=" even:shadow-lg rounded-bl-xl rounded-tr-xl even:border-t-2 border-zinc-300 dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
               >
                 {/**<Avatar src={contactAvatar} />**/}

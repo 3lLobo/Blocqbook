@@ -36,21 +36,19 @@ export default function Header() {
   // TODO: useEffect to auto connect if wallet is connected 
   useEffect(() => {
     async function autoConnect() {
-      
-      if (isAbleToRefresh) {
-        const accounts = await ethereum.request({ method: 'eth_accounts' })
-          .catch((e) => {
-            console.error(e)
-            return []
-          })
-        console.log("🚀 ~ file: index.js ~ line 41 ~ getadd ~ accounts", accounts)
-        if (accounts.length > 0) {
-          connectCeramic()
-        }
+      const accounts = await ethereum.request({ method: 'eth_accounts' })
+        .catch((e) => {
+          console.error(e)
+          return []
+        })
+      if (accounts.length > 0) {
+        (await connectCeramic())
 
       }
     }
-    autoConnect()
+    if (isAbleToRefresh && !store.connected) {
+      autoConnect()
+    }
   }, [isAbleToRefresh])
 
 

@@ -20,7 +20,6 @@ import { getWeb3Signer } from '../../lib/xmtpSigner'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
-
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
   const address = accounts[0]
   const provider = new EthereumAuthProvider(window.ethereum, address)
@@ -29,10 +28,31 @@ async function createAuthProvider() {
 
 export default function Header() {
   const router = useRouter()
-  const [isAbleToRefresh, setIsAbleToRefresh] = useState(false)
+  const [isAbleToRefresh, setIsAbleToRefresh] = useState(true)
   const store = useSelector((state) => state.evm)
   const dispatch = useDispatch()
   const [poapTrigger, poapResult, poapLastPromiseInfo] = useLazyGetPoapsQuery()
+
+  // TODO: useEffect to auto connect if wallet is connected 
+  useEffect(() => {
+    async function autoConnect() {
+      
+      if (isAbleToRefresh) {
+        const accounts = await ethereum.request({ method: 'eth_accounts' })
+          .catch((e) => {
+            console.error(e)
+            return []
+          })
+        console.log("🚀 ~ file: index.js ~ line 41 ~ getadd ~ accounts", accounts)
+        if (accounts.length > 0) {
+          connectCeramic()
+        }
+
+      }
+    }
+    autoConnect()
+  }, [isAbleToRefresh])
+
 
   // Wait for poap result and store it.
   useEffect(() => {
@@ -49,61 +69,18 @@ export default function Header() {
 
   //XTPM
   const { connect: connectXmtp, disconnect: disconnectXmtp } = useXmtp()
-  // const {
-  //   signer,
-  //   connect: connectWallet,
-  //   disconnect: disconnectWallet,
-  // } = useWallet()
-
-  // const handleConnect = useCallback(async () => {
-  //   await connectWallet()
-  // }, [connectWallet])
-
-  // const usePrevious = (value) => {
-  //   const ref = useRef()
-  //   useEffect(() => {
-  //     ref.current = value
-  //   })
-  //   return ref.current
-  // }
-  // const prevSigner = usePrevious(signer)
-
-  // useEffect(() => {
-  //   if (!store.isConnected) {
-  //     disconnectXmtp()
-  //   } else {
-  //     const connect = async () => {
-  //       connectXmtp(signer)
-  //     }
-  //     connect()
-  //   }
-  // }, [store.isConnected, connectXmtp, disconnectXmtp])
 
   // Ceramic
   const [connection, connect, disconnect] = useViewerConnection()
 
-  // useEffect(() => {
-  //   const checkIfRefresh = async () => {
-  //     connectCeramic()
-  //   }
-  //   console.log('Ceramic client: ', connection)
-  //   if (store.isConnected && connection.status === 'idle') {
-  //     checkIfRefresh()
-  //   }
-  // }, [connection.status, isAbleToRefresh, connectCeramic, connection, store.isConnected])
-
-  // const connectCeramic = useCallback(
-  //   async () => {
   async function connectCeramic() {
     const authProvider = await createAuthProvider()
     // trigger POAP fetching
-    poapTrigger({ address: window.ethereum.selectedAddress }, true)
+    poapTrigger({ address: authProvider.address }, true)
     try {
       await connect(authProvider)
       const signer = getWeb3Signer()
       await connectXmtp(signer)
-      // setIsConnected(true)
-      // setIsAbleToRefresh(true)
       const chainId =
         ethers.utils.arrayify(window.ethereum.chainId, {
           hexPad: 'left',
@@ -111,11 +88,10 @@ export default function Header() {
       dispatch(
         setConnection({
           connected: true,
-          account: window.ethereum.selectedAddress,
+          account: authProvider.address,
           chainId: chainId.toString(),
         })
       )
-      // setSigner(authProvider.getSigner())
       router.push('/rotarydial')
     } catch (error) {
       console.log(error)
@@ -130,10 +106,10 @@ export default function Header() {
       //since there's no way to disconnect metamask from frontend and
       //we check if there's an account to rehydrate our app. We need a
       //toast here to ask to disconnect metamask aswell
-      disconnect()
       setIsAbleToRefresh(false)
+      disconnect()
     } else {
-      // await handleConnect()
+      setIsAbleToRefresh(true)
       connectCeramic()
     }
     // Set event listener for disconnecting a wallet

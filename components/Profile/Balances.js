@@ -6,6 +6,7 @@ import { CoinBalance } from './CoinBalance'
 
 export default function Balances({ balances }) {
   // const balances = balancesAddress
+  console.log("Balance",balances)
 
   return (
     // <div className="w-40 px-4 pt-16">
@@ -14,8 +15,7 @@ export default function Balances({ balances }) {
         <div key={chain.chain}>
           {chain.items.length > 1 ? (
             <Disclosure
-              // TODO: Map the chainname instead of the chainid
-              key={chain.chain_id}
+              key={"chain".concat(chain.chain_id)}
             >
               {({ open }) => (
                 <>

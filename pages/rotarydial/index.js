@@ -43,16 +43,6 @@ const Profile = () => {
     store.isSyncedCeramic,
   ])
 
-  // async function clickContacts() {
-  //   record.set({
-  //     'contacts': {
-  //       '0x3ecc53f7ba45508483379bd76989a3003e6cbf09': dummyProfile('wolf', store.account),
-  //       '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': dummyProfile('Crypto'),
-  //       '0xd9a51042eBE9A428e362B36F12Bd332bB565deEa': dummyProfile('Panda'),
-  //     },
-  //   })
-  // }
-
   return (
     // <WalletProvider>
     <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">

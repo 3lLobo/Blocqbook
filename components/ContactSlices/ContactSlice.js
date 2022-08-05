@@ -79,7 +79,7 @@ export const Slice = ({ contact }) => {
         </div>
         <button
           onClick={onContactClick}
-          className="mr-11 col-span-2 self-center hover:font-semibold transition-all duration-300 transform-gpu text-left"
+          className="mr-11 col-span-2 self-center hover:text-neonPurple dark:hover:text-snow dark:hover:opacity-100 dark:opacity-70 font-medium transition-all duration-300 transform-gpu text-left"
         >
           {contact.bio.name || contact.address}
         </button>

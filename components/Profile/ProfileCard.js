@@ -66,7 +66,7 @@ const ProfileCard = ({ profile }) => {
           // TODO: align down
           className="fixed ml-32 justify-start items-start h-fit z-0 w-full mb-3 gap-y-3 flex flex-col "
         >
-          <div className="relative ml-2 h-16 scale-300 mb-11 aspect-1 dark:hue-rotate-180 dark:invert">
+          <div className="relative ml-2 h-16 scale-300 mb-11 aspect-1 dark:hue-rotate-180 dark:invert ">
             <Image
               className=""
               layout="fill"
@@ -78,7 +78,7 @@ const ProfileCard = ({ profile }) => {
             poapData.map((poap) => {
               const isCommon = commonPoaps.includes(poap.event.id)
               return (
-                <div className=" h-20  aspect-1" key={poap.address}>
+                <div className=" h-20 aspect-1" key={poap.address}>
                   <PoapAvatar poapData={poap} isCommon={isCommon} />
                 </div>
               )

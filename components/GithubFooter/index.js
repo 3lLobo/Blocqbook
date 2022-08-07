@@ -35,7 +35,7 @@ export default function GithubFooter() {
             <a
               key={item.name}
               href={item.href}
-              className="text-zinc-900 hover:text-zinc-500 hover:scale-110 transition ease-in-out duration-300"
+              className="text-zinc-900 dark:text-neonPurple dark:hover:text-violet-400 hover:text-zinc-500 hover:scale-110 transition ease-in-out duration-300"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />

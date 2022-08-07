@@ -6,7 +6,7 @@ import { CoinBalance } from './CoinBalance'
 
 export default function Balances({ balances }) {
   // const balances = balancesAddress
-  console.log("Balance",balances)
+  console.log('Balance', balances)
 
   return (
     // <div className="w-40 px-4 pt-16">
@@ -14,9 +14,7 @@ export default function Balances({ balances }) {
       {balances.map((chain) => (
         <div key={chain.chain}>
           {chain.items.length > 1 ? (
-            <Disclosure
-              key={"chain".concat(chain.chain_id)}
-            >
+            <Disclosure key={'chain'.concat(chain.chain_id)}>
               {({ open }) => (
                 <>
                   <Disclosure.Button className="flex justify-between m-1 rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75 w-full">

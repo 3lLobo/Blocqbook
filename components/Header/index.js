@@ -33,24 +33,23 @@ export default function Header() {
   const dispatch = useDispatch()
   const [poapTrigger, poapResult, poapLastPromiseInfo] = useLazyGetPoapsQuery()
 
-  // TODO: useEffect to auto connect if wallet is connected 
+  // TODO: useEffect to auto connect if wallet is connected
   useEffect(() => {
     async function autoConnect() {
-      const accounts = await ethereum.request({ method: 'eth_accounts' })
+      const accounts = await ethereum
+        .request({ method: 'eth_accounts' })
         .catch((e) => {
           console.error(e)
           return []
         })
       if (accounts.length > 0) {
-        (await connectCeramic())
-
+        await connectCeramic()
       }
     }
     if (isAbleToRefresh && !store.connected) {
       autoConnect()
     }
   }, [isAbleToRefresh])
-
 
   // Wait for poap result and store it.
   useEffect(() => {

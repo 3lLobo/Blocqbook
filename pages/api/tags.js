@@ -10,13 +10,13 @@ export default async function handler(req, res) {
     switch (mode) {
       case 'add':
         tx = await addTag(targetAddress, tag)
-        break;
+        break
       case 'delete':
         tx = await delTag(targetAddress, tag)
         breal
       default:
         res.status(400).json({ error: 'Invalid mode' })
-        break;
+        break
     }
     res.status(200).json({ tx: tx })
     console.log(tx)

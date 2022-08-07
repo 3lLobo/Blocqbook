@@ -18,6 +18,7 @@ import { CurrencyDollarIcon } from '@heroicons/react/outline'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpenTab } from '../../app/navSlice'
 import { v4 } from 'uuid'
+import GithubFooter from '../GithubFooter'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -211,37 +212,21 @@ const Sidebar = () => {
             })}
           </Tab.Panels>
         </div>
+        <div
+          // TODO: position the image.
+          className="absolute bottom-0 md:w-64 mb-0 flex flex-col"
+        >
+          <div className="relative w-36 aspect-1 mx-auto ">
+            <Image
+              layout="fill"
+              alt="pbLogo"
+              src="/blocqBookLogo/icon/blocqbookTransparent2.png"
+            />
+          </div>
+          <GithubFooter />
+        </div>
       </Tab.Group>
-      {/* <div
-      // TODO: position the image.
-        className='relative flex flex-grow w-64 h-64 aspect-1 mt-11'
-      >
-        <Image
-          layout='fill'
-          alt='pbLogo'
-          src='/blocqBookLogo/icon/blocqbookTransparent2.png'
-        />
-      </div> */}
     </div>
-
-    // <div className='flex flex-row relative'>
-    //   <div className='h-full left-0 absolute grid grid-row gap-1 p-4 max-w-xs'>
-    //     <button
-    //       // size="md"
-    //       // variant="ghost"
-    //       // bg="#4f46e5"
-    //       className='font-bold'
-    //     >
-    //       Add Contact
-    //     </button>
-    //     {/* <button className='mt-10 text-black dark:text-white' colorScheme='none'> */}
-    //       {/* <Link href="/dashboard">Dashboard</Link></button> */}
-    //     {/* <button className='text-black dark:text-white' colorScheme='none'> */}
-    //       {/* <Link href="/profile">Profile</Link></button> */}
-    //     <button className='text-black dark:text-white' colorScheme='none'>Indiv</button>
-    //     <button className='text-black dark:text-white' colorScheme='none'>Settings</button>
-    //   </div>
-    // </div>
   )
 }
 

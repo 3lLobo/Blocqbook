@@ -212,19 +212,6 @@ const Sidebar = () => {
             })}
           </Tab.Panels>
         </div>
-        <div
-          // TODO: position the image.
-          className="absolute bottom-0 md:w-64 mb-0 flex flex-col"
-        >
-          <div className="relative w-36 aspect-1 mx-auto ">
-            <Image
-              layout="fill"
-              alt="pbLogo"
-              src="/blocqBookLogo/icon/blocqbookTransparent2.png"
-            />
-          </div>
-          <GithubFooter />
-        </div>
       </Tab.Group>
     </div>
   )

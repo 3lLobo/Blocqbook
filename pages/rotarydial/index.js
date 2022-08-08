@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
 import ProfileModal from '../../components/ProfileModal'
+import GithubFooter from '../../components/GithubFooter'
+import Image from 'next/image'
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -44,16 +46,29 @@ const Profile = () => {
   ])
 
   return (
-    // <WalletProvider>
-    <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
-      <Head />
-      {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
+    <>
+      <div className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col ">
+        <Head />
+        {/* <button className="bg-mybg-light dark:bg-mybg-dark min-h-screen flex flex-col " onClick={clickContacts} >
         ClickMEEE
       </button> */}
-      <Sidebar />
-      <ProfileModal />
-    </div>
-    // </WalletProvider>
+        <Sidebar />
+        <ProfileModal />
+      </div>
+      <div
+        // TODO: position the image.
+        className="absolute bottom-0 md:w-64 mb-0 flex flex-col "
+      >
+        <div className="relative w-36 aspect-1 mx-auto ">
+          <Image
+            layout="fill"
+            alt="pbLogo"
+            src="/blocqBookLogo/icon/blocqbookTransparent2.png"
+          />
+        </div>
+        <GithubFooter />
+      </div>
+    </>
   )
 }
 

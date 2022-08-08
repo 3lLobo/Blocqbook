@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 
 import blocqbookLogo from '../public/blocqBookLogo/logoText/blocqbookTextTransparentBanner.png'
 import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbookTextTransparent.png'
+import GithubFooter from '../components/GithubFooter'
 export default function Home() {
   const store = useSelector((state) => state.evm)
 
@@ -23,7 +24,9 @@ export default function Home() {
           <div className=" mx-auto w-full h-60 bg-logo-black dark:bg-logo-indigo bg-cover bg-center" />
           <div className="sm:mt-11 mx-auto w-1/2 h-32 bg-catch-phrase bg-cover bg-center" />
         </main>
-        <footer className="mt-auto mb-0"></footer>
+        <footer className="mt-auto mb-0">
+          <GithubFooter />
+        </footer>
       </div>
     </div>
   )

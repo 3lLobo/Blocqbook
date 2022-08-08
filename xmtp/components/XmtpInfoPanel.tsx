@@ -91,7 +91,7 @@ const XmtpInfoPanel = ({ onConnect }: XmtpInfoPanelProps): JSX.Element => {
         {InfoRows.map((info, index) => {
           return (
             <InfoRow
-              key={"infoConvo".concat(index.toString())}
+              key={'infoConvo'.concat(index.toString())}
               icon={info.icon}
               headingText={info.headingText}
               subHeadingText={info.subHeadingText}

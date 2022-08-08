@@ -123,15 +123,17 @@ const FileTransfer = () => {
   }
 
   const addToMediaIfFile = (message, recipientAddress) => {
-    const sliced = message?.content?.slice(0, 21)
-    if (
-      (sliced === '{"type":"file","cid":') &
-      (message.recipientAddress === recipientAddress)
-    ) {
-      const newMedia = JSON.parse(message.content)
-      newMedia['sender'] = message.senderAddress
-      newMedia['timestamp'] = message.header.timestamp
-      setReceivedMedia((prevState) => [newMedia, ...prevState])
+    if (message) {
+      const sliced = message.content?.slice(0, 21)
+      if (
+        (sliced === '{"type":"file","cid":') &
+        (message.recipientAddress === recipientAddress)
+      ) {
+        const newMedia = JSON.parse(message.content)
+        newMedia['sender'] = message.senderAddress
+        newMedia['timestamp'] = message.header.timestamp
+        setReceivedMedia((prevState) => [newMedia, ...prevState])
+      }
     }
   }
 

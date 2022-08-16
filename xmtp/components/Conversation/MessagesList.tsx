@@ -33,17 +33,17 @@ const MessageFiltered = ({ message }) => {
       return <div>{message.content}</div>
     case 'file':
       return (
-        <div>
-          This is a File with subject {messageObject.description.toUpperCase()}.
-          You can check it on FileTransfer tab or
+        <div
+          className='px-1 mx-1 font-mono text-zinc-900 bg-blocqpurple text-xs rounded-md'
+        >
           <a
             target="_blank"
             rel="noreferrer"
             href={`https://ipfs.io/ipfs/${messageObject.cid}`}
           >
-            HERE
+            Attachment: 
           </a>
-          .
+          {messageObject.description.toUpperCase()}
         </div>
       )
     case 'media':
@@ -80,22 +80,21 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
     address: message.senderAddress.toLowerCase(),
   })
   return (
-    <div className="flex items-start mx-auto mb-4 w-full">
-      <div className="relative w-11 h-11 ">
+    <div className={"flex justify-self-start mb-4 w-full " + (isSender ? "flex-row-reverse" : "flex-row ")}>
+      {/* <div className="relative w-11 h-11 ">
         <Avatar src={savedAvatar} scale={0} />
-      </div>
+      </div> */}
       <div className="ml-2">
-        <div className="flex items-center gap-2">
+        <div className="flex gap-2">
           {/**COVALENT IS BRINGING JUST LOWERCASE ADDRESSES */}
-          <AddressTag
+          {/* <AddressTag
             address={message.senderAddress.toLowerCase()}
-            isOneHop={false}
-          />
+          /> */}
           {/* <span className="flex overflowtext-sm font-normal place-self-end text-n-300 text-md uppercase">
             {formatTime(message.sent)}
           </span> */}
         </div>
-        <span className="block text-md px-2 mt-2 text-black font-normal">
+        <span className={"block text-md px-2 mt-2 text-zinc-900 dark:text-snow font-normal bg-zinc-500 rounded-full p-1 bg-opacity-30"}>
           {message.error ? (
             `Error: ${message.error?.message}`
           ) : (

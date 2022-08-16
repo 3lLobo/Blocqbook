@@ -8,11 +8,15 @@ import { getRandomTailwindColor } from '../../lib/randomColors'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'
 import axios from 'axios'
+// import { tagAdrsAwsApi } from '../../lib/aws/getAwsClient'
+
+
+const apiKey = process.env.NEXT_PUBLIC_AWS_API
 
 // Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGraph.
 async function tag2theGraph(targetAddress, tag, mode) {
   const res = await axios.post(
-    '/api/tags',
+    'https://zz2k357n83.execute-api.eu-central-1.amazonaws.com/addressTag',
     {
       targetAddress,
       tag,
@@ -20,6 +24,9 @@ async function tag2theGraph(targetAddress, tag, mode) {
     },
     {
       timeout: 15000,
+      headers: {
+        'x-api-key': apiKey,
+      },
     }
   )
   console.log('Tag-api response: ', res)
@@ -64,6 +71,7 @@ export function PubTags() {
       // set mode to 'add' if tag has been added
       if (nPrevTags < nTags) {
         tag2theGraph(targetAddress, selectedTags[nTags - 1].name, 'add')
+        // tagAdrsAwsApi({targetAddress, tag: selectedTags[nTags - 1].name, mode: 'add'})
       } else if (nPrevTags > nTags) {
         // filter aut the missing tag from the previous selectedTags
         const deletedTag = selected.filter((tag) => {
@@ -72,6 +80,7 @@ export function PubTags() {
           }
         })
         tag2theGraph(targetAddress, deletedTag[0].name, 'delete')
+        // tagAdrsAwsApi({targetAddress, tag: deletedTag[0].name, mode: 'delete'})
       }
     }
   }
@@ -123,10 +132,9 @@ export function PubTags() {
                     <Listbox.Option
                       key={'listPrivTag'.concat(tag.id)}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4  ${
-                          active
-                            ? ' text-bold'
-                            : 'text-indigo-900 dark:text-snow'
+                        `relative cursor-default select-none py-2 pl-10 pr-4  ${active
+                          ? ' text-bold'
+                          : 'text-indigo-900 dark:text-snow'
                         }`
                       }
                       value={tag}
@@ -134,9 +142,8 @@ export function PubTags() {
                       {({ selected, active }) => (
                         <>
                           <span
-                            className={`block truncate  ${
-                              selected ? 'font-medium' : 'font-normal'
-                            }`}
+                            className={`block truncate  ${selected ? 'font-medium' : 'font-normal'
+                              }`}
                           >
                             {tag.name}
                           </span>

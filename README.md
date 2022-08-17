@@ -61,7 +61,7 @@ Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/co
 Did we say [POAPS](https://poap.xyz/)? 🎉🎉🎉
 Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPs of other wallets and notify when we have POAPs in common.
 
-![blocqbookTextTransparentBannerLight](public/blocqBookLogo/icon/blocqbookTextTransparentBannerLight.png)
+![blocqbookTextTransparentBannerLight](public/logov2/booqName/blocqbookTL.png)
 
 ## Tech Stack
 
@@ -72,5 +72,3 @@ Redux Toolkit
 Tailwind CSS 💫
 Ethers.js
 ```
-
-![HFs](./public/hacqFSbanner.png)

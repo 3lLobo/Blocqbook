@@ -5,6 +5,7 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './xmtp/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
     {
@@ -32,6 +33,7 @@ module.exports = {
         },
       },
       colors: {
+        blocqpurple: '#B88DFF',
         neonPurple: 'rgba(111,76,255,1.0)',
         navy: '#0b3a53',
         'navy-muted': '#244e66',

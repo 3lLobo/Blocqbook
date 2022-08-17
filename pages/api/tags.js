@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         break
       case 'delete':
         tx = await delTag(targetAddress, tag)
-        breal
+        break
       default:
         res.status(400).json({ error: 'Invalid mode' })
         break

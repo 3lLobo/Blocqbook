@@ -119,6 +119,7 @@ const ConversationTile = ({
                   loading ? 'animate-pulse' : ''
                 )}
               >
+                {/* TODO: use timeAgo */}
                 {formatDate(latestMessage?.sent)}
               </span>
             </div>

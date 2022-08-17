@@ -18,9 +18,9 @@ import { ethers } from 'ethers'
 import { getWeb3Signer } from '../../lib/xmtpSigner'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
-  <aside className="flex w-1/4 text-xs flex-col flex-grow fixed inset-y-0 right-0 border-l border-gray-200 px-2">
-    <div className="flex flex-col flex-grow overflow-y-auto ">{children}</div>
-  </aside>
+  <div className="flex flex-col overflow-y-scroll scrollbar-hide ">
+    {children}
+  </div>
 )
 
 const TopBarLayout: React.FC = ({ children }) => (
@@ -43,6 +43,14 @@ const Layout: React.FC = ({ children }) => {
     // loadingConversations,
   } = useXmtp()
   const router = useRouter()
+
+  useEffect(() => {
+    if (router.query.to) {
+      setAddressToSend(() => {
+        return router.query.to as string
+      })
+    }
+  }, [router.query.to])
 
   const recipientWalletAddr = router.query.to as string
 
@@ -77,7 +85,7 @@ const Layout: React.FC = ({ children }) => {
   useEffect(() => setAddressToSend(''), [router.query.to])
 
   return (
-    <div className="">
+    <div className="flex flex-row-reverse h-screen scrollbar-hide">
       <NavigationView>
         <NavigationColumnLayout>
           <span className="text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
@@ -89,11 +97,11 @@ const Layout: React.FC = ({ children }) => {
               className="flex items-center gap-1 w-full mt-5 px-3 mb-4"
             >
               <input
-                className="rounded-2xl w-11/12"
+                className="rounded-2xl"
                 type="text"
                 onChange={(e) => setAddressToSend(e.target.value)}
                 value={addressToSend}
-                placeholder="New conversation"
+                placeholder="Enter address"
               />
               <button className={messageComposerStyles.arrow}>
                 {addressToSend.length === 42 ? (
@@ -129,11 +137,11 @@ const Layout: React.FC = ({ children }) => {
           <NavigationPanel onConnect={() => onConnect()} />
         </NavigationColumnLayout>
       </NavigationView>
-      {/* <div className="w-3/4 flex"> */}
-      {walletAddress && client && recipientWalletAddr !== undefined && (
-        <Conversation recipientWalletAddr={recipientWalletAddr} />
-      )}
-      {/* </div> */}
+      <div className="w-3/4 relative flex flex-nowrap flex-grow-0 overflow-y-scroll scrollbar-hide">
+        {walletAddress && client && recipientWalletAddr !== '' && (
+          <Conversation recipientWalletAddr={recipientWalletAddr} />
+        )}
+      </div>
     </div>
   )
 }

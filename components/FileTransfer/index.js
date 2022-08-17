@@ -152,13 +152,13 @@ const FileTransfer = () => {
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex flex-col items-center mt-4 w-11/12">
-        <div className="text-2xl text-slate-800 dark:text-white text-left w-full">
+        <div className="text-2xl text-zinc-800 dark:text-white text-left w-full">
           Send files to your friends
         </div>
-        <div className="bg-white dark:bg-indigo-800 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative">
+        <div className="bg-zinc-200 dark:bg-zinc-900 p-2 mx-6 my-2 w-full flex-row gap-3 rounded-xl grid grid-cols-16 grid-flow-col justify-start items-center text-zinc-900  dark:text-snow relative">
           <label
             htmlFor="filePicker"
-            className={`rounded-lg bg-slate-900 p-2  hover:bg-opacity-20 cursor-pointer ${
+            className={`rounded-lg bg-zinc-900 p-2  hover:bg-opacity-20 cursor-pointer ${
               files.length > 0 ? 'bg-opacity-20' : 'bg-opacity-10'
             }`}
           >
@@ -186,7 +186,7 @@ const FileTransfer = () => {
             />
           </label>
           <input
-            className="w-96 border-none active:border-blue-300 rounded-lg"
+            className="w-96 border-none active:border-blue-300 rounded-lg dark:bg-zinc-600"
             type="text"
             value={address}
             placeholder="Search or paste your friend's address"
@@ -194,7 +194,7 @@ const FileTransfer = () => {
             required
           />
           <input
-            className="w-full border-none active:border-blue-500 rounded-lg"
+            className="w-full border-none active:border-blue-500 rounded-lg dark:bg-zinc-600"
             type="text"
             placeholder="You can add a subject"
             value={description}
@@ -203,14 +203,14 @@ const FileTransfer = () => {
           <button
             disabled={isUploading || filesCID.length === 0}
             onClick={sendFile}
-            className="bg-indigo-900 text-slate-300 hover:bg-indigo-900 disabled:bg-gray-400 hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2"
+            className="bg-indigo-300 dark:bg-zinc-900 text-zinc-300 hover:bg-indigo-900  hover:text-snow group flex items-center px-2 py-2 text-sm font-medium rounded-md absolute right-2 disabled:cursor-not-allowed"
           >
             {isUploading ? (
               <BezierSpinner />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 stroke-white dark:stroke-indigo-300"
+                className="h-6 w-6 stroke-snow "
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -224,7 +224,7 @@ const FileTransfer = () => {
       </div>
       <div className="flex flex-col items-center mt-8 w-11/12">
         <div className="w-full">
-          <div className="text-2xl text-left text-slate-800 dark:text-snow mb-3">
+          <div className="text-2xl text-left text-zinc-800 dark:text-snow mb-3">
             Files received
           </div>
         </div>
@@ -234,27 +234,18 @@ const FileTransfer = () => {
         )}
         {receivedMedia.length > 0 &&
           receivedMedia.map((m, i) => {
-            const contactAvatar = Object.keys(store.contacts).includes(m.sender)
-              ? store.contacts[address].bio?.avatar
-              : '/blocqBookLogo/icon/blocqbookTransparent2.png'
             return (
               <div
                 key={v4()}
-                className=" even:shadow-lg rounded-bl-xl rounded-tr-xl even:border-t-2 border-zinc-300 dark:bg-slate-800 p-2 mx-6 w-full flex-row gap-3 grid grid-cols-16 grid-flow-col justify-start items-center text-slate-900  dark:text-snow relative"
+                className=" even:shadow-lg dark:even:shadow-zinc-700 even:z-30 rounded-bl-xl rounded-tr-xl even:border-t-2 border-zinc-300 dark:border-zinc-700 dark:bg-transparent p-2 mx-6 w-full flex-row gap-3 grid grid-cols-16 grid-flow-col justify-start items-center text-zinc-900  dark:text-snow relative"
               >
-                {/**<Avatar src={contactAvatar} />**/}
-                {/* <img className="w-12 h-full rounded-full" src={contactAvatar} /> */}
-                <div className="relative w-11 h-11 ">
-                  <Avatar src={contactAvatar} scale={0} />
-                </div>
                 <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
-                  {/**WTF COVALENT IS BRINGING THE ADDRESS LOWERCASES!! */}
                   <AddressTag
                     address={m.sender.toLowerCase()}
                     isOneHop={true}
                   />
                 </div>
-                <button className="bg-zinc-300 text-zinc-900 hover:text-zinc-600 hover:bg-zinc-400 group px-2 py-1 text-sm font-mono rounded-md">
+                <button className="bg-zinc-300 bg-opacity-60 text-zinc-900 hover:text-zinc-600 hover:bg-zinc-400 group px-2 py-1 text-sm font-mono rounded-md">
                   <Link href={`https://ipfs.io/ipfs/${m.cid}`}>
                     <a target="_blank">{m.description}</a>
                   </Link>
@@ -265,7 +256,7 @@ const FileTransfer = () => {
                     <Tag tagText="dude.eth" color="indigo-300" />
                     <Tag tagText="dude.eth" />
                   </div> */}
-                  {/* <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
+                  {/* <button className="rounded-lg bg-zinc-900 p-2 bg-opacity-10 hover:bg-opacity-20">
                     {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -284,7 +275,7 @@ const FileTransfer = () => {
                       </svg>
                     }
                   </button>
-                  <button className="rounded-lg bg-slate-900 p-2 bg-opacity-10 hover:bg-opacity-20">
+                  <button className="rounded-lg bg-zinc-900 p-2 bg-opacity-10 hover:bg-opacity-20">
                     {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

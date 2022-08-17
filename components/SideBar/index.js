@@ -18,7 +18,6 @@ import { CurrencyDollarIcon } from '@heroicons/react/outline'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpenTab } from '../../app/navSlice'
 import { v4 } from 'uuid'
-import GithubFooter from '../GithubFooter'
 
 // TODO: Use the React component!!! https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
 const Sidebar = () => {
@@ -110,7 +109,7 @@ const Sidebar = () => {
   ]
 
   return (
-    <div className="h-full">
+    <div className="flex flex-col flex-initial flex-nowrap overflow-y-scroll h-screen scrollbar-hide">
       <Tab.Group
         vertical
         selectedIndex={navStore.openTab}
@@ -129,7 +128,7 @@ const Sidebar = () => {
                       <a
                         key={tabName}
                         href="#"
-                        className={`dark:text-slate-4000 hover:bg-violet-400 dark:hover:bg-[#270067] hover:text-snow group flex gap-2 items-center px-3 py-11 text-sm font-medium rounded-md`.concat(
+                        className={`dark:text-slate-4000 hover:bg-violet-400 dark:hover:bg-[#270067] hover:text-snow group flex gap-2 items-center px-3 py-6 text-sm font-medium rounded-md`.concat(
                           ' ',
                           selected
                             ? 'text-indigo-100 bg-violet-400 dark:bg-[#270067]'
@@ -146,7 +145,7 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-        <div className="md:pl-64 flex flex-col">
+        <div className="md:pl-64 flex flex-col ">
           {[0, 1].includes(navStore.openTab) && (
             <div className=" mx-6  rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30">
               <button

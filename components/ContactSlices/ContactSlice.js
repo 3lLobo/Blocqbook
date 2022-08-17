@@ -10,11 +10,14 @@ import { useRouter } from 'next/router'
 import { v4 } from 'uuid'
 import { setOpenTab } from '../../app/navSlice'
 import { ethers } from 'ethers'
+import MsgCatch from './MsgCatch'
+import useXmtp from '../../xmtp/hooks/useXmtp'
 
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
   const navStore = useSelector((state) => state.nav)
   const dispatch = useDispatch()
+  const { client } = useXmtp()
 
   function onTabChange(index) {
     dispatch(setOpenTab({ tab: index }))
@@ -24,19 +27,30 @@ export const Slice = ({ contact }) => {
 
   const [openConfirm, setOpenConfirm] = useState(false)
 
+  const [showMsgToast, setShowMsgToast] = useState(false)
+
   function onContactClick() {
     dispatch(openModal({ address: contact.bio.address }))
   }
-
-  const handleTabSwitch = (tab) => {
-    router.push(
-      {
-        pathname: '/rotarydial',
-        query: { to: ethers.utils.getAddress(contact.bio.address) },
-      },
-      { shallow: true }
-    )
-    dispatch(setOpenTab({ tab: tab, query: contact.bio.address }))
+// Check if recipient is on the XMTP network before forwarding
+  const handleTabSwitch = async (tab) => {
+    const checkAddress = ethers.utils.getAddress(contact.bio.address)
+    const canMsg = await client?.canMessage(checkAddress) || false
+    if (canMsg) {
+      router.push(
+        {
+          pathname: '/rotarydial',
+          query: { to: checkAddress },
+        },
+        { shallow: true }
+      )
+      dispatch(setOpenTab({ tab: tab, query: contact.bio.address }))
+    } else {
+      setShowMsgToast(true)
+      setTimeout(() => {
+        setShowMsgToast(false)
+      }, 5000)
+    }
   }
 
   return (
@@ -48,12 +62,17 @@ export const Slice = ({ contact }) => {
           dispatch(deleteContact({ address: contact.bio.address }))
         }}
       />
-      <div className="bg-indigo-50 dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900  ">
+      <MsgCatch
+        show={showMsgToast}
+        setShow={setShowMsgToast}
+        contactName={contact.bio.name}
+      />
+      <div className=" group bg-indigo-50 hover:bg-blocqpurple dark:hover:bg-neonPurple dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900 hover:transition-all ease-in-out ">
         <div
           onClick={onContactClick}
           className="w-full col-span-1 flex flex-row"
         >
-          <div className="relative w-10 aspect-1 hover:scale-105 transition-all duration-300 transform-gpu hover:cursor-pointer ">
+          <div className="relative w-10 aspect-1 hover:scale-125 hover:transition-all duration-300 transform-gpu hover:cursor-pointer ">
             <Avatar src={contact.bio.avatar} />
           </div>
           <div className="relative w-10 aspect-1 dark:hue-rotate-180 dark:invert">
@@ -79,30 +98,30 @@ export const Slice = ({ contact }) => {
         </div>
         <button
           onClick={onContactClick}
-          className="mr-11 col-span-2 self-center hover:text-neonPurple dark:hover:text-snow dark:hover:opacity-100 dark:opacity-70 font-medium transition-all duration-300 transform-gpu text-left"
+          className="mr-11 col-span-2 self-center dark:opacity-70 font-medium transition-all duration-300 transform-gpu text-left overflow-x-hidden whitespace-nowrap overflow-ellipsis"
         >
           {contact.bio.name || contact.address}
         </button>
-        <div className="space-x-1 col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide">
+        <div className="space-x-1 col-span-5 group-hover:col-span-3 flex flex-row h-full items-center px-1 justify-start overflow-x-scroll scrollbar-hide">
           {contact.tags.privTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={tag.id} />
           ))}
         </div>
-        <div className="space-x-1 col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide ">
+        <div className="space-x-1 col-span-3 group-hover:col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide ">
           {contact.tags.pubTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={v4()} isPub={true} />
           ))}
         </div>
-        <div className="flex justify-center col-span-2 gap-x-1 ">
+        <div className="hidden group-hover:flex justify-center col-span-2 gap-x-1 ">
           <button
             onClick={() => {
               handleTabSwitch(2)
             }}
-            className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
+            className="rounded-lg bg-snow p-2 bg-opacity-30 hover:bg-opacity-50"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-100"
+              className="h-4 w-4 stroke-indigo-600 dark:stroke-indigo-100"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -118,11 +137,11 @@ export const Slice = ({ contact }) => {
           </button>
           <button
             onClick={() => handleTabSwitch(3)}
-            className="rounded-lg bg-slate-900 dark:bg-snow p-2 bg-opacity-10 dark:bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-20"
+            className="rounded-lg bg-snow p-2 bg-opacity-30 hover:bg-opacity-50"
           >
             {/* <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-100"
+            className="h-4 w-4 stroke-indigo-600 dark:stroke-indigo-100"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -137,7 +156,7 @@ export const Slice = ({ contact }) => {
             <svg
               height="196"
               viewBox="0 0 169 196"
-              className="h-6 w-6 stroke-indigo-600 dark:stroke-indigo-100"
+              className="h-4 w-4 stroke-indigo-600 dark:stroke-indigo-100"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g fill="none">
@@ -168,7 +187,7 @@ export const Slice = ({ contact }) => {
             </svg>
           </button>
         </div>
-        <div className="flex justify-end col-span-1 gap-x-1 w-full">
+        <div className="justify-end hidden group-hover:flex col-span-1 gap-x-1 w-full">
           <button
             className="rounded-lg p-2 bg-opacity-30 hover:bg-opacity-50 mr-0"
             // TODO: add confirmation modal.
@@ -179,7 +198,7 @@ export const Slice = ({ contact }) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 stroke-pink-900 "
+              className="h-4 w-4 stroke-pink-900 "
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -9,7 +9,7 @@ export const ContactSlices = ({ setSelectedIndex }) => {
   const contacts = store.contacts ? Object.values(store.contacts) : []
 
   return (
-    <div className=" w-full place-items-center">
+    <div className=" w-full place-items-center ">
       {contacts
         // sort alphabetically
         ?.sort((a, b) => a.bio.name.localeCompare(b.bio.name))

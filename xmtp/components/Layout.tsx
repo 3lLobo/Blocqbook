@@ -44,6 +44,14 @@ const Layout: React.FC = ({ children }) => {
   } = useXmtp()
   const router = useRouter()
 
+  useEffect(() => {
+    if (router.query.to) {
+      setAddressToSend(() => {
+        return router.query.to as string
+      })
+    }
+  }, [router.query.to])
+
   const recipientWalletAddr = router.query.to as string
 
   // const handleConnect = useCallback(async () => {
@@ -77,7 +85,7 @@ const Layout: React.FC = ({ children }) => {
   useEffect(() => setAddressToSend(''), [router.query.to])
 
   return (
-    <div className="flex flex-row-reverse flex-initial flex-nowrap h-full">
+    <div className="flex flex-row-reverse h-screen scrollbar-hide">
       <NavigationView>
         <NavigationColumnLayout>
           <span className="text-center font-bold bg-mybg-light dark:bg-mybg-dark dark:text-snow py-6 backdrop-blur-sm dark:backdrop-brightness-150 z-30 shadow-xl">
@@ -93,7 +101,7 @@ const Layout: React.FC = ({ children }) => {
                 type="text"
                 onChange={(e) => setAddressToSend(e.target.value)}
                 value={addressToSend}
-                placeholder="New conversation"
+                placeholder="Enter address"
               />
               <button className={messageComposerStyles.arrow}>
                 {addressToSend.length === 42 ? (
@@ -130,7 +138,7 @@ const Layout: React.FC = ({ children }) => {
         </NavigationColumnLayout>
       </NavigationView>
       <div className="w-3/4 relative flex flex-nowrap flex-grow-0 overflow-y-scroll scrollbar-hide">
-        {(walletAddress && client && recipientWalletAddr !== '') && (
+        {walletAddress && client && recipientWalletAddr !== '' && (
           <Conversation recipientWalletAddr={recipientWalletAddr} />
         )}
       </div>

@@ -57,9 +57,9 @@ const Profile = () => {
       </div>
       <div
         // TODO: position the image.
-        className="absolute bottom-0 md:w-64 mb-0 flex flex-col "
+        className="absolute bottom-0 md:w-64 mb-0 flex flex-col z-0"
       >
-        <div className="relative w-36 aspect-1 mx-auto ">
+        <div className="relative w-20 aspect-1 mx-auto dark:hidden">
           <Image
             layout="fill"
             alt="pbLogo"

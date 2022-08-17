@@ -37,19 +37,7 @@ const useConversation = (
       console.log('Listing messages for peer address', conversation.peerAddress)
       setLoading(true)
       const msgs = await conversation.messages({ pageSize: 100 })
-      //this is done now in the run in MessagesList
-      // const msgsUpdated = msgs.map((m) => {
-      //   if (m.content.slice(0, 21) === '{"type":"file","cid":') {
-      //     const { type, description, cid } = JSON.parse(m.content)
-      //     // if (type=='file') {
-      //     const m2 = m
-      //     m2.content = `This is a File with subject ${description.toUpperCase()}. You can check it on FileTransfer tab or in https://ipfs.io/ipfs/${cid}.`
-      //     return m2
-      //     // }
-      //   } else {
-      //     return m
-      //   }
-      // })
+
       if (dispatchMessages) {
         dispatchMessages({
           peerAddress: conversation.peerAddress,

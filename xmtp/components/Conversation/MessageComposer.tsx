@@ -99,7 +99,7 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
   }, [files])
 
   return (
-    <div className="sticky bottom-0 pl-4 mb-4 pt-2 flex-shrink-0 flex h-[68px] bg-transparent w-full">
+    <div className="sticky bottom-0 px-4 mb-4 pt-2 flex-shrink-0 flex h-[68px] bg-transparent w-full">
       <form
         className={classNames(
           'flex',
@@ -108,6 +108,9 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
           'py-2',
           'pl-4',
           'mr-3',
+          'dark:bg-zinc-800',
+          'dark:border-zinc-600',
+          'dark:text-snow',
           messageComposerStyles.bubble
         )}
         autoComplete="off"

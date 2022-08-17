@@ -7,11 +7,13 @@ import { AddressTag } from '../../../components/AddressTag'
 import { useAddressAvatar } from '../../../hooks/useAddressAvatar.js'
 import { PoapAvatar } from '../../../components/Poap'
 import { Avatar } from '../../../components/Profile/Avatar'
+import TimeAgo from 'timeago-react'
 
 export type MessageListProps = {
   messages: Message[]
   walletAddress: string | undefined
   messagesEndRef: MutableRefObject<null>
+  recipientWalletAddr: string
 }
 
 type MessageTileProps = {
@@ -33,17 +35,15 @@ const MessageFiltered = ({ message }) => {
       return <div>{message.content}</div>
     case 'file':
       return (
-        <div
-          className='px-1 mx-1 font-mono text-zinc-900 bg-blocqpurple text-xs rounded-md'
-        >
+        <div className="hover:scale-105 transition-all ease-in-out px-3 py-1 m-1 font-mono text-zinc-900 dark:text-zinc-300 bg-mybg-light dark:bg-mybg-dark text-xs rounded-md">
           <a
             target="_blank"
             rel="noreferrer"
             href={`https://ipfs.io/ipfs/${messageObject.cid}`}
           >
-            Attachment: 
+            IPFS:
+            {messageObject.description.toUpperCase()}
           </a>
-          {messageObject.description.toUpperCase()}
         </div>
       )
     case 'media':
@@ -80,12 +80,17 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
     address: message.senderAddress.toLowerCase(),
   })
   return (
-    <div className={"flex justify-self-start mb-4 w-full " + (isSender ? "flex-row-reverse" : "flex-row ")}>
+    <div
+      className={
+        'flex justify-self-start w-full ' +
+        (isSender ? 'flex-row-reverse' : 'flex-row ')
+      }
+    >
       {/* <div className="relative w-11 h-11 ">
         <Avatar src={savedAvatar} scale={0} />
       </div> */}
       <div className="ml-2">
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           {/**COVALENT IS BRINGING JUST LOWERCASE ADDRESSES */}
           {/* <AddressTag
             address={message.senderAddress.toLowerCase()}
@@ -94,14 +99,18 @@ const MessageTile = ({ message, isSender }: MessageTileProps): JSX.Element => {
             {formatTime(message.sent)}
           </span> */}
         </div>
-        <span className={"block text-md px-2 mt-2 text-zinc-900 dark:text-snow font-normal bg-zinc-500 rounded-full p-1 bg-opacity-30"}>
+        <span
+          className={
+            'block text-md px-2 my-1 text-zinc-900 dark:text-snow font-normal bg-zinc-500 rounded-full p-1 bg-opacity-30'
+          }
+        >
           {message.error ? (
             `Error: ${message.error?.message}`
           ) : (
-            // ) : (message.content.slice(0,23)==='{"type":"media","cid":"' ? (
-            //   <img className='h-64' src='https://ipfs.io/ipfs/bafybeihjesi6ustbin3to5cqxkpzd3opqihwyq74ef2fc37fm4rtnkgsnu/bart.jpg' />
-            <MessageFiltered message={message} />
-            // <div>{message.content}</div>
+            <div className="flex flex-row">
+              <MessageFiltered message={message} />
+              {/* <TimeAgo datetime={message.sent.toDateString()} /> */}
+            </div>
           )}
         </span>
       </div>
@@ -127,11 +136,12 @@ const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
   </div>
 )
 
-const ConversationBeginningNotice = (): JSX.Element => (
-  <div className="flex align-items-center justify-center pb-4">
-    <span className="text-gray-300 text-sm font-semibold">
-      This is the beginning of the conversation
+const ConversationBeginningNotice = ({ contact }): JSX.Element => (
+  <div className="sticky top-4 flex flex-row w-fill justify-center pb-4">
+    <span className="text-zinc-500 dark:text-zinc-400 text-md font-semibold">
+      Conversation with
     </span>
+    <AddressTag address={contact.toLowerCase()} />
   </div>
 )
 
@@ -139,37 +149,38 @@ const MessagesList = ({
   messages,
   walletAddress,
   messagesEndRef,
+  recipientWalletAddr,
 }: MessageListProps): JSX.Element => {
   let lastMessageDate: Date | undefined
 
   return (
-    <div className="flex-grow flex ">
-      <div className="pb-6 md:pb-0 w-full flex flex-col self-end">
-        <div className="w-full bg-transparent px-4 pt-6 overflow-y-auto flex">
-          <div className="">
-            {messages && messages.length ? (
-              <ConversationBeginningNotice />
-            ) : null}
-            {messages?.map((msg: Message) => {
-              const isSender = msg.senderAddress === walletAddress
-              const tile = (
-                <MessageTile message={msg} key={msg.id} isSender={isSender} />
-              )
-              const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
-              lastMessageDate = msg.sent
-              return dateHasChanged ? (
+    <div className=" flex flex-col flex-initial bg-transparent px-4 pt-6 ">
+      {messages && messages.length ? (
+        <ConversationBeginningNotice contact={recipientWalletAddr} />
+      ) : null}
+      <div className="flex flex-col flex-nowrap ">
+        {messages?.map((msg: Message) => {
+          const isSender = msg.senderAddress === walletAddress
+          const tile = (
+            <MessageTile message={msg} key={msg.id} isSender={isSender} />
+          )
+          const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
+          lastMessageDate = msg.sent
+          return (
+            <div className="inline-block">
+              {dateHasChanged ? (
                 <div key={msg.id}>
                   <DateDivider date={msg.sent} />
                   {tile}
                 </div>
               ) : (
                 tile
-              )
-            })}
-            <div ref={messagesEndRef} />
-          </div>
-        </div>
+              )}
+            </div>
+          )
+        })}
       </div>
+      <div ref={messagesEndRef} />
     </div>
   )
 }

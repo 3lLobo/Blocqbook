@@ -146,7 +146,7 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-        <div className="md:pl-64 mt-3 flex flex-col">
+        <div className="md:pl-64 flex flex-col">
           {[0, 1].includes(navStore.openTab) && (
             <div className=" mx-6  rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30">
               <button

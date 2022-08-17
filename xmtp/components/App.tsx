@@ -10,7 +10,7 @@ function App() {
   return (
     // <WalletProvider>
     //   <XmtpProvider>
-    <div className="w-full ">
+    <div className="w-full h-screen">
       <Layout></Layout>
     </div>
     //   </XmtpProvider>

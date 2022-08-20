@@ -104,7 +104,7 @@ const Layout: React.FC = ({ children }) => {
                 value={addressToSend}
                 placeholder="Enter address"
               /> */}
-              <ContactSearch />
+              <ContactSearch setAddressToSend={setAddressToSend} />
               <button className={messageComposerStyles.arrow}>
                 {addressToSend.length === 42 ? (
                   <svg

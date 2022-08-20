@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Tag } from './Tag'
+// import { Tag } from './Tag'
 import { getRandomTailwindColor } from '../../lib/randomColors'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateContact } from '../../app/contactSlice'

@@ -9,6 +9,7 @@ const nextConfig = {
       'pbs.twimg.com',
       'assets.poap.xyz',
       'avatars.githubusercontent.com',
+      'ipfs.io'
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

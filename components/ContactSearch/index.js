@@ -24,13 +24,17 @@ export function ContactSearch({ setAddressToSend }) {
 
   function onSelected(selectedContact) {
     if (selectedContact) {
-      router.push(
-        {
-          pathname: '/rotarydial',
-          query: { to: ethers.utils.getAddress(selectedContact.bio.address) },
-        },
-        { shallow: true }
-      )
+      try {
+        router.push(
+          {
+            pathname: '/rotarydial',
+            query: { to: ethers.utils.getAddress(selectedContact.bio.address) },
+          },
+          { shallow: true }
+        )
+      } catch (error) {
+        console.log('error:', error)
+      }
     }
   }
 
@@ -41,7 +45,7 @@ export function ContactSearch({ setAddressToSend }) {
           <div className="w-full relative mt-1">
             <div className=" w-full relative flex cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
               <Combobox.Input
-                className="w-full flex border-none py-2 pl-3 text-sm leading-5 text-indigo-900 focus:ring-0 bg-transparent backdrop-blur-md backdrop-brightness-125 rounded-l-lg dark:text-indigo-100 dark:bg-zinc-800 dark:bg-opacity-80"
+                className="w-full flex border-none py-2 pl-3 text-sm leading-5 text-indigo-900 bg-transparent backdrop-blur-md backdrop-brightness-125 rounded-l-lg dark:text-indigo-100 dark:bg-zinc-800 dark:bg-opacity-80"
                 displayValue={query}
                 // value={query}
                 onChange={(event) => {

@@ -65,13 +65,17 @@ const Layout: React.FC = ({ children }) => {
 
   const handleNewConversation = (e) => {
     e.preventDefault()
-    router.push(
-      {
-        pathname: '/rotarydial',
-        query: { to: ethers.utils.getAddress(addressToSend) },
-      },
-      { shallow: true }
-    )
+    try {
+      router.push(
+        {
+          pathname: '/rotarydial',
+          query: { to: ethers.utils.getAddress(addressToSend) },
+        },
+        { shallow: true }
+      )
+    } catch (error) {
+      console.log('error:', error);
+    }
   }
 
   const usePrevious = <T,>(value: T): T | undefined => {

@@ -1,5 +1,5 @@
 import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGetAllTokenBalancesQuery } from '../../app/covApi'
 import { BezierSpinner } from '../Spinner/BezierSpinner'
 import { Avatar } from './Avatar'
@@ -11,8 +11,12 @@ import { updateContact } from '../../app/contactSlice'
 import { PoapAvatar } from '../Poap'
 import Image from 'next/image'
 import { useCommonPoap } from '../../hooks/useCommonPoap'
+import { uploadImage } from '../../lib/uploadToWeb3Storage'
 
 const ProfileCard = ({ profile }) => {
+  const [files, setFiles] = useState(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const extension = useRef('')
   const store = useSelector((state) => state.contact)
   const dispatch = useDispatch()
 
@@ -34,7 +38,20 @@ const ProfileCard = ({ profile }) => {
     doUpdate: true,
   })
 
-  console.log('POAP data', poapData)
+  // console.log('POAP data', poapData)
+
+  async function handleUpload(filesToUpload) {
+    setIsUploading(true)
+    const cid = await uploadImage(filesToUpload)
+    dispatch(
+      updateContact({
+        field1: 'bio',
+        field2: 'avatar',
+        value: `http://ipfs.io/ipfs/${cid}/media.${extension}`,
+      })
+    )
+    setIsUploading(false)
+  }
 
   function handleChange(e) {
     e.preventDefault()
@@ -58,6 +75,20 @@ const ProfileCard = ({ profile }) => {
         )
     }
   }
+
+  useEffect(() => {
+    const upload = async (file) => {
+      await handleUpload(file)
+    }
+    if (files?.length > 0) {
+      const file = files[0]
+      const type = file.type
+      extension.current = type.split('/')[1]
+      const blob = file.slice(0, file.size, type)
+      const newFile = [new File([blob], `media.${extension}`, { type })]
+      upload(newFile)
+    }
+  }, [files])
 
   return (
     <div className="border-2 dark:border-zinc-800 self-center grid justify-items-center m-8 p-4 shadow-lg">
@@ -88,8 +119,21 @@ const ProfileCard = ({ profile }) => {
           )}
         </div>
       )}
-      <div className="hover:scale-105 hover:cursor-pointer transition-all duration-300 transform-gpu w-20 sm:w-36 mb-3">
-        <Avatar src={profile.bio.avatar} />
+      <div className="hover:scale-105 transition-all duration-300 transform-gpu w-20 sm:w-36 mb-3 relative">
+        <label htmlFor="filePicker" className="cursor-pointer">
+          <Avatar src={profile.bio.avatar} />
+          <input
+            type="file"
+            id="filePicker"
+            onChange={(e) => setFiles(e.target.files)}
+            className="hidden w-full h-full"
+          />
+        </label>
+        {isUploading && (
+          <div className='absolute right-0 top-0'>
+            <BezierSpinner />
+          </div>
+        )}
       </div>
 
       <textarea

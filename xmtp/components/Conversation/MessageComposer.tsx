@@ -3,14 +3,13 @@ import classNames from '../../helpers/classNames'
 import messageComposerStyles from '../../styles/MessageComposer.module.css'
 import { useRouter } from 'next/router'
 import { BezierSpinner } from '../../../components/Spinner/BezierSpinner'
-import { Web3Storage } from 'web3.storage'
+import { uploadImage } from '../../../lib/uploadToWeb3Storage'
 
 type MessageComposerProps = {
   onSend: (msg: string) => Promise<void>
 }
 
 const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
-  const token = process.env.NEXT_PUBLIC_WEB3STORAGE
   const [message, setMessage] = useState('')
   const [files, setFiles] = useState(null)
   const [filesCID, setFilesCID] = useState('')
@@ -54,29 +53,8 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
 
   async function handleUpload(filesToUpload) {
     setIsUploading(true)
-    try {
-      console.log('> 📦 creating web3.storage client')
-      const client = new Web3Storage({ token })
-
-      console.log(
-        '> 🤖 chunking and hashing the files to calculate the Content ID'
-      )
-      const cid = await client.put(filesToUpload, {
-        onRootCidReady: (localCid) => {
-          console.log(`> 🔑 locally calculated Content ID: ${localCid} `)
-          console.log('> 📡 sending files to web3.storage ')
-        },
-        onStoredChunk: (bytes) =>
-          console.log(
-            `> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`
-          ),
-      })
-      console.log(`> ✅ web3.storage now hosting ${cid}`)
-
-      setFilesCID(cid)
-    } catch (error) {
-      console.log(error)
-    }
+    const cid = await uploadImage(filesToUpload)
+    setFilesCID(cid)
     setIsUploading(false)
   }
 

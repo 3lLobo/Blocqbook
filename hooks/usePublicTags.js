@@ -1,15 +1,18 @@
-import { skipToken } from "@reduxjs/toolkit/dist/query"
-import { useEffect, useState } from "react"
-import { v4 } from "uuid"
-import { useGetTagsQuery } from "../app/thegraphApi"
-import { publicTags } from "../components/Profile/PubTags"
-import { Tag } from "../components/Profile/Tag"
-
+import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { useEffect, useState } from 'react'
+import { v4 } from 'uuid'
+import { useGetTagsQuery } from '../app/thegraphApi'
+import { publicTags } from '../components/Profile/PubTags'
+import { Tag } from '../components/Profile/Tag'
 
 export function usePublicTags({ contact }) {
   const address = contact.bio.address
   const [uiTags, setUiTags] = useState(null)
-  const { data: pubTags, error, isLoading } = useGetTagsQuery(address ? { address } : skipToken, {
+  const {
+    data: pubTags,
+    error,
+    isLoading,
+  } = useGetTagsQuery(address ? { address } : skipToken, {
     refetchOnFocus: true,
     refetchOnReconnect: false,
   })
@@ -28,11 +31,12 @@ export function usePublicTags({ contact }) {
 function matchPubTag(graphTag, contact) {
   // are the fetched tags in our database?
   const tags2show = graphTag?.map((tag) => {
-    var matchedTag = publicTags.filter((stdtag) => {
-      if (stdtag.name === tag.name) {
-        return stdtag
-      }
-    })[0] || undefined
+    var matchedTag =
+      publicTags.filter((stdtag) => {
+        if (stdtag.name === tag.name) {
+          return stdtag
+        }
+      })[0] || undefined
     // Did we get a match?
     if (matchedTag === undefined) {
       return
@@ -58,7 +62,12 @@ function matchPubTag(graphTag, contact) {
     return (
       <div key={v4()}>
         {tag && (
-          <Tag tagText={tag.name} color={tag.color} count={tag.count || undefined} isPub={tag.isPub} />
+          <Tag
+            tagText={tag.name}
+            color={tag.color}
+            count={tag.count || undefined}
+            isPub={tag.isPub}
+          />
         )}
       </div>
     )

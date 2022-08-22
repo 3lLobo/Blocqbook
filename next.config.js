@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["components/*"]
-    }
+  compilerOptions: {
+    baseUrl: '.',
+    paths: {
+      '@/components/*': ['components/*'],
+    },
   },
   reactStrictMode: true,
   images: {
@@ -15,7 +15,7 @@ const nextConfig = {
       'pbs.twimg.com',
       'assets.poap.xyz',
       'avatars.githubusercontent.com',
-      'ipfs.io'
+      'ipfs.io',
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

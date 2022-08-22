@@ -54,7 +54,9 @@ const Conversation = ({
         walletAddress={walletAddress}
         recipientWalletAddr={recipientWalletAddr}
       />
-      {(walletAddress && recipientWalletAddr) && <MessageComposer onSend={sendMessage} />}
+      {walletAddress && recipientWalletAddr && (
+        <MessageComposer onSend={sendMessage} />
+      )}
     </main>
   )
 }

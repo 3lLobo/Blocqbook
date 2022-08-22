@@ -17,21 +17,22 @@ export function Tag({ tagText, color, isPub, count }) {
         opa
       }
     >
-      <div className="font-semibold text-center text-sm ">
-        {tagText}
-      </div>
-      {(count > 0) &&
+      <div className="font-semibold text-center text-sm ">{tagText}</div>
+      {count > 0 && (
         <span
-          className={"absolute top-0 right-0 block w-5 h-5 transform -translate-y-2/3 translate-x-1/4 rounded-full aspect-1 ring-4 ring-snow dark:ring-slate-900 group-hover:ring-blocqpurple dark:group-hover:ring-indigo-500 hover:transition-color hover:duration-500 hover:scale-105 transition-transform ease-in-out justify-items-center ".concat(" ", bg)}
+          className={'absolute top-0 right-0 block w-5 h-5 transform -translate-y-2/3 translate-x-1/4 rounded-full aspect-1 ring-4 ring-snow dark:ring-slate-900 group-hover:ring-blocqpurple dark:group-hover:ring-indigo-500 hover:transition-color hover:duration-500 hover:scale-105 transition-transform ease-in-out justify-items-center '.concat(
+            ' ',
+            bg
+          )}
         >
           <div
-            className='text-xs font-semibold text-center pt-1  text-zinc-900 self-center'
+            className="text-xs font-semibold text-center pt-1  text-zinc-900 self-center"
             title={`This wallet was tagged ${count} times with "${tagText}".`}
           >
             {count}
           </div>
         </span>
-      }
+      )}
     </div>
   )
 }

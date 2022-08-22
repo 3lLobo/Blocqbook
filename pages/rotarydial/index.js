@@ -24,7 +24,7 @@ const Profile = () => {
     console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected && !record.isLoading) {
       console.log('Ceramic record loaded!')
-      covTrigger({address: store.address}, true)
+      covTrigger({ address: store.address }, true)
       dispatch(
         setContacts({
           // contacts: myContacts,

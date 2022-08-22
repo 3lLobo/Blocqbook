@@ -34,10 +34,10 @@ export const Slice = ({ contact }) => {
   function onContactClick() {
     dispatch(openModal({ address: contact.bio.address }))
   }
-// Check if recipient is on the XMTP network before forwarding
+  // Check if recipient is on the XMTP network before forwarding
   const handleTabSwitch = async (tab) => {
     const checkAddress = ethers.utils.getAddress(contact.bio.address)
-    const canMsg = await client?.canMessage(checkAddress) || false
+    const canMsg = (await client?.canMessage(checkAddress)) || false
     if (canMsg) {
       router.push(
         {

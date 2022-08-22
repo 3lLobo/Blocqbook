@@ -35,7 +35,7 @@ export default function Header() {
 
   // Logging webstats
   useLogRocket()
-  
+
   // TODO: useEffect to auto connect if wallet is connected
   useEffect(() => {
     async function autoConnect() {

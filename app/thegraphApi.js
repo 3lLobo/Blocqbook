@@ -1,20 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { request, gql, ClientError } from 'graphql-request'
 
-
 const graphqlBaseQuery =
   ({ baseUrl }) =>
-    async ({ body, variables }) => {
-      try {
-        const result = await request(baseUrl, body, variables)
-        return { data: result }
-      } catch (error) {
-        if (error instanceof ClientError) {
-          return { error: { status: error.response.status, data: error } }
-        }
-        return { error: { status: 500, data: error } }
+  async ({ body, variables }) => {
+    try {
+      const result = await request(baseUrl, body, variables)
+      return { data: result }
+    } catch (error) {
+      if (error instanceof ClientError) {
+        return { error: { status: error.response.status, data: error } }
       }
+      return { error: { status: 500, data: error } }
     }
+  }
 
 // TODO:
 // Define a service using a base URL and expected endpoints
@@ -24,7 +23,7 @@ export const thegraphApi = createApi({
   //   baseUrl: '/api/theGraph/',
   // }),
   baseQuery: graphqlBaseQuery({
-    baseUrl: "https://api.thegraph.com/subgraphs/name/3llobo/blocqbook",
+    baseUrl: 'https://api.thegraph.com/subgraphs/name/3llobo/blocqbook',
   }),
   endpoints: (builder) => ({
     // getTags: builder.query({
@@ -58,20 +57,19 @@ export const thegraphApi = createApi({
               }
             }
           }
-          `,
+        `,
       }),
       transformResponse: (response) => transformTagQueryResponse(response),
     }),
   }),
 })
 
-
 function transformTagQueryResponse(response) {
-
-  var tags = response.address?.tags?.map((tag) => {
-    const resTag = {name: tag.tag.name, count: tag.count}
-    return resTag
-  }) || []
+  var tags =
+    response.address?.tags?.map((tag) => {
+      const resTag = { name: tag.tag.name, count: tag.count }
+      return resTag
+    }) || []
   if (tags.length > 0) {
     tags = tags.filter((tag) => tag.count > 0)
   }

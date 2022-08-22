@@ -128,7 +128,7 @@ const ProfileCard = ({ profile }) => {
           />
         </label>
         {isUploading && (
-          <div className='absolute right-0 top-0'>
+          <div className="absolute right-0 top-0">
             <BezierSpinner />
           </div>
         )}

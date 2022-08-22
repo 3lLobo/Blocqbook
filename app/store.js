@@ -9,7 +9,7 @@ import navSliceReducer from './navSlice'
 import { poapApi } from './poapApi'
 import { covApi } from './covApi'
 import { thegraphApi } from './thegraphApi'
-import LogRocket from 'logrocket';
+import LogRocket from 'logrocket'
 
 export const store = configureStore({
   reducer: {

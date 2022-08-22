@@ -3,8 +3,7 @@ import { ColorModeToggle } from './colorModeToggle'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { MyButton } from '../Buttons/MyButton'
-import { useCallback, useRef, useState } from 'react'
-import { useEffect } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset as resetEvm, setConnection, setPoaps } from '../../app/evmSlice'
 import { reset as resetContacts } from '../../app/contactSlice'
@@ -17,6 +16,7 @@ import { useLazyGetPoapsQuery } from '../../app/poapApi'
 
 import useXmtp from '../../xmtp/hooks/useXmtp.ts'
 import { getWeb3Signer } from '../../lib/xmtpSigner'
+import { useLogRocket } from '../../hooks/useLogrocket'
 
 async function createAuthProvider() {
   // The following assumes there is an injected `window.ethereum` provider
@@ -33,6 +33,9 @@ export default function Header() {
   const dispatch = useDispatch()
   const [poapTrigger, poapResult, poapLastPromiseInfo] = useLazyGetPoapsQuery()
 
+  // Logging webstats
+  useLogRocket()
+  
   // TODO: useEffect to auto connect if wallet is connected
   useEffect(() => {
     async function autoConnect() {

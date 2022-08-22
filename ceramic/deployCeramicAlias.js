@@ -8,11 +8,6 @@ export async function deployCeramicAlias(ceramic3Did) {
   // const ceramic = authenticateDID(ceramic3Did)
   const ceramic = await getCeramic()
 
-  console.log(
-    '🚀 ~ file: deployCeramicAlias.js ~ line 7 ~ deployCeramicAlias ~ ceramic',
-    ceramic
-  )
-
   const manager = new ModelManager({ ceramic })
 
   await manager.createSchema('MyBlocqSchema', {

@@ -25,7 +25,7 @@ export function ColorModeToggle() {
 
   const iconStyle = 'h-4 w-4 text-snow fill-snow '
   return (
-    <div className="flex flex-grow color-snow hover:scale-110 transition ease-in-out duration-500">
+    <div className="flex flex-0 color-snow hover:scale-110 transition ease-in-out duration-500">
       <button
         className="dark:bg-indigo-600 bg-indigo-300 rounded-full border-2 border-indigo-600 dark:border-indigo-300 p-2"
         // bg="blueviolet"

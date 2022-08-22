@@ -6,7 +6,6 @@ import { CoinBalance } from './CoinBalance'
 
 export default function Balances({ balances }) {
   // const balances = balancesAddress
-  console.log('Balance', balances)
 
   return (
     // <div className="w-40 px-4 pt-16">

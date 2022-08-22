@@ -8,6 +8,8 @@ import contactSliceReducer from './contactSlice'
 import navSliceReducer from './navSlice'
 import { poapApi } from './poapApi'
 import { covApi } from './covApi'
+import { thegraphApi } from './thegraphApi'
+import LogRocket from 'logrocket';
 
 export const store = configureStore({
   reducer: {
@@ -17,13 +19,16 @@ export const store = configureStore({
     nav: navSliceReducer,
     [poapApi.reducerPath]: poapApi.reducer,
     [covApi.reducerPath]: covApi.reducer,
+    [thegraphApi.reducerPath]: thegraphApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       //serializableCheck: false,
     })
       .concat(poapApi.middleware)
-      .concat(covApi.middleware),
+      .concat(covApi.middleware)
+      .concat(thegraphApi.middleware)
+      .concat(LogRocket.reduxMiddleware()),
   //
 })
 

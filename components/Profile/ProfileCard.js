@@ -38,8 +38,6 @@ const ProfileCard = ({ profile }) => {
     doUpdate: true,
   })
 
-  // console.log('POAP data', poapData)
-
   async function handleUpload(filesToUpload) {
     setIsUploading(true)
     const cid = await uploadImage(filesToUpload)

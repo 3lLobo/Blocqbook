@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import ProfileModal from '../../components/ProfileModal'
 import GithubFooter from '../../components/GithubFooter'
 import Image from 'next/image'
+import { useLazyGetAllTokenBalancesQuery } from '../../app/covApi'
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -17,10 +18,13 @@ const Profile = () => {
   const evmStore = useSelector((state) => state.evm)
   const dispatch = useDispatch()
 
+  const [covTrigger, covResult, covInfo] = useLazyGetAllTokenBalancesQuery()
+
   useEffect(() => {
     console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected && !record.isLoading) {
       console.log('Ceramic record loaded!')
+      covTrigger({address: store.address}, true)
       dispatch(
         setContacts({
           // contacts: myContacts,

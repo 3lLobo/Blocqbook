@@ -12,12 +12,14 @@ import { setOpenTab } from '../../app/navSlice'
 import { ethers } from 'ethers'
 import MsgCatch from './MsgCatch'
 import useXmtp from '../../xmtp/hooks/useXmtp'
+import { usePublicTags } from '../../hooks/usePublicTags'
 
 export const Slice = ({ contact }) => {
   const store = useSelector((state) => state.contact)
   const navStore = useSelector((state) => state.nav)
   const dispatch = useDispatch()
   const { client } = useXmtp()
+  const { uiTags, pubTags, error, isLoading } = usePublicTags({ contact })
 
   function onTabChange(index) {
     dispatch(setOpenTab({ tab: index }))
@@ -67,7 +69,7 @@ export const Slice = ({ contact }) => {
         setShow={setShowMsgToast}
         contactName={contact.bio.name}
       />
-      <div className=" group bg-indigo-50 hover:bg-blocqpurple dark:hover:bg-neonPurple dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900 hover:transition-all ease-in-out ">
+      <div className=" group bg-indigo-50 hover:bg-blocqpurple dark:hover:bg-neonPurple dark:bg-[#270067] shadow-md dark:text-snow p-2 mx-6 my-2 max-w-11/12 flex-row gap-3 rounded-xl grid grid-cols-11  justify-start items-center  text-slate-900 hover:transition-all ease-in-out duration-500">
         <div
           onClick={onContactClick}
           className="w-full col-span-1 flex flex-row"
@@ -107,10 +109,11 @@ export const Slice = ({ contact }) => {
             <Tag tagText={tag.name} color={tag.color} key={tag.id} />
           ))}
         </div>
-        <div className="space-x-1 col-span-3 group-hover:col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide ">
-          {contact.tags.pubTags.map((tag) => (
+        <div className="col-span-3 space-x-1 group-hover:col-span-2 flex flex-row h-full items-center pl-1 justify-start overflow-x-scroll scrollbar-hide mt-1 group">
+          {/* {contact.tags.pubTags.map((tag) => (
             <Tag tagText={tag.name} color={tag.color} key={v4()} isPub={true} />
-          ))}
+          ))} */}
+          {uiTags && [...uiTags]}
         </div>
         <div className="hidden group-hover:flex justify-center col-span-2 gap-x-1 ">
           <button

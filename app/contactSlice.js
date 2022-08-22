@@ -42,7 +42,7 @@ export const emptyProfile = (address, isOneHop, avatar, name, notes, dev) => ({
 
 const devNote = `Hi 🤗 I am one of the 🌳 Developers who made the BlocqBook. Hope you njoyyy and would love to hear your feedBacq! Shoot me a text in the messenger 📩`
 
-function devContacts() {
+export function devContacts() {
   const wolf = emptyProfile(
     '0x3ECC53F7Ba45508483379bd76989A3003E6cbf09',
     false,

@@ -19,20 +19,21 @@ export function usePublicTags({ contact }) {
 
   useEffect(() => {
     if (pubTags) {
-      const copyPubTags = [...pubTags]
-      const readyTags = matchPubTag(copyPubTags, contact)
+      const readyTags = matchPubTag(pubTags, contact)
       setUiTags(() => readyTags)
     }
   }, [pubTags, contact])
 
   return { uiTags, pubTags, error, isLoading }
 }
+
+
 // Find the matchgin tag, check if the user has already selected it and add the count of the tag.
 function matchPubTag(graphTag, contact) {
   // are the fetched tags in our database?
   const tags2show = graphTag?.map((tag) => {
     var matchedTag =
-      publicTags.filter((stdtag) => {
+      [...publicTags].filter((stdtag) => {
         if (stdtag.name === tag.name) {
           return stdtag
         }
@@ -41,11 +42,12 @@ function matchPubTag(graphTag, contact) {
     if (matchedTag === undefined) {
       return
     }
+    const copyMatchedTag = JSON.parse(JSON.stringify(matchedTag))
     // Is the tag already selected by the user?
     const isPub = !contact.tags.pubTags.map((t) => t.id).includes(matchedTag.id)
-    matchedTag['count'] = Number(tag.count)
-    matchedTag['isPub'] = isPub
-    return matchedTag
+    copyMatchedTag['count'] = tag.count
+    copyMatchedTag['isPub'] = isPub
+    return copyMatchedTag
   })
   // Check if the user has has given tags which were not recorded in the graph.
   // This should not be the case and will be temporary

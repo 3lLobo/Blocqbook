@@ -1,5 +1,4 @@
 import LogRocket from 'logrocket'
-import setupLogRocketReact from 'logrocket-react'
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 

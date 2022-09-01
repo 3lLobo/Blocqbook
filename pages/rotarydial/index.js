@@ -66,7 +66,7 @@ const Profile = () => {
       </div>
       <div
         // TODO: position the image.
-        className="absolute bottom-0 md:w-64 mb-0 flex flex-col z-0"
+        className="absolute bottom-0 md:w-64 mb-0 flex-col z-0 hidden md:flex"
       >
         <div className="relative w-20 aspect-1 mx-auto dark:hidden">
           <Image

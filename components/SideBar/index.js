@@ -27,6 +27,13 @@ const Sidebar = () => {
 
   function onTabChange(index) {
     dispatch(setOpenTab({ tab: index }))
+    setMobileMenu(false)
+  }
+
+  const [mobileMenu, setMobileMenu] = useState(false)
+  function toggleMobileMenu() {
+    console.log("Mobile: ", mobileMenu)
+    setMobileMenu((prevState) => !prevState)
   }
 
   const tabNames = [
@@ -115,7 +122,7 @@ const Sidebar = () => {
         selectedIndex={navStore.openTab}
         onChange={onTabChange}
       >
-        <div className="hidden md:flex md:w-64 md:flex-col md:fixed h-full backdrop-blur-xl backdrop-brightness-50">
+        <div className={mobileMenu ? "flex" : "hidden" + " md:flex md:w-64 md:flex-col md:fixed h-full backdrop-blur-xl backdrop-brightness-50 "}>
           <div className="flex-1 flex flex-col min-h-0 bg-indigo-100 shadow-lg dark:bg-[#0E0026] ">
             <div className="flex items-center h-16 flex-shrink-0">
               <Header />
@@ -146,11 +153,12 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="md:pl-64 flex flex-col ">
-          {[0, 1].includes(navStore.openTab) && (
+          {([0, 1, 2, 3].includes(navStore.openTab) && !mobileMenu) && (
             <div className=" mx-6  rounded-2xl sticky top-2 flex-shrink-0 flex h-11 bg-transparent backdrop-blur-md dark:backdrop-brightness-150 shadow-2xl z-30">
               <button
                 type="button"
                 className="px-4 border-r border-slate-900 text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                onClick={toggleMobileMenu}
               >
                 <span className="sr-only">Open sidebar</span>
                 <MenuAlt2Icon className="h-6 w-6" />

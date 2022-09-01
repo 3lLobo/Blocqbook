@@ -8,6 +8,7 @@ import ProfileModal from '../../components/ProfileModal'
 import GithubFooter from '../../components/GithubFooter'
 import Image from 'next/image'
 import { useLazyGetAllTokenBalancesQuery } from '../../app/covApi'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 
 const Profile = () => {
   // This is the entrypoint to the users database.
@@ -24,7 +25,11 @@ const Profile = () => {
     console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected && !record.isLoading) {
       console.log('Ceramic record loaded!')
-      covTrigger({ address: store.address }, true)
+      const address = evmStore.account
+      covTrigger( address 
+        ? { address }
+        : skipToken
+        , true)
       dispatch(
         setContacts({
           // contacts: myContacts,

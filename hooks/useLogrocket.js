@@ -13,7 +13,6 @@ function initLogRocket() {
 
 export function useLogRocket() {
   const store = useSelector((state) => state.evm)
-  const dispatch = useDispatch()
   const [prevAddress, setPrevAddress] = useState(null)
   const [lrInit, setLrInit] = useState(false)
 
@@ -21,19 +20,17 @@ export function useLogRocket() {
   useEffect(() => {
     if (!lrInit) {
       initLogRocket()
-      // // after calling LogRocket.init()
-      // setupLogRocketReact(LogRocket);
       setLrInit(true)
     }
   }, [lrInit])
 
   useEffect(() => {
-    if (store.address !== prevAddress && lrInit && store.connected) {
-      LogRocket.identify(store.address, {
-        name: store.address,
-        email: store.address,
+    if (store.account !== prevAddress && lrInit && store.connected) {
+      LogRocket.identify(store.account, {
+        name: store.account,
+        email: store.account,
       })
-      setPrevAddress(store.address)
+      setPrevAddress(store.account)
     }
-  }, [store.address, prevAddress, lrInit, store.connected])
+  }, [store.account, prevAddress, lrInit, store.connected])
 }

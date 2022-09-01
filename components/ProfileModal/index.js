@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, openModal } from '../../app/contactSlice'
+import { ColorModeToggle } from '../Header/colorModeToggle'
 import ProfileCard from '../Profile/ProfileCard'
 
 export default function ProfileModal({ children }) {
@@ -56,6 +57,7 @@ export default function ProfileModal({ children }) {
               >
                 <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-indigo-50 dark:bg-[#11002D] p-6 text-left align-middle shadow-xl transition-all">
                   <div className="mt-2">
+                    {/* <ColorModeToggle /> */}
                     {store.contactInEdit && (
                       <ProfileCard profile={store.contactInEdit} />
                     )}

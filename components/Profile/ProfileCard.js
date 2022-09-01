@@ -38,8 +38,6 @@ const ProfileCard = ({ profile }) => {
     doUpdate: true,
   })
 
-  // console.log('POAP data', poapData)
-
   async function handleUpload(filesToUpload) {
     setIsUploading(true)
     const cid = await uploadImage(filesToUpload)
@@ -130,7 +128,7 @@ const ProfileCard = ({ profile }) => {
           />
         </label>
         {isUploading && (
-          <div className='absolute right-0 top-0'>
+          <div className="absolute right-0 top-0">
             <BezierSpinner />
           </div>
         )}

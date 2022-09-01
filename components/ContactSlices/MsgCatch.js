@@ -4,9 +4,7 @@ import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
 
-
-export default function MsgCatch({contactName, show, setShow}) {
-
+export default function MsgCatch({ contactName, show, setShow }) {
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}
@@ -30,11 +28,19 @@ export default function MsgCatch({contactName, show, setShow}) {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <CheckCircleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                    <CheckCircleIcon
+                      className="h-6 w-6 text-red-600"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">Your contact {contactName} needs connect to Blocqbook before you guys can chat.</p>
-                    <p className="mt-1 text-sm text-gray-500">Tell {contactName} about the Blocqbook!</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Your contact {contactName} needs connect to Blocqbook
+                      before you guys can chat.
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Tell {contactName} about the Blocqbook!
+                    </p>
                   </div>
                   <div className="ml-4 flex-shrink-0 flex">
                     <button

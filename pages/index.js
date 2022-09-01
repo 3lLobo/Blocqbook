@@ -1,15 +1,7 @@
 import { Head } from '../components/Head'
-import Image from 'next/image'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
-import { MyButton } from '../components/Buttons/MyButton'
-import Link from 'next/link'
 
-import { useViewerRecord } from '@self.id/react'
-import { useEffect, useState } from 'react'
-
-import blocqbookLogo from '../public/blocqBookLogo/logoText/blocqbookTextTransparentBanner.png'
-import blocqbookTextTransparent from '../public/blocqBookLogo/logoText/blocqbookTextTransparent.png'
 import GithubFooter from '../components/GithubFooter'
 export default function Home() {
   const store = useSelector((state) => state.evm)

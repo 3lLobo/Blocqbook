@@ -9,7 +9,7 @@ export const useAddressName = ({ address }) => {
 
   var addressCased
   if (!isLowerCase(address))
-    addressCased = address.toLowerCase()
+    addressCased = address?.toLowerCase()
   else {
     addressCased = ethers.utils.getAddress(address)
   }
@@ -30,5 +30,5 @@ export const useAddressName = ({ address }) => {
 
 
 function isLowerCase(str) {
-  return str == str.toLowerCase() && str != str.toUpperCase();
+  return str == str?.toLowerCase() && str != str?.toUpperCase();
 }

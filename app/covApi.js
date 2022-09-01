@@ -9,52 +9,52 @@ console.log('chainIds', chainIds)
 
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
-  // Assume url is a list of urls
-  async ({ url, method, data, params }) => {
-    // This attaches the api key to every request
-    if (params) {
-      params['key'] = process.env.NEXT_PUBLIC_COVALENT_API_KEY
-    } else {
-      params = { key: process.env.NEXT_PUBLIC_COVALENT_API_KEY }
-    }
-    try {
-      const result = []
-      // Covalent limits to 5 request per second
-      for (let x_urls = 0; x_urls < url.length; x_urls = x_urls + 5) {
-        // parallelize to make it faster, inspired here: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
-        const requests = await axios
-          .all(
-            url.slice(x_urls, x_urls + 5).map((endpoint) => {
-              return axios({
-                url: baseUrl + endpoint,
-                method,
-                data,
-                params,
-              })
-            })
-          )
-          .then(
-            axios.spread((...responses) => {
-              responses.forEach((response) => {
-                result.push(response.data.data)
-              })
-            })
-          )
-          .catch((error) => {
-            console.log('error', error)
-          })
+    // Assume url is a list of urls
+    async ({ url, method, data, params }) => {
+      // This attaches the api key to every request
+      if (params) {
+        params['key'] = process.env.NEXT_PUBLIC_COVALENT_API_KEY
+      } else {
+        params = { key: process.env.NEXT_PUBLIC_COVALENT_API_KEY }
       }
-      return { data: result }
-    } catch (axiosError) {
-      let err = axiosError
-      return {
-        error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
-        },
+      try {
+        const result = []
+        // Covalent limits to 5 request per second
+        for (let x_urls = 0; x_urls < url.length; x_urls = x_urls + 5) {
+          // parallelize to make it faster, inspired here: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
+          const requests = await axios
+            .all(
+              url.slice(x_urls, x_urls + 5).map((endpoint) => {
+                return axios({
+                  url: baseUrl + endpoint,
+                  method,
+                  data,
+                  params,
+                })
+              })
+            )
+            .then(
+              axios.spread((...responses) => {
+                responses.forEach((response) => {
+                  result.push(response.data.data)
+                })
+              })
+            )
+            .catch((error) => {
+              console.log('error', error)
+            })
+        }
+        return { data: result }
+      } catch (axiosError) {
+        let err = axiosError
+        return {
+          error: {
+            status: err.response?.status,
+            data: err.response?.data || err.message,
+          },
+        }
       }
     }
-  }
 
 // Define a service using a base URL and expected endpoints
 export const covApi = createApi({
@@ -62,9 +62,7 @@ export const covApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: 'https://api.covalenthq.com/v1/',
   }),
-  // baseQuery: fetchBaseQuery({
-  //   baseUrl: 'https://api.covalenthq.com/v1/',
-  // }),
+  keepUnusedDataFor: 300_000,
   endpoints: (builder) => ({
     getTransactions: builder.query({
       query: ({ address, chain_id }) => ({

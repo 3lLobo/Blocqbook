@@ -156,7 +156,7 @@ export default function Header() {
             >
               {store.account}
             </motion.div>
-            <div className="sm:inset-auto sm:ml-6 flex gap-2 ml-32 md:ml-0">
+            <div className="sm:inset-auto sm:ml-6 flex gap-2 ml-32 ">
               <ColorModeToggle />
             </div>
           </div>

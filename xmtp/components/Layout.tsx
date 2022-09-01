@@ -16,6 +16,7 @@ import NavigationPanel from './NavigationPanel'
 import messageComposerStyles from '../styles/MessageComposer.module.css'
 import { ethers } from 'ethers'
 import { getWeb3Signer } from '../../lib/xmtpSigner'
+import { ContactSearch } from '../../components/ContactSearch'
 
 const NavigationColumnLayout: React.FC = ({ children }) => (
   <div className="flex flex-col overflow-y-scroll scrollbar-hide ">
@@ -64,13 +65,17 @@ const Layout: React.FC = ({ children }) => {
 
   const handleNewConversation = (e) => {
     e.preventDefault()
-    router.push(
-      {
-        pathname: '/rotarydial',
-        query: { to: ethers.utils.getAddress(addressToSend) },
-      },
-      { shallow: true }
-    )
+    try {
+      router.push(
+        {
+          pathname: '/rotarydial',
+          query: { to: ethers.utils.getAddress(addressToSend) },
+        },
+        { shallow: true }
+      )
+    } catch (error) {
+      console.log('error:', error);
+    }
   }
 
   const usePrevious = <T,>(value: T): T | undefined => {
@@ -96,13 +101,14 @@ const Layout: React.FC = ({ children }) => {
               onSubmit={handleNewConversation}
               className="flex items-center gap-1 w-full mt-5 px-3 mb-4"
             >
-              <input
+              {/* <input
                 className="rounded-2xl"
                 type="text"
                 onChange={(e) => setAddressToSend(e.target.value)}
                 value={addressToSend}
                 placeholder="Enter address"
-              />
+              /> */}
+              <ContactSearch setAddressToSend={setAddressToSend} />
               <button className={messageComposerStyles.arrow}>
                 {addressToSend.length === 42 ? (
                   <svg

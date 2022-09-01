@@ -6,7 +6,7 @@ import { publicTags } from '../components/Profile/PubTags'
 import { Tag } from '../components/Profile/Tag'
 
 export function usePublicTags({ contact }) {
-  const address = contact.bio.address
+  const address = contact.bio.address.toLowerCase()
   const [uiTags, setUiTags] = useState(null)
   const {
     data: pubTags,

@@ -152,11 +152,11 @@ export default function Header() {
                 hidden: { opacity: 0, x: -500 },
               }}
               title={store.account}
-              className="ml-3 mr-auto px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
+              className="hidden md:flex ml-3 mr-auto px-2 py-1 bg-indigo-500 bg-opacity-80 rounded-tr-xl rounded-bl-xl text-snow text-xs hover:text-snow-muted hover:bg-indigo-600 transition-colors duration-300 truncate"
             >
               {store.account}
             </motion.div>
-            <div className="sm:inset-auto sm:ml-6 flex gap-2">
+            <div className="sm:inset-auto sm:ml-6 flex gap-2 ml-32 md:ml-0">
               <ColorModeToggle />
             </div>
           </div>

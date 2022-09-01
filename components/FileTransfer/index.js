@@ -241,7 +241,7 @@ const FileTransfer = () => {
               >
                 <div className="mr-11  col-span-2 div-black dark:div-indigo-50 self-center ">
                   <AddressTag
-                    address={m.sender.toLowerCase()}
+                    address={m.sender?.toLowerCase()}
                     isOneHop={true}
                   />
                 </div>

@@ -57,7 +57,7 @@ export default function ProfileModal({ children }) {
               >
                 <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-indigo-50 dark:bg-[#11002D] p-6 text-left align-middle shadow-xl transition-all">
                   <div className="mt-2">
-                    <ColorModeToggle />
+                    {/* <ColorModeToggle /> */}
                     {store.contactInEdit && (
                       <ProfileCard profile={store.contactInEdit} />
                     )}

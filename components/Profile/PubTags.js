@@ -11,10 +11,12 @@ import axios from 'axios'
 import { usePublicTags } from '../../hooks/usePublicTags'
 import { v4 } from 'uuid'
 
+const apiKey = process.env.NEXT_PUBLIC_AWS_API
+
 // Call the tag-api to call the contract and submit the tag+target-address to the blockchain and theGraph.
 async function tag2theGraph(targetAddress, tag, mode) {
   const res = await axios.post(
-    '/api/tags',
+    'https://zz2k357n83.execute-api.eu-central-1.amazonaws.com/addressTag',
     {
       targetAddress,
       tag,
@@ -22,6 +24,9 @@ async function tag2theGraph(targetAddress, tag, mode) {
     },
     {
       timeout: 15000,
+      headers: {
+        'x-api-key': apiKey,
+      },
     }
   )
   console.log('Tag-api response: ', res)

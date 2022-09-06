@@ -7,15 +7,12 @@ import {
   MenuAlt3Icon,
   SearchIcon,
 } from '@heroicons/react/solid'
-import ProfileCard from '../Profile/ProfileCard'
 import { Transactions } from '../Transactions'
 import { useState } from 'react'
 import { ContactSlices } from '../ContactSlices'
 import FileTransfer from '../FileTransfer'
-import Image from 'next/image'
 import Messenger from '../Messenger'
 import { CurrencyDollarIcon } from '@heroicons/react/outline'
-import { useDispatch, useSelector } from 'react-redux'
 import { setOpenTab } from '../../app/navSlice'
 import { v4 } from 'uuid'
 

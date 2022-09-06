@@ -3,7 +3,7 @@
 // Also display the coin logo and name.
 // Style the component with tailwind.
 
-import Image from 'next/image'
+// import Image from 'next/image'
 import { v4 } from 'uuid'
 
 export function CoinBalance({ item, quote_currency }) {
@@ -37,7 +37,7 @@ export function CoinBalance({ item, quote_currency }) {
       <div
         className={`relative w-6 h-6 aspect-1 items-center justify-center flex flex-grow my-1`}
       >
-        <Image
+        <img
           className="rounded-full  "
           layout="fill"
           src={logo_url}

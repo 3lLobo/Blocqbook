@@ -6,7 +6,7 @@ import { setContacts, setSyncedCeramic } from '../../app/contactSlice'
 import { useCallback, useEffect, useRef } from 'react'
 import ProfileModal from '../../components/ProfileModal'
 import GithubFooter from '../../components/GithubFooter'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { useLazyGetAllTokenBalancesQuery } from '../../app/covApi'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 
@@ -69,7 +69,7 @@ const Profile = () => {
         className="absolute bottom-0 md:w-64 mb-0 flex-col z-0 hidden md:flex"
       >
         <div className="relative w-20 aspect-1 mx-auto dark:hidden">
-          <Image
+          <img
             layout="fill"
             alt="pbLogo"
             src="/blocqBookLogo/icon/blocqbookTransparent2.png"

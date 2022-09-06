@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link'
 import { useGetPoapsQuery } from '../../app/poapApi'
 import { CommonCheck } from './CommonCheck'
@@ -12,7 +12,7 @@ export const PoapAvatar = ({ poapData, isCommon }) => {
       >
         <div className="w-full h-full rounded-full shadow-xl outline-neonPurple outline outline-2">
           <Link href={poapData.event.event_url}>
-            <Image
+            <img
               className="rounded-full bg-indigo-400 dark:bg-neonPurple"
               layout="fill"
               src={poapData.event.image_url}

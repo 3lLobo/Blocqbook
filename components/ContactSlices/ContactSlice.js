@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeModal, deleteContact, openModal } from '../../app/contactSlice'
 import { useState } from 'react'
 import { ConfirmDelete } from './ConfirmDelete'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { CommonCheck } from '../Poap/CommonCheck'
 import { useRouter } from 'next/router'
 import { v4 } from 'uuid'
@@ -82,7 +82,7 @@ export const Slice = ({ contact }) => {
               <div
               // className='relative'
               >
-                <Image
+                <img
                   className=""
                   layout="fill"
                   src="/poap-badge.png"

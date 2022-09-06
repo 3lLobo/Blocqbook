@@ -1,74 +1,75 @@
-<!-- ![blocqbookTextSolidBanner](https://user-images.githubusercontent.com/70228821/180654821-224ca13c-9dcc-44de-9f44-16d565c0109b.png) -->
+![bbbanner](/public/logov2/booqName/blocqbookN.png)
 
-![bbBanner](public/blocqBookLogo/logoText/blocqbookTextSolidBanner.png)
+# PolygonBUIDL
 
-# The Blocqbook
+The blocq☎️book v3. We skip v2 cuz even numbers are boring!
 
-Picture a phonebook for the blockchain.
+This project addresses the need for a decentralized contact management system for EVM wallets and blockchain enthusiasts. We create and curate a decentralized, user-owned contact DB, upwards-compatible for integration with interaction-based EVM dApps.
 
-Or, if you never browsed the white-pages for your crush's number, an ios-contact app for all of the W3b.
+TL;DR: The Blocq☎️book:
+- Bacqend:
+  - decentralized contact DB (IPFS) with customization inspired by Discord. `#Web3Tooling` 
+  - tagging system with a dcntrlzd subgraph (theGraph) offering a public GQl endpoint. `#SocialGood` `#ComunityBuilding`
+  - integration with the XMTP network.
+- Frontend:
+  - UI for contact management and tagging. `#W3btransition`
+  - multi(13)-chain transaction and token-balance explorer
+  - 3 decentralized Google-suite clones to demonstrate the integrability of our DB: 
+    1. Instant messaging `#W3btransition`
+    2. File storage and  `#W3btransition`
+    3. transfer with 1TB soft limit 🧑🏾‍🚀 `#W3btransition`
 
-We ship a fully-awesome web-3 app for retrieving transactions, contact management, instant messaging and peers2peer file transfer. Built by a team of 🌳 developers - [Florian Wolf](https://github.com/3lLobo) , [Julian Perassi](https://github.com/perassijulian) & [Reshma Shaik](https://github.com/TheReshma), this project lives up to the promise of decentralized WEB3. Your contact-data is 💯 owned by you and upwards compatible, for when you want to import your contacts to any interaction-based w3b-app (Metamask, XMTP, etc.). To launch this rocket of an app, connect your [Metamask](https://metamask.io/) wallet, and voila, your are ready for your interplanetary adventure! All your transactions have been fetched and you can now to chit-chat with your peers the decentralized way !
+IPFS/Spheron dcntrlzd app: https://polygonbuidl-y8q1s2.spheron.app/
+Centralized (fallbacq): https://blocqbook.netlify.app/
 
-## Live Site
+## A booq, What is that even?
 
-Try out our app here : [Blocqbook](https://blocqbook.netlify.app/)
+<!-- img grandpa avatar -->
 
-For the oldest news, have an eye on your [local Newspaper](https://twitter.com/blocqbook)
+Well kid, bacq in the days, we used to have a book with the names and numbers of everyone in town. It was called white-pages, or phonebook. Sounds crazy, right?
 
-## Covalent
+Then you won't believe what I came up with:
 
-The Blocqbook uses the [Covalent](https://www.covalenthq.com/) API to fetch transactions from the blockchain. All transactions are displayed in the transactions tab of the app. We display the token-balances of 13 chains in the profile section, namely -
+A phonebook for the blockchain! Fully decentralized and user owned.
+With the help of IPFS and the Ceramic protocol, your contacts are stored on decentralized storage and can only be accessed by you!
 
+Why does that matter? Because you shouldn't rely on anyone, not on me, not on Google, not on Facebook, especially not on Facebook, zero trust!
+
+It's like learning to walk on your own, making your very first steps. But hey, it get's even better: Your database is fully upwards compatible. You can choose to import your contacts to any dApp which supports the Ceramic protocol. We did the groundwork, so that the social interaction of the blocqchain ecosystem shall soon put both candycrush and instagram in deep shadow.
+
+## Social interaction with zeroTrust, how does that work?
+
+Besides the personal tags, which you can self-define and give to your contacts, our UI fetches **public tags** from the decentralized blockchain event-indexing network theGraph and enriches your contacts with public information on these wallets. Those are 5 indicative and sentimented tags:
 ```
-Ethereum Mainnet
-Kovan
-Polygon
-Polygon Mumbai
-Binance Smart chain
-Fantom
-Fantom testnet
-Arbitrium
-Arbitrium Rinkeby
-Avalanche
-Avalanche Fuji
-Harmony
-Aurora
+- friend
+- trust
+- smartContract
+- spam
+- fraud
 ```
+While the blockchain is an anonymous space, we see value in uncovering behavior traits of users.
+Picture e.g. a wallet got 100 x tagged as `friend`, this wallet would be easier to trust.
+On the opposite a wallet tagged with `fraud` might get blacqlisted from exchanges or social interactions.
 
-## Ceramic
+If you had a confirmed transaction to or from an address (one hop) you are might give that wallet 1 suiting public tag.
 
-Ceramic is our go to option for database as we wanted the app to be Web 3.0 and not Web 2.5 . We use [Ceramic](https://ceramic.network/) to initialize a database for every wallet registered. Users can connect their wallet and choose to link their pre-existing DID or get a new one. This way, all user data is stored in the blockchain. Blocqbook provides you the full data-driven web-experience, while collecting zero of your data. Check-out our [Ceramic Cook-Book](./ceramic/ceramicCookBook.md).
+## IPFS & Spheron
 
-## XMTP
+IPFS makes the core of the Blocq☎️book.
+The contact-data is stored and retrieved from the Ceramic network, which operates on IPFS.
+Decentralized file transfer and storage is empowered by Web3storage with a generous limit of 1TB.
+To top the cherry, the UI is deployed via Spheron on the Filecoin network, keeping it out of reach of censoring or capitalizing hands 👋🏾
+In other words: Neither the Blocq☎️book, nor your personal web3-contact-DB can be taken down, you better start using it!  
 
-We use [XMTP](https://xmtp.com/) to enable decentralized messaging across wallets. To chat with an address, navigate to the 'Messenger' tab on the sidebar and Initiate a conversation by pasting your peer's address in the input area & hit the arrow button. Another way to initiate a conversation is to save a contact & then click on the chat icon in the contact card.
+## AWS, A tiny dash of good old centralization
 
-## IPFS
 
-[IPFS](https://ipfs.io/) is awesome! The Blocqbook 💙 IPFS and uses it for decentralized, interplanetary file sharing, while saving you the hassle of juggling with CIDs. Navigate to the File Transfer tab & drop your files with the receiver's address or you can click on the IPFS icon on the receiver's contact card. The file is uploaded to IPFS and the CID is sent to the receiver via messenger powered by XMTP.
+As much as we all would like to live in Ponyland, reality usually teaches us hard facts.
+Through all their perks, we could not yet find a way to decentralize a secure backend.
+Storing wallet keys on a static website would open the door for malicious actors to abuse both the storage and public tagging system.
+In necessity of a secure backend, we turned to AWS where the Blocq☎️book API is deployed.
 
-## Polygon & The Graph
+Being thankful implies having successfully surpassed a challenge, thus with this metaphor in mind we would like to round up this hackathon with a big **ThankYou** to the the generous sponsors IPFS, AWS and Polygon 💜  
 
-The Blockbook's smart contract is deployed on [Polygon Mumbai](https://mumbai.polygonscan.com/) and emits an event every time an address is tagged with a public tag ( such as - `scam` or `airdrop` ). Our [The Graph](https://thegraph.com/hosted-service) subgraph indexes the events. All the addresses that have been given a public tag are now on the blockchain and can be graph-queried from [The Graph](https://thegraph.com/hosted-service) api. Possible use-cases are fraud detection & address identification. We build this feature in the hope to contribute to a safer and more transparent web3 🤍
 
-Contract : [0xde4d7f0a42aa7df311b3cc18ef5231f501168695](https://mumbai.polygonscan.com/address/0xde4d7f0a42aa7df311b3cc18ef5231f501168695#events)
-
-Subgraph : [Polygon](https://thegraph.com/hosted-service/subgraph/notthatdumb/contract-polygon)
-
-## Poaps
-
-Did we say [POAPS](https://poap.xyz/)? 🎉🎉🎉
-Hell Yeah, we did. We are giving out POAPs to the early users of Blocqbook. Do grab one & mint them for free in the Gnosis chain. We also display POAPs of other wallets and notify when we have POAPs in common.
-
-![blocqbookTextTransparentBannerLight](public/logov2/booqName/blocqbookTL.png)
-
-## Tech Stack
-
-```
-Next.js
-React.js
-Redux Toolkit
-Tailwind CSS 💫
-Ethers.js
-```
+![bbbye](/public/logov2/booqName/blocqbookN.png)

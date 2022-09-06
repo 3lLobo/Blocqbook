@@ -9,7 +9,8 @@ export const emptyProfile = (address, isOneHop, avatar, name, notes, dev) => ({
   bio: {
     name: name || '',
     address: address || '',
-    avatar: avatar || '/blocqBookLogo/icon/blocqbookTransparent2.png',
+    avatar: avatar || '/logov2/bbLogo.gif',
+    // avatar: avatar || '/blocqBookLogo/icon/blocqbookTransparent2.png',
     notes: notes || '',
   },
   isSelf: false,

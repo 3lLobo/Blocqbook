@@ -13,7 +13,8 @@ export function Avatar({ src, scale }) {
         className="rounded-full bg-indigo-400 dark:bg-neonPurple"
         layout="fill"
         // TODO: change to animated gif
-        src={saveSrc || '/blocqBookLogo/icon/blocqbookTransparent2.png'}
+        src={saveSrc || '/logov2/bbLogo.gif'}
+        // src={saveSrc || '/blocqBookLogo/icon/blocqbookTransparent2.png'}
         alt="avatar"
       />
     </div>

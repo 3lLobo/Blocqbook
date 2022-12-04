@@ -22,7 +22,9 @@ The Blocqbook uses the [Covalent](https://www.covalenthq.com/) API to fetch tran
 
 ```
 Ethereum Mainnet
-Kovan
+Ethereum Goerli
+Evmos
+Evmos Testnet
 Polygon
 Polygon Mumbai
 Binance Smart chain

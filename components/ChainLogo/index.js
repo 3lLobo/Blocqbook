@@ -7,15 +7,12 @@ export const ChainLogo = ({ chainId }) => {
   // const chainLogo = CHAIN_INFO[chainId]?.logoUrl || null
 
   const chain = covalentChains.items.find((chain) => {
-    console.log('chain', typeof chainId)
-    console.log('chainId', chainId)
     return parseInt(chain.chain_id) === chainId
   })
   if (!chain) {
     return
   }
   const { name, label, logo_url } = chain
-  console.log('label', label, 'logo_url', logo_url)
 
   return (
     <div className="flex w-fit place-items-center">

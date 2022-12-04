@@ -35,6 +35,7 @@ export enum SupportedChainId {
   // ARBITRUM_RINKEBY = 421611,
 
   OPTIMISM = 10,
+  OPTIMISM_GOERLI = 420,
   // OPTIMISTIC_KOVAN = 69,
 
   AVALANCHE = 43114,

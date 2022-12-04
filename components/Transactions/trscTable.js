@@ -11,9 +11,10 @@ function classNames(...classes) {
 }
 
 export const PrettyTable = ({ transactions }) => {
+  console.log("🚀 ~ file: trscTable.js:14 ~ PrettyTable ~ transactions", transactions)
   if (transactions.length === 0) {
     return (
-      <div className="mx-auto mt-11 text-center">
+      <div className="mx-auto mt-11 text-center p-6">
         <p>No transactions</p>
       </div>
     )

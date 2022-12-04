@@ -80,7 +80,7 @@ export default function Header() {
     try {
       await connect(authProvider)
       const signer = getWeb3Signer()
-      await connectXmtp(signer)
+      // await connectXmtp(signer)
       const chainId =
         ethers.utils.arrayify(window.ethereum.chainId, {
           hexPad: 'left',

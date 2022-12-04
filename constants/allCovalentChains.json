@@ -1,0 +1,515 @@
+{
+  "updated_at": "2022-12-04T20:37:39.296881913Z",
+  "items": [
+    {
+      "name": "eth-mainnet",
+      "chain_id": "1",
+      "is_testnet": false,
+      "db_schema_name": "chain_eth_mainnet",
+      "label": "Ethereum Mainnet",
+      "category_label": "Ethereum",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/ethereum-eth-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "eth-goerli",
+      "chain_id": "5",
+      "is_testnet": true,
+      "db_schema_name": "chain_eth_goerli",
+      "label": "Ethereum Goerli Testnet",
+      "category_label": "Ethereum",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/ethereum-eth-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "matic-mainnet",
+      "chain_id": "137",
+      "is_testnet": false,
+      "db_schema_name": "chain_matic_mainnet",
+      "label": "Polygon Mainnet",
+      "category_label": "Polygon",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/polygon-matic-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "matic-mumbai",
+      "chain_id": "80001",
+      "is_testnet": true,
+      "db_schema_name": "chain_matic_mumbai",
+      "label": "Polygon Testnet Mumbai",
+      "category_label": "Polygon",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/polygon-matic-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "avalanche-mainnet",
+      "chain_id": "43114",
+      "is_testnet": false,
+      "db_schema_name": "chain_avalanche_mainnet",
+      "label": "Avalanche C-Chain Mainnet",
+      "category_label": "Avalanche",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/avalanche-avax-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "avalanche-testnet",
+      "chain_id": "43113",
+      "is_testnet": true,
+      "db_schema_name": "chain_avalanche_testnet",
+      "label": "Avalanche Fuji Testnet",
+      "category_label": "Avalanche",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/avalanche-avax-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "bsc-mainnet",
+      "chain_id": "56",
+      "is_testnet": false,
+      "db_schema_name": "chain_bsc_mainnet",
+      "label": "BNB Smart Chain",
+      "category_label": "Binance",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/binance-coin-bnb-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "bsc-testnet",
+      "chain_id": "97",
+      "is_testnet": true,
+      "db_schema_name": "chain_bsc_testnet",
+      "label": "BNB Smart Chain Testnet",
+      "category_label": "Binance",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/binance-coin-bnb-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "moonbeam-mainnet",
+      "chain_id": "1284",
+      "is_testnet": false,
+      "db_schema_name": "chain_moonbeam_mainnet",
+      "label": "Moonbeam Mainnet",
+      "category_label": "Moonbeam",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/moonbeam-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "moonbeam-moonbase-alpha",
+      "chain_id": "1287",
+      "is_testnet": true,
+      "db_schema_name": "chain_moonbeam_moonbase_alpha",
+      "label": "Moonbeam Moonbase Alpha",
+      "category_label": "Moonbeam",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/moonbeam-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "moonbeam-moonriver",
+      "chain_id": "1285",
+      "is_testnet": false,
+      "db_schema_name": "chain_moonbeam_moonriver",
+      "label": "Moonbeam Moonriver",
+      "category_label": "Moonbeam",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/moonriver.png",
+      "is_appchain": false
+    },
+    {
+      "name": "rsk-mainnet",
+      "chain_id": "30",
+      "is_testnet": false,
+      "db_schema_name": "chain_rsk_mainnet",
+      "label": "RSK Mainnet",
+      "category_label": "RSK",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/rsk-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "rsk-testnet",
+      "chain_id": "31",
+      "is_testnet": true,
+      "db_schema_name": "chain_rsk_testnet",
+      "label": "RSK Testnet",
+      "category_label": "RSK",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/rsk-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "arbitrum-mainnet",
+      "chain_id": "42161",
+      "is_testnet": false,
+      "db_schema_name": "chain_arbitrum_mainnet",
+      "label": "Arbitrum Mainnet",
+      "category_label": "Arbitrum",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/arbitrum-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "arbitrum-testnet",
+      "chain_id": "421611",
+      "is_testnet": true,
+      "db_schema_name": "chain_arbitrum_testnet",
+      "label": "Arbitrum Testnet",
+      "category_label": "Arbitrum",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/arbitrum-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "fantom-mainnet",
+      "chain_id": "250",
+      "is_testnet": false,
+      "db_schema_name": "chain_fantom_mainnet",
+      "label": "Fantom Opera",
+      "category_label": "Fantom",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/fantom-ftm-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "fantom-testnet",
+      "chain_id": "4002",
+      "is_testnet": true,
+      "db_schema_name": "chain_fantom_testnet",
+      "label": "Fantom Testnet",
+      "category_label": "Fantom",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/fantom-ftm-logo.png",
+      "is_appchain": false
+    },
+    {
+      "name": "palm-mainnet",
+      "chain_id": "11297108109",
+      "is_testnet": false,
+      "db_schema_name": "chain_palm_mainnet",
+      "label": "Palm Mainnet",
+      "category_label": "Palm",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/palm-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "palm-testnet",
+      "chain_id": "11297108099",
+      "is_testnet": true,
+      "db_schema_name": "chain_palm_testnet",
+      "label": "Palm Testnet",
+      "category_label": "Palm",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/palm-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "klaytn-mainnet",
+      "chain_id": "8217",
+      "is_testnet": false,
+      "db_schema_name": "chain_klaytn_mainnet",
+      "label": "Klaytn Mainnet",
+      "category_label": "Klaytn",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/klaytn-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "heco-mainnet",
+      "chain_id": "128",
+      "is_testnet": false,
+      "db_schema_name": "chain_heco_mainnet",
+      "label": "HECO Mainnet",
+      "category_label": "HECO",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/heco-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "heco-testnet",
+      "chain_id": "256",
+      "is_testnet": true,
+      "db_schema_name": "chain_heco_testnet",
+      "label": "HECO Testnet",
+      "category_label": "HECO",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/heco-testnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "nervos-polyjuice-testnet",
+      "chain_id": "71393",
+      "is_testnet": true,
+      "db_schema_name": "chain_nervos_polyjuice_testnet",
+      "label": "Nervos Polyjuice Testnet",
+      "category_label": "Nervos",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/nervos-polyjuice-testnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "nervos-godwoken-mainnet",
+      "chain_id": "71402",
+      "is_testnet": false,
+      "db_schema_name": "chain_nervos_godwoken_mainnet",
+      "label": "Nervos Godwoken Mainnet",
+      "category_label": "Nervos",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/nervos-godwoken-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "nervos-godwoken-testnet",
+      "chain_id": "71401",
+      "is_testnet": true,
+      "db_schema_name": "chain_nervos_godwoken_testnet",
+      "label": "Nervos Godwoken Testnet",
+      "category_label": "Nervos",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/nervos-godwoken-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "axie-mainnet",
+      "chain_id": "2020",
+      "is_testnet": false,
+      "db_schema_name": "chain_axie_mainnet",
+      "label": "Axie Mainnet",
+      "category_label": "Axie",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/axie-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "evmos-mainnet",
+      "chain_id": "9001",
+      "is_testnet": false,
+      "db_schema_name": "chain_evmos_mainnet",
+      "label": "EVMOS Mainnet",
+      "category_label": "EVMOS",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/evmos-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "evmos-testnet",
+      "chain_id": "9000",
+      "is_testnet": true,
+      "db_schema_name": "chain_evmos_testnet",
+      "label": "EVMOS Testnet",
+      "category_label": "EVMOS",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/evmos-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "astar-mainnet",
+      "chain_id": "592",
+      "is_testnet": false,
+      "db_schema_name": "chain_astar_mainnet",
+      "label": "Astar Mainnet",
+      "category_label": "Astar",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/astar-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "astar-shiden",
+      "chain_id": "336",
+      "is_testnet": false,
+      "db_schema_name": "chain_astar_shiden",
+      "label": "Astar Shiden",
+      "category_label": "Astar",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/astar-shiden-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "iotex-mainnet",
+      "chain_id": "4689",
+      "is_testnet": false,
+      "db_schema_name": "chain_iotex_mainnet",
+      "label": "IoTeX Mainnet",
+      "category_label": "IoTeX",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/iotex-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "iotex-testnet",
+      "chain_id": "4690",
+      "is_testnet": true,
+      "db_schema_name": "chain_iotex_testnet",
+      "label": "IoTeX Testnet",
+      "category_label": "IoTeX",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/iotex-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "harmony-mainnet",
+      "chain_id": "1666600000",
+      "is_testnet": false,
+      "db_schema_name": "chain_harmony_mainnet",
+      "label": "Harmony Mainnet",
+      "category_label": "Harmony",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/harmony-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "harmony-testnet",
+      "chain_id": "1666700000",
+      "is_testnet": true,
+      "db_schema_name": "chain_harmony_testnet",
+      "label": "Harmony Testnet",
+      "category_label": "Harmony",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/harmony-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "cronos-mainnet",
+      "chain_id": "25",
+      "is_testnet": false,
+      "db_schema_name": "chain_cronos_mainnet",
+      "label": "Cronos Mainnet",
+      "category_label": "Cronos",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/cronos-mainnet-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "aurora-mainnet",
+      "chain_id": "1313161554",
+      "is_testnet": false,
+      "db_schema_name": "chain_aurora_mainnet",
+      "label": "Aurora Mainnet",
+      "category_label": "Aurora",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/aurora-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "aurora-testnet",
+      "chain_id": "1313161555",
+      "is_testnet": true,
+      "db_schema_name": "chain_aurora_testnet",
+      "label": "Aurora Testnet",
+      "category_label": "Aurora",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/aurora-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "emerald-paratime-mainnet",
+      "chain_id": "42262",
+      "is_testnet": false,
+      "db_schema_name": "chain_emerald_paratime_mainnet",
+      "label": "Oasis Emerald ParaTime Mainnet",
+      "category_label": "Oasis",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/oasis-paratime-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "defi-kingdoms-mainnet",
+      "chain_id": "53935",
+      "is_testnet": false,
+      "db_schema_name": "chain_defi_kingdoms_mainnet",
+      "label": "DeFi Kingdoms Mainnet",
+      "category_label": "Avalanche",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/defi-kingdoms.svg",
+      "is_appchain": true
+    },
+    {
+      "name": "swimmer-mainnet",
+      "chain_id": "73772",
+      "is_testnet": false,
+      "db_schema_name": "chain_swimmer_mainnet",
+      "label": "Swimmer Mainnet",
+      "category_label": "Avalanche",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/swimmer.svg",
+      "is_appchain": true
+    },
+    {
+      "name": "boba-mainnet",
+      "chain_id": "288",
+      "is_testnet": false,
+      "db_schema_name": "chain_boba_mainnet",
+      "label": "Boba Mainnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-ethereum-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-avalanche-mainnet",
+      "chain_id": "43288",
+      "is_testnet": false,
+      "db_schema_name": "chain_boba_avalanche_mainnet",
+      "label": "Boba Avalanche Mainnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-avax-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-bobabeam-mainnet",
+      "chain_id": "1294",
+      "is_testnet": false,
+      "db_schema_name": "chain_boba_bobabeam_mainnet",
+      "label": "Boba Bobabeam Mainnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-moonbeam-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-avalanche-testnet",
+      "chain_id": "4328",
+      "is_testnet": true,
+      "db_schema_name": "chain_boba_avalanche_testnet",
+      "label": "Boba Avalanche Testnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-avax-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-rinkeby-testnet",
+      "chain_id": "28",
+      "is_testnet": true,
+      "db_schema_name": "chain_boba_rinkeby_testnet",
+      "label": "Boba Rinkeby Testnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-ethereum-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-bobabase-testnet",
+      "chain_id": "1297",
+      "is_testnet": true,
+      "db_schema_name": "chain_boba_bobabase_testnet",
+      "label": "Boba Bobabase Testnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-moonbeam-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-bnb-mainnet",
+      "chain_id": "56288",
+      "is_testnet": false,
+      "db_schema_name": "chain_boba_bnb_mainnet",
+      "label": "Boba BNB Mainnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-bnb-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "boba-bnb-testnet",
+      "chain_id": "9728",
+      "is_testnet": true,
+      "db_schema_name": "chain_boba_bnb_testnet",
+      "label": "Boba BNB Testnet",
+      "category_label": "Boba",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/boba-bnb-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "scroll-l2-testnet",
+      "chain_id": "534354",
+      "is_testnet": true,
+      "db_schema_name": "chain_scroll_l2_testnet",
+      "label": "Scroll L2 Testnet",
+      "category_label": "Scroll",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/scroll-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "scroll-l1-testnet",
+      "chain_id": "534351",
+      "is_testnet": true,
+      "db_schema_name": "chain_scroll_l1_testnet",
+      "label": "Scroll L1 Testnet",
+      "category_label": "Scroll",
+      "logo_url": "https://www.covalenthq.com/static/images/icons/display-icons/scroll-logo.svg",
+      "is_appchain": false
+    },
+    {
+      "name": "covalent-internal-network-v1",
+      "chain_id": "1131378225",
+      "is_testnet": false,
+      "db_schema_name": "chain_covint1",
+      "label": "Covalent Internal V1",
+      "category_label": "Covalent",
+      "logo_url": "https://www.covalenthq.com/static/images/covalent-logomark.png",
+      "is_appchain": false
+    }
+  ]
+}

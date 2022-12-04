@@ -27,7 +27,6 @@ export function usePublicTags({ contact }) {
   return { uiTags, pubTags, error, isLoading }
 }
 
-
 // Find the matchgin tag, check if the user has already selected it and add the count of the tag.
 function matchPubTag(graphTag, contact) {
   // are the fetched tags in our database?

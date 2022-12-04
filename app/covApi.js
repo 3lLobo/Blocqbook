@@ -101,6 +101,7 @@ export const {
   useGetTransactionsQuery,
   useGetAllTransactionsQuery,
   useGetAllTokenBalancesQuery,
+  useLazyGetAllTransactionsQuery,
   useLazyGetAllTokenBalancesQuery,
   useGetTokenBalancesQuery,
 } = covApi

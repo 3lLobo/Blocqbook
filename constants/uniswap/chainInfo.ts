@@ -16,25 +16,29 @@ export enum SupportedChainId {
   MAINNET = 1,
   // ROPSTEN = 3,
   // RINKEBY = 4,
-  // GOERLI = 5,
-  KOVAN = 42,
+  GOERLI = 5,
+  // KOVAN = 42,
+  EVMOS = 9001,
+  EVMOS_TESTNET = 9000,
+
+  // SOLANA = 1399811149,
 
   POLYGON = 137,
-  POLYGON_MUMBAI = 80001,
+  // POLYGON_MUMBAI = 80001,
 
   BSC = 56,
 
   FANTOM = 250,
-  FANTOM_TESTNET = 4002,
+  // FANTOM_TESTNET = 4002,
 
   ARBITRUM_ONE = 42161,
-  ARBITRUM_RINKEBY = 421611,
+  // ARBITRUM_RINKEBY = 421611,
 
-  // OPTIMISM = 10,
+  OPTIMISM = 10,
   // OPTIMISTIC_KOVAN = 69,
 
   AVALANCHE = 43114,
-  AVALANCHE_FUJI = 43113,
+  // AVALANCHE_FUJI = 43113,
 
   HARMONY = 1666600000,
 
@@ -146,8 +150,8 @@ export interface L2ChainInfo extends BaseChainInfo {
 export type ChainInfoMap = {
   readonly [chainId: number]: L1ChainInfo | L2ChainInfo
 } & {
-  readonly [chainId in SupportedL2ChainId]: L2ChainInfo
-} & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
+    readonly [chainId in SupportedL2ChainId]: L2ChainInfo
+  } & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
 
 export const CHAIN_INFO: ChainInfoMap = {
   [SupportedChainId.MAINNET]: {

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import ProfileModal from '../../components/ProfileModal'
 import GithubFooter from '../../components/GithubFooter'
 import Image from 'next/image'
-import { useLazyGetAllTokenBalancesQuery } from '../../app/covApi'
+import { useLazyGetAllTokenBalancesQuery, useLazyGetAllTransactionsQuery } from '../../app/covApi'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 
 const Profile = () => {
@@ -20,16 +20,15 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   const [covTrigger, covResult, covInfo] = useLazyGetAllTokenBalancesQuery()
+  const [txTrigger, txResult, txInfo] = useLazyGetAllTransactionsQuery()
 
   useEffect(() => {
     console.log('Ceramic record: ', record)
     if (!store.hasInitialRecord && evmStore.connected && !record.isLoading) {
       console.log('Ceramic record loaded!')
       const address = evmStore.account
-      covTrigger( address 
-        ? { address }
-        : skipToken
-        , true)
+      // covTrigger(address ? { address } : skipToken, true)
+      txTrigger(address ? { address } : skipToken, true)
       dispatch(
         setContacts({
           // contacts: myContacts,

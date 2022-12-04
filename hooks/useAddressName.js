@@ -8,12 +8,10 @@ export const useAddressName = ({ address }) => {
   const addressList = Object.keys(store.contacts)
 
   var addressCased
-  if (!isLowerCase(address))
-    addressCased = address?.toLowerCase()
+  if (!isLowerCase(address)) addressCased = address?.toLowerCase()
   else {
     addressCased = ethers.utils.getAddress(address)
   }
-
 
   var contactName
 
@@ -28,7 +26,6 @@ export const useAddressName = ({ address }) => {
   return contactName
 }
 
-
 function isLowerCase(str) {
-  return str == str?.toLowerCase() && str != str?.toUpperCase();
+  return str == str?.toLowerCase() && str != str?.toUpperCase()
 }

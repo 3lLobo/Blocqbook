@@ -74,7 +74,7 @@ const Layout: React.FC = ({ children }) => {
         { shallow: true }
       )
     } catch (error) {
-      console.log('error:', error);
+      console.log('error:', error)
     }
   }
 

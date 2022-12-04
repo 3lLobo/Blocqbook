@@ -126,7 +126,6 @@ export default function Header() {
   return (
     <>
       <div
-        as="nav"
         className="backdrop-blur-sm dark:backdrop-brightness-150 z-30 sticky top-0 shadow-xl overflow-hidden"
       >
         <div className=" mx-auto px-2 sm:px-6 ">
